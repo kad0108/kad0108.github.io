@@ -3,7 +3,7 @@ title: 前端性能优化
 date: 2017-03-08 10:07:03
 categories: 
 - Front-End
-tags:
+tags: HTTP缓存
 ---
 
 前端性能优化，目的是为什么？让用户有更友好的体验，让服务商节省可观的资源。
@@ -47,26 +47,43 @@ Content Delivery Network 即内容分发网络，CDN把**内容分发**到距离
 
 ### http缓存
 
-缓存可以减少响应延迟，减少网络带宽消耗。http header中与缓存控制相关的有：
+缓存可以减少响应延迟，减少网络带宽消耗。http header中与缓存控制相关的头部有：Cache-Control、Expires、Etag、Last-Modified。
 
-1. **cache-control**：请求报文的请求头部，控制缓存行为。
+浏览器在第一次第一次请求后，再次请求时：
 
-	**max-age**这个值也爱考，max-age>0直接从浏览器缓存中提取，max-age<=0向server发送http请求确认该资源是否有修改，有返回200，无返回304。
+1. 浏览器会先看header中的Cache-Control和Expires(强缓存)，如果有缓存则直接从本地缓存中获取资源，不和服务器通信，返回200。
 
-2. **expires**：响应内容过期时间。如果max-age和Expires同时存在，cache-control覆盖expires。
+2. 如果没有缓存，则携带Etag和Last-Modified(协商缓存)发请求给服务器，如果服务器端没有变化，返回304，告诉浏览器可以从缓存中获取资源。
 
-3. **etag**：请求报文的响应头部，响应中资源的校验值，用于标示URL对象是否改变，是与web资源关联的记号(token)。
+3. 如果本地没有缓存或者服务器端资源有更新，或者用户强制刷新Ctrl+F5，浏览器会直接从服务器下载最新数据
 
-	请求头中**If-Match**和**If-None-Match**用来比较Etag是否一致。
 
-4. **last-Modified**：响应中文件在服务器端最后一次修改的时间。
+#### Cache-Control
 
-	请求头中**If-Modified-Since**询问该时间后文件是否有被修改过。没有变化返回304。
+请求报文的请求头部，控制缓存行为，相对时间。
+
+**max-age**这个值也爱考，max-age>0直接从浏览器缓存中提取，max-age<=0向server发送http请求确认该资源是否有修改，有返回200，无返回304。
+
+#### Expires
+
+响应内容过期时间，是绝对时间。如果max-age和Expires同时存在，**cache-control覆盖expires**。
+
+#### Etag
+
+请求报文的响应头部，响应中资源的校验值，用于标示URL对象是否改变，是与web资源关联的记号(token)。
+
+请求头中**If-Match**和**If-None-Match**用来比较Etag是否一致。
+
+#### Last-Modified
+
+响应中文件在服务器端最后一次修改的时间。
+
+请求头中**If-Modified-Since**询问该时间后文件是否有被修改过。没有变化返回304。
 
 ETag解决了Last-modified无法解决的问题：
 
 * 一些文件修改时间改变了，但是内容没有改变，此时使用Last-modified会认为资源更新了，而ETag不会。
-* Last-modified只能精确到秒，如果资源修改非常频繁，在秒一下的时间进行修改，Last-modified无法正确响应。
+* Last-modified只能精确到秒，如果资源修改非常频繁，在秒以下的时间进行修改，Last-modified无法正确响应。
 * 某些服务器不能精确的得到文件的最后修改时间，这样就无法通过最后修改时间判断资源是否更新。
 
 > 有面试题问304缓存的原理，Not Modified，就可以讲讲上面的http缓存了。

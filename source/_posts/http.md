@@ -43,6 +43,25 @@ HTTP header字段包括通用头、请求头、响应头、实体头四个部分
 | get请求会缓存     | 不缓存，每次刷新重新发送 |
 | url可见，不安全 | 较get安全 |
 
+### POST提交数据的几种数据格式
+
+POST提交的数据必须放在HTTP的body中，服务器端根据http header中的**Content-Type**字段来判断数据是用哪种编码方式编码的，然后进行解码。
+
+#### 先看Form表单的**enctype**属性：
+
+1. 默认编码方式发送前编码所有字符：`application/x-www-form-urlencoded`
+
+2. 不对字符编码，在使用包含文件上传的表单时必须使用该值：`multipart/form-data`
+
+3. 空格转换为+加号，不对特殊字符编码：`text/plain`
+
+#### Ajax以POST请求向服务器提交数据时，可以通过setRequestHeader设置头部属性Content-Type定义发送内容编码属性。
+
+1. `application/json`：json数据
+
+2. `application/xml`：根据xml头指定的编码格式进行编码。还有`text/xml`这种编码方式但是不推荐，因为`text/*`这种MIME类型有一个US-ASCII字符集，`text/xml`会忽略xml头指定的编码格式而默认采用US-ASCII编码。
+
+
 
 ## 状态码
 
@@ -83,3 +102,8 @@ HTTP header字段包括通用头、请求头、响应头、实体头四个部分
 | 明文传输，不安全  | 具有安全性的SSL加密传输协议 |
 | 无需证书        | 需要CA机构颁发的SSL证书 |
 | 工作在应用层     | 工作在传输层？  |
+
+
+## Reference
+
+[四种常见的 POST 提交数据方式](https://imququ.com/post/four-ways-to-post-data-in-http.html)
