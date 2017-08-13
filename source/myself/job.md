@@ -1,4 +1,53 @@
-## 2017-08-05 百度一面
+## 2017-08-08 阿里一面
+
+1. 简单介绍前端相关工作
+
+2. 二叉堆的维护过程？二叉堆是不是一颗完全二叉树？
+
+3. 布局的时候浏览器的机制，bfc了解吗？怎么触发bfc，它有什么作用？
+
+4. 介绍同源策略，跨域的技术方案。
+
+5. CSS属性继承：文本相关的属性`text-*, font-*, color`，列表相关的属性`list-*`.
+
+6. 清楚浮动，怎么实现
+
+7. 闭包概念，怎么形成一个闭包。实现一个功能， 外层是ul，里面是一堆li，希望点击第i个li的时候alert(i)。发现这里面试官好像有误导我，让我去向内层返回函数中传值。
+
+   ```
+   var lis = document.getElementsByName('li');
+   for(var i = 0; i < lis.length; i++){
+     lis[i].onclick = (function(i){
+       return function(){ // onclick必须是一个函数，匿名函数立即执行如果不return一个function，onclick是做不了任何事
+         alert(i); // 这里就是闭包的效果了，可以直接访问上层作用域中的i
+       }
+     })(i);
+   }
+   ```
+
+8. 用ES5之前的语法怎么实现继承？原型继承。`Object.create`实现的继承叫做原型继承。
+
+   ```
+   function Foo(){}
+   Foo.prototype = ...
+
+   function Bar(){
+     Foo.call(this);
+   }
+   Bar.prototype = Object.create(Foo.prototype);
+   ```
+
+9. 实例的`__proto__`指向谁？
+
+10. vue的MVVM双向绑定怎么原生JS实现的？
+
+11. 期望工作地点。
+
+## 2017-08-05 百度运维二面
+
+* 36匹马，6个跑道，没有计时器，让找出其中最快的三匹马，需要比赛多少次。
+
+## 2017-08-05 百度运维一面
 
 1. 自我介绍。
 
