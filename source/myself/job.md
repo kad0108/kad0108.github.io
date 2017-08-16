@@ -1,6 +1,48 @@
-## 2017-08-12 百度网页搜索二面
+## 2017-08-14 百度网页搜索二面
 
+1. 自我介绍。为什么双方要合作？你重构的游戏的项目是单独的吗？面试官有关注微软小英，去玩单词消消乐，是头一个会关注我做了什么事情并去体验的面试官。手指滑动时怎么识别滑到了哪个字母？是多少个人在做？我换一个浏览器能正常显示玩吗？微软小英里面你做的内容在哪里能看？都会有什么bug？重构使用vue是谁决定用的框架？
 
+2. 做的这个调查问卷可以访问吗？爬虫网页分析这个分析了什么内容？用phantomJS和selenium，用phantomJS被封用selenium是什么情况？selenium的webdriver会去驱动firefox、chrome、phantomJS是吧，然后我突然想起来phantomJS是headless的。然后你是递归的去爬吗？得到数据后怎么分析的？
+
+3. 看你算法经历很多，怎么会想要做前端？
+
+4. 上一面觉得自己哪道题答的不太好？etag对于集群了解吗？第一次访问落到这台机器上返回一个标识，又一次访问落到另一台机器上返回另一个标识。对etag原理了解一下。
+
+5. 向后端提交数据，一种是ajax，一种是form，现在要提交一个文件，要提交之后不刷新页面。写代码。
+
+   ```
+   <form action="" method="post" enctype="multipart/form-data" target="myiframe">
+   	<input type="file" name="file" />
+   	<button type="submit">submit</button>
+   </form>
+   <iframe name="myiframe" hidden></iframe> 
+
+   // form提交将target指向iframe的name
+   // form提交文件，编码应该是multipart/form-data
+   ```
+
+6. 一个输入框，用户在输入字母时向后台发送请求返回推荐搜索关键字，但是不能每次输入都发送，应该在用户停止输入1s后发送。写代码。
+
+   ```
+   var $input = $("input");
+   var timer;
+   $input.addEventListener("keydown", function(e){
+     clearInterval(timer);
+   })
+   $input.addEventListener("keyup", function(e){
+     timer = setInterval(function(){
+       // ajax request
+     }, 1000);
+   })
+   ```
+
+7. 及时通信，websocket降级解决方案是什么？ajax轮询是不能做到及时的。
+
+8. 实现这样一个场景，一个列表，每行可以向左滑动，而且动画要流畅。应该是transition吧？面试官说的transform，问比直接修改width好在哪儿。z-index只对定位元素有效，就是设置了position的元素。
+
+9. 给一个根文件，里面可能有很深的文件，要求将全部文件读取之后执行回调函数。我说了一个想法，面试官说你的这个做法是同一时间只用了一个进程，而实际上读取文件可以是并行的。promise.all应该可以做。
+
+10. 面试官他们在做一个叫商桥的产品，有实时通信窗口。在用modx替换redux。会先都尝试一些框架，然后根据需求决定要使用什么。在考虑用GraphQL来替代RESTFUL API。
 
 ## 2017-08-14 百度网页搜索一面
 
