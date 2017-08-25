@@ -1,3 +1,66 @@
+## 2017-08-24 搜狗一面
+
+1. addEventListener第三个参数表示事件能否在捕获或冒泡阶段执行。默认false，事件发生在冒泡阶段执行
+
+2. 事件绑定方式：
+
+   * HTML事件处理程序`<input type="button" value="click me" onclick="alert('clicked')"/>`
+   * DOM0级事件处理程序`$btn.onclick = function(){}`
+   * DOM2级事件处理程序`$btn.addEventListener('click', function(){}, false)`
+
+3. 解除绑定：
+
+   * `$btn.onclick = null;`
+
+   * `$btn.removeEventListener()`传入参数和addEventListener参数相同，也就是通过addEventListener添加的匿名函数无法移除。 
+
+     ```
+     function handler(){}
+     $btn.addEventListener('click', handler, false);
+     $btn.removeEventListener('click', handler, false);
+     ```
+
+4. onclick形式的绑定事件和addEventListener形式的绑定事件的区别：
+
+   ```
+   使用addEventListener可以添加多个事件处理程序，都会触发。
+   $btn.addEventListener('click', function(){ console.log(1); }); // 触发
+   $btn.addEventListener('click', function(){ console.log(2); }); // 触发
+
+   使用onclick会有覆盖，但是onclick不会覆盖addEventListener
+   $btn.onclick = function(){ console.log(3); }; // 被覆盖
+   $btn.onclick = function(){ console.log(3); }; // 触发
+
+   二者回调函数中的参数都是一样的，event一样，this指向也一样。
+   ```
+
+5. HTML5 input 提供的新的type有：email、number、date、range
+
+6. ajax level1的用法也得好好看。readyState是user agent提供的：xmlhttprequest finished and response is ready。status是server返回的。
+
+7. 瀑布流布局的实现
+
+8. ES6有用哪些，都有问有没有用过class（实际上是对象原型的语法糖）。
+
+9. Html5有用过哪些新特性，问我有没有了解audio的格式限制。
+
+10. 前端优化。
+
+    * css为什么需要放头部？（CSS放在后面可能页面会出现闪跳的感觉，或者是白屏或者布局混乱）
+    * script放头部怎么不阻塞？（async异步执行该脚本必须是带有src的脚本，defer脚本在文档解析后触发DOMContentLoaded前执行）
+    * CDN是什么？如何更新资源？（可以通过加版本号的方式，也可以强制刷新获取资源）
+    * http缓存是什么？
+
+11. 面试官问你有什么问题：
+
+    ```
+    做这份工作需要具备哪些素质和技能？
+    您觉得这份工作所需的能力，我还有哪些不具备？
+    团队是怎样的规模，分工是怎样的？我需要做什么工作？
+    ```
+
+
+
 ## 2017-08-20 今日头条一面
 
 1. 做的微信网页版，那移动端适配是怎么做的？设置了body默认字体大小，也就是一个盒子设置了2rem，在不同设备上都显示一样大小？那怎么实现适配，不同尺寸设备上响应显示大小？我说设置百分比，然后问百分比能做为什么又去用rem？
