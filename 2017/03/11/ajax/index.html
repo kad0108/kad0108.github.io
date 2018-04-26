@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html >
+<head>
+
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="Adong Kong" />
+
+
+
+<meta name="description" content="Ajax = 异步JS + XML通过在后台与服务器进行少量数据交换，AJAX 可以使网页实现异步更新(不阻塞)。这意味着可以在不重新加载整个网页的情况下，对网页的某部分进行更新。
+创建XMLHttpRequest对象，用于和服务器交换数据浏览器兼容写法：1234567var xhr;if(window.XMLHttpRequest)&amp;#123;	xhr = new XMLHttpRequest(">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ajax和跨域总结">
+<meta property="og:url" content="http://kad0108.github.io/2017/03/11/ajax/index.html">
+<meta property="og:site_name" content="Adong Kong's Blog">
+<meta property="og:description" content="Ajax = 异步JS + XML通过在后台与服务器进行少量数据交换，AJAX 可以使网页实现异步更新(不阻塞)。这意味着可以在不重新加载整个网页的情况下，对网页的某部分进行更新。
+创建XMLHttpRequest对象，用于和服务器交换数据浏览器兼容写法：1234567var xhr;if(window.XMLHttpRequest)&amp;#123;	xhr = new XMLHttpRequest(">
+<meta property="og:image" content="http://kad0108.github.io/2017/03/11/ajax/ajaxheader.png">
+<meta property="og:updated_time" content="2017-08-30T08:34:06.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Ajax和跨域总结">
+<meta name="twitter:description" content="Ajax = 异步JS + XML通过在后台与服务器进行少量数据交换，AJAX 可以使网页实现异步更新(不阻塞)。这意味着可以在不重新加载整个网页的情况下，对网页的某部分进行更新。
+创建XMLHttpRequest对象，用于和服务器交换数据浏览器兼容写法：1234567var xhr;if(window.XMLHttpRequest)&amp;#123;	xhr = new XMLHttpRequest(">
+<meta name="twitter:image" content="http://kad0108.github.io/2017/03/11/ajax/ajaxheader.png">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="Adong Kong&#39;s Blog" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.ico">
+
+
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>Ajax和跨域总结 | Adong Kong&#39;s Blog</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: false,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: true
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?1dbd558cf5d5b4dfae10344f2a043bbd";
+            var s = document.getElementsByTagName("script")[0]; 
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?1dbd558cf5d5b4dfae10344f2a043bbd";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+</head>
+<body>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="https://github.com/kad0108/"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://camo.githubusercontent.com/121cd7cbdc3e4855075ea8b558508b91ac463ac2/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f677265656e5f3030373230302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_left_green_007200.png"></a>
+        <a href="/" class="profilepic">
+            <img src="/img/avatar.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">Adong Kong</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">Do what you love and love what you do.</p>
+        
+
+        
+            <form id="search-form">
+            <input type="text" id="local-search-input" name="q" placeholder="search..." class="search form-control" autocomplete="off" autocorrect="off" searchonload="false" />
+            <i class="fa fa-times" onclick="resetSearch()"></i>
+            </form>
+            <div id="local-search-result"></div>
+            <p class='no-result'>No results found <i class='fa fa-spinner fa-pulse'></i></p>
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>Menu</li>
+                        <li>Tags</li>
+                        
+                        <li>Friends</li>
+                        
+                        
+                        <li>About Me</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="mailto:kad0108@foxmail.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" href="https://github.com/kad0108" title="GitHub"></a>
+                            
+                                <a class="fa RSS" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Float/">Float</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/">HTTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Html5/">Html5</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://pages.github.com/">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://moxfive.xyz/">MOxFIVE</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">专注于前端</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">Adong Kong</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">Adong Kong</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">Do what you love and love what you do.</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="mailto:kad0108@foxmail.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="https://github.com/kad0108" title="GitHub"></a>
+                            
+                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="Tags" friends="Friends" about="About Me"/>
+</nav>
+      <div class="body-wrap"><article id="post-ajax" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/03/11/ajax/" class="article-date">
+      <time datetime="2017-03-11T13:41:17.000Z" itemprop="datePublished">2017-03-11</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Ajax和跨域总结
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/Front-End/">Front-End</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/">JavaScript</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h2 id="Ajax-异步JS-XML"><a href="#Ajax-异步JS-XML" class="headerlink" title="Ajax = 异步JS + XML"></a>Ajax = 异步JS + XML</h2><p>通过在后台与服务器进行少量数据交换，AJAX 可以使网页实现异步更新(不阻塞)。这意味着可以在不重新加载整个网页的情况下，对网页的某部分进行更新。</p>
+<h3 id="创建XMLHttpRequest对象，用于和服务器交换数据"><a href="#创建XMLHttpRequest对象，用于和服务器交换数据" class="headerlink" title="创建XMLHttpRequest对象，用于和服务器交换数据"></a>创建XMLHttpRequest对象，用于和服务器交换数据</h3><p>浏览器兼容写法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">var xhr;</div><div class="line">if(window.XMLHttpRequest)&#123;</div><div class="line">	xhr = new XMLHttpRequest();</div><div class="line">&#125;eles if(window.ActiveXObject)&#123;</div><div class="line">	// code for IE5,IE6</div><div class="line">	xhr = new ActiveXObject(Microsoft.XMLHTTP);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<a id="more"></a>
+<h3 id="向服务器发起请求："><a href="#向服务器发起请求：" class="headerlink" title="向服务器发起请求："></a>向服务器发起请求：</h3><p><strong>GET or POST?</strong></p>
+<p>与 POST 相比，GET 更简单也更快，并且在大部分情况下都能用。然而，在以下情况中，请使用 POST 请求：</p>
+<ol>
+<li>无法使用缓存文件（更新服务器上的文件或数据库）</li>
+<li>向服务器发送大量数据（POST 没有数据量限制）</li>
+<li>发送包含未知字符的用户输入时，POST 比 GET 更稳定也更可靠</li>
+</ol>
+<p><strong>GET请求</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">xhr.open(&quot;GET&quot;, url, true);</div><div class="line">xhr.send(null);</div></pre></td></tr></table></figure>
+<p>为避免获取到的缓存结果，可以向url添加一个唯一的ID：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">xhr.open(&quot;GET&quot;,&quot;demo_get.asp?t=&quot; + Math.random(),true);</div></pre></td></tr></table></figure></p>
+<p>通过 GET 方法发送信息，请向 URL 添加信息：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">xhr.open(&quot;GET&quot;,&quot;demo_get2.asp?fname=Bill&amp;lname=Gates&quot;,true);</div></pre></td></tr></table></figure></p>
+<p><strong>POST请求</strong></p>
+<p>需要使用 setRequestHeader() 来添加 HTTP 头。然后在 send() 方法中规定希望发送的数据：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">xmlhttp.open(&quot;POST&quot;,&quot;ajax_test.asp&quot;,true);</div><div class="line">xmlhttp.setRequestHeader(&quot;Content-type&quot;,&quot;application/x-www-form-urlencoded&quot;);//提交时的内容类型</div><div class="line">xmlhttp.send(&quot;fname=Bill&amp;lname=Gates&quot;);</div></pre></td></tr></table></figure></p>
+<h3 id="发送XHR请求时，会发送的HTTP头部信息："><a href="#发送XHR请求时，会发送的HTTP头部信息：" class="headerlink" title="发送XHR请求时，会发送的HTTP头部信息："></a>发送XHR请求时，会发送的HTTP头部信息：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">Accept：浏览器能够处理的内容类型</div><div class="line">Accept-Charset：浏览器能够显示的字符集</div><div class="line">Accept-Encoding：浏览器能够处理的压缩编码</div><div class="line">Accept-Language：浏览器当前设置的语言</div><div class="line">Connection：浏览器与服务器之间连接的类型</div><div class="line">Cookie：缓存</div><div class="line">Host：发出请求的页面所在的域</div><div class="line">Referer：发出请求的页面的URI</div><div class="line">User-Agent：浏览器的用户代理字符串</div></pre></td></tr></table></figure>
+<p><img src="/2017/03/11/ajax/ajaxheader.png" alt="ajax http header"></p>
+<p>使用setRequestHeader()可以设置自定义的请求头部信息。要成功发送请求头部信息，必须在open方法之后和send方法之前调用。</p>
+<h3 id="服务器响应："><a href="#服务器响应：" class="headerlink" title="服务器响应："></a>服务器响应：</h3><p>responseText：获得字符串形式的响应数据。<br>responseXML：获得 XML 形式的响应数据</p>
+<h3 id="原生JS写Ajax"><a href="#原生JS写Ajax" class="headerlink" title="原生JS写Ajax"></a>原生JS写Ajax</h3><p>XMLHttpRequest Level 1 的写法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">var url = &apos;xx.json&apos;;</div><div class="line">var xhr = new XMLHttpRequest();</div><div class="line">xhr.onreadystatechange = function()&#123;</div><div class="line">	if(xhr.readyState == 4 &amp;&amp; xhr.status == 200)&#123;</div><div class="line">		console.log(xhr.responseText);</div><div class="line">	&#125;</div><div class="line">&#125;;</div><div class="line">xhr.open(&quot;GET&quot;, url);</div><div class="line">xhr.send(null);</div></pre></td></tr></table></figure></p>
+<p>XMLHTTPRequest Level 2 的写法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">var url = &apos;xx.json&apos;;</div><div class="line">var xhr = new XMLHttpRequest();</div><div class="line"></div><div class="line">xhr.open(&apos;GET&apos;, url);</div><div class="line">xhr.send(null);</div><div class="line"></div><div class="line">xhr.onload = function()&#123;</div><div class="line">	if(xhr.status == 200 || xhr.status == 304)&#123;</div><div class="line">		console.log(JSON.parse(xhr.responseText));</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><strong>老版本缺点：</strong></p>
+<ol>
+<li>只支持文本数据的传送，无法用来读取和上传二进制文件。</li>
+<li>传送和接收数据时，没有进度信息，只能提示有没有完成。</li>
+<li>受到”同域限制”（Same Origin Policy），只能向同一域名的服务器请求数据。</li>
+</ol>
+<p><strong>XMLHttpRequest Level 2新版本的功能：</strong></p>
+<ol>
+<li><p>可以设置HTTP请求的时限</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">xhr.timeout = 3000;</div><div class="line">xhr.ontimeout = function(event)&#123;</div><div class="line">　　　　alert(&apos;请求超时！&apos;);</div><div class="line">　　&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>可以使用FormData对象管理表单数据，xhr.send(new FormData(form))。</p>
+</li>
+<li>可以上传文件, formData.append(‘files[]’, files[i])。</li>
+<li>可以请求不同域名下的数据（跨域请求）,CORS，使用跨域资源共享的前提是浏览器支持且服务器同意。</li>
+<li>可以获取服务器端的二进制数据。</li>
+<li>可以获得数据传输的进度信息，xhr.onprogress。</li>
+</ol>
+<blockquote>
+<p>面试题：Ajax实现分页，分页切换url不变，现在想实现点击浏览器后退按钮回退到前一页而不是上一个链接</p>
+</blockquote>
+<p>可以采用“地址栏加hash”技术来解决。只要改变锚点内容（‘#’后的），浏览器就认为URL变化，也就会放入浏览历史，这样前进后退问题就解决了。我们只要把不同的AJAX状态通过不同的hash写到地址栏就可以了，当页面加载的时候检测是否有hash值，有的话就读取hash进行相应的ajax还原操作。location.hash可以取到或者设置hash的值，当hash改变的时候window.onhashchange事件会被触发。</p>
+<h3 id="JQuery的Ajax使用"><a href="#JQuery的Ajax使用" class="headerlink" title="JQuery的Ajax使用"></a>JQuery的Ajax使用</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">$.ajax(&#123;</div><div class="line">	url: &apos;./data.json&apos;,</div><div class="line">	type: &apos;GET&apos;,</div><div class="line">	aysnc: true,</div><div class="line">	data: &#123;//发送给服务器的数据</div><div class="line"></div><div class="line">	&#125;,</div><div class="line">	timeout: 5000, //超时</div><div class="line">	dataType: &apos;json&apos;, //服务器返回的数据格式</div><div class="line"></div><div class="line">	beforeSend:function(xhr)&#123;</div><div class="line">        //发送请求前可修改 XMLHttpRequest 对象的函数，如添加自定义 HTTP 头</div><div class="line">    &#125;,</div><div class="line">	success: function(data, textStatus)&#123;</div><div class="line">		//根据 dataType 参数进行处理后的服务器返回数据</div><div class="line">	&#125;,</div><div class="line">	error: function()&#123;</div><div class="line">		//请求出错处理</div><div class="line">	&#125;,</div><div class="line">	complete:function()&#123;</div><div class="line">        //请求完成之后调用这个函数，无论成功或失败</div><div class="line">    &#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<p>jquery调用ajax中文乱码的问题，提交前用encode对数据进行编码，后台接收处对数据进行解码。</p>
+<h2 id="跨域"><a href="#跨域" class="headerlink" title="跨域"></a>跨域</h2><p>跨域是指在通过JS不同域之间进行数据传输或通信。只要协议、域名、端口有任何一个不同，都被当作是不同的域。</p>
+<h3 id="CORS-Cross-Origin-Resource-Sharing-跨域资源共享"><a href="#CORS-Cross-Origin-Resource-Sharing-跨域资源共享" class="headerlink" title="CORS(Cross-Origin Resource Sharing, 跨域资源共享)"></a>CORS(Cross-Origin Resource Sharing, 跨域资源共享)</h3><p>CORS的基本思想是使用自定义的HTTP头部让浏览器和服务器进行沟通。</p>
+<p>发起请求时添加额外的Origin头部，包含和请求页面的源信息，服务器根据这个头部信息决定是否给予响应，就在Access-Control-Allow-Origin头部中返回相同的源信息。如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Origin：http://www.abc.com</div><div class="line">Access-Control-Allow-Origin: http://www.abc.com</div></pre></td></tr></table></figure></p>
+<p>注意，请求和响应都不包含cookie信息。</p>
+<h3 id="JSONP"><a href="#JSONP" class="headerlink" title="JSONP"></a>JSONP</h3><p>通过script标签引入的js是不受同源策略的限制的，其实凡是带有src这个属性的标签都拥有跨域的能力，如script、img、iframe。</p>
+<p>JSONP是使用script元素获取JSON数据包装在一个回调函数中操作。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">function handle(response)&#123;</div><div class="line">	console.log(response.data);</div><div class="line">&#125;</div><div class="line"></div><div class="line">var script = document.createElement(&apos;script&apos;);</div><div class="line">script.src = &apos;http://abc.com/json/?callback=handle&apos;;</div><div class="line">document.body.insertBefore(script, document.body.firstChild);</div></pre></td></tr></table></figure>
+<p>JSONP的缺点：无法确定其他域是否安全，无法确定JSONP请求是否失败。JSONP只支持GET请求，CORS支持所有类型的HTTP请求。</p>
+<p>JSONP的优势：在于支持老式浏览器，以及可以向不支持CORS的网站请求数据。</p>
+<h3 id="document-domain"><a href="#document-domain" class="headerlink" title="document.domain"></a>document.domain</h3><p>比如两个页面地址分别为<code>x.abc.com</code>和<code>y.abc.com</code>，明显不同域，可以将两个页面的<code>document.domain</code>设为相同的域名<code>abc.com</code>，而且也只能设置为更高一级的父域，且<strong>主域必须相同</strong>。</p>
+<p>不同域之间能够获得彼此的window对象，但不能获取window的属性和方法。通过修改两个页面的document.domain，就可以在父页面中操作它里面的iframe的window对象(contentWindow)。</p>
+<p>修改document.domain的方法只适用于不同子域的框架间的交互.</p>
+<h3 id="window-name"><a href="#window-name" class="headerlink" title="window.name"></a>window.name</h3><p>在每个窗口window的生命周期内，窗口载入的所有页面都是共享一个window.name的，每个页面都对window.name有读写的权限。window.name是持久存在在一个窗口载入过的所有页面中，并不会因为新页面的载入而重置。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">//a.html</div><div class="line">window.name = &apos;data from a.html&apos;;</div><div class="line">window.location = &apos;b.html&apos;;</div><div class="line"></div><div class="line">//b.html</div><div class="line">console.log(window.name);//&apos;data from a.html&apos;</div></pre></td></tr></table></figure>
+<h3 id="HTML5-PostMessage"><a href="#HTML5-PostMessage" class="headerlink" title="HTML5 PostMessage"></a>HTML5 PostMessage</h3><p>postMessage用于两个窗口iframe之间交换数据。两个窗口能通信的前提是：一个窗口以iframe的形式存在于另一个窗口中(MessageEvent.source获取源窗口)，或者一个窗口是从另一个窗口通过window.open()或超链接形式打开的(同样可以用window.opener获取源窗口)。也就是说要想交换数据，必须能获取目标窗口的引用。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">// origin1</div><div class="line">window.frames[0].postMessage(message, origin2URL);</div><div class="line">window.onmessage = function(e)&#123;</div><div class="line">	console.log(e.data);// MessageEvent</div><div class="line">&#125;</div><div class="line">// origin2: iframe in origin1</div><div class="line">window.onmessage = function(e)&#123;</div><div class="line">	if(e.source != window.parent) return;// 判断数据发送方</div><div class="line">	console.log(e.data);</div><div class="line">	e.source.postMessage(message, e.origin);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><a href="https://github.com/kad0108/Html5/tree/gh-pages/postMessage" target="_blank" rel="external">demo看这里</a></p>
+<blockquote>
+<p>如果需要传输的数据很大，用HTTP GET请求肯定不行，而且需要兼容浏览器，应该怎么跨域？</p>
+</blockquote>
+<p>使用POST请求，通过表单提交，action指向post请求的地方，提交表单会马上刷新页面，target可以指定刷新页面，写个iframe让target指向这个iframe。</p>
+<h2 id="前端安全"><a href="#前端安全" class="headerlink" title="前端安全"></a>前端安全</h2><h3 id="XSS-Cross-Site-Scripting"><a href="#XSS-Cross-Site-Scripting" class="headerlink" title="XSS(Cross Site Scripting)"></a>XSS(Cross Site Scripting)</h3><p>XSS跨站脚本攻击：攻击者向web页面插入恶意脚本代码<code>&lt;script&gt;&lt;/script&gt;</code>来攻击用户。</p>
+<p>XSS防御：对输入(和URL参数)进行过滤，对输出进行html编码。特殊字符过滤，如：<code>&lt;</code>,<code>&gt;</code>,<code>&amp;</code>,JS伪协议。</p>
+<h3 id="CSRF-Cross-Site-Request-Forgery"><a href="#CSRF-Cross-Site-Request-Forgery" class="headerlink" title="CSRF(Cross Site Request Forgery)"></a>CSRF(Cross Site Request Forgery)</h3><p>CSRF跨站请求伪造：通过伪造来自受信任用户的请求来利用受信任的网站。</p>
+<p><strong>CSRF原理：</strong></p>
+<p>通过例子来说明，用户访问并登录银行网站，用户在未登出银行网站的情况下访问了危险网站(可以通过广告等诱使用户访问)，用户在访问这个危险网站同时，向银行发起一个转账请求，这个请求会携带着用户的cookie走了。这个请求因为是用户发起的并且携带了认证信息，所以请求会成功响应。所以，CSRF攻击是hacker借助受害者的cookie骗取服务器的信任，但hacker是打死都拿不到也无法读取cookie的，而且服务器返回的结果由于浏览器同源策略的限制，hacker也无法拿到。</p>
+<p><strong>CSRF防御：</strong></p>
+<ol>
+<li><p>检查HTTP头部Referer(从哪个页面链接过来)</p>
+</li>
+<li><p>检查token(服务器不存储用户登录状态，只需验证token是否合法)</p>
+</li>
+<li><p>通过验证码来检测用户提交</p>
+</li>
+<li><p>使用定制的HTTP报头</p>
+</li>
+<li><p>严格设置cookie的域</p>
+</li>
+</ol>
+<h2 id="小结："><a href="#小结：" class="headerlink" title="小结："></a>小结：</h2><p>Ajax是无需刷新页面就能够从服务器取得数据的一种方法，核心对象是XMLHttpRequest对象。</p>
+<p>同源策略是对XHR的一个主要约束，它为通信设置了”相同的域、相同的端口、相同的协议”这一限制。试图访问上述限制之外的资源都会引发安全错误，除非采用被认可的跨域解决方案，这个方案叫做CORS。</p>
+<p>Comet是对Ajax的扩展，让服务器能够实时向客户端推送数据。实现Comet的手段主要有：长轮询和HTTP流。</p>
+<p>WebSockets是一种与服务器进行全双工、双向通信的信道。与其他方案不同，websockets不使用HTTP协议，而使用自定义的协议，专门为快速传输小数据设计。</p>
+<p>JS跨域请求方式有：CORS、JSONP、修改<code>document.domain</code>跨子域、<code>window.name</code>、<code>HTML5 window.postMessage</code>.</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a href="http://www.ruanyifeng.com/blog/2012/09/xmlhttprequest_level_2.html" target="_blank" rel="external">XMLHttpRequest Level 2 使用指南</a><br><a href="https://developer.mozilla.org/cn/docs/Web/API/XMLHttpRequest/Using_XMLHttpRequest" target="_blank" rel="external">Using XMLHttpRequest</a><br><a href="http://www.jquery123.com/jQuery.ajax/" target="_blank" rel="external">jQuert.ajax()</a><br><a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Access_control_CORS" target="_blank" rel="external">HTTP访问控制(CORS)</a><br><a href="https://segmentfault.com/a/1190000000718840" target="_blank" rel="external">详解js跨域问题</a><br><a href="http://www.cnblogs.com/zichi/p/4638096.html" target="_blank" rel="external">HTML5 PostMessage</a><br><a href="https://www.ibm.com/developerworks/cn/web/1102_niugang_csrf/" target="_blank" rel="external">CSRF 攻击</a></p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>Title:</span><a href="/2017/03/11/ajax/">Ajax和跨域总结</a></p>
+        <p><span>Author:</span><a href="/" title="Back to Homepage">Adong Kong</a></p>
+        <p><span>Created:</span>2017-03-11, 21:41:17</p>
+        <p><span>Updated:</span>2017-08-30, 16:34:06</p>
+        <p>
+            <span>Full URL:</span><a class="post-url" href="/2017/03/11/ajax/" title="Ajax和跨域总结">http://kad0108.github.io/2017/03/11/ajax/</a>
+            <span class="copy-path" data-clipboard-text="From http://kad0108.github.io/2017/03/11/ajax/　　By Adong Kong" title="Copy Article&#39;s Link &amp; Author"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>License:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"CC BY-NC-SA 4.0"</a> Keep Link &amp; Author if Distribute.
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2017/03/24/layout/">
+                    CSS布局
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2017/03/09/url/">
+                    输入URL到页面加载完成这个过程中都发生了什么
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">Contents</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Ajax-异步JS-XML"><span class="toc-number">1.</span> <span class="toc-text">Ajax = 异步JS + XML</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#创建XMLHttpRequest对象，用于和服务器交换数据"><span class="toc-number">1.1.</span> <span class="toc-text">创建XMLHttpRequest对象，用于和服务器交换数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#向服务器发起请求："><span class="toc-number">1.2.</span> <span class="toc-text">向服务器发起请求：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#发送XHR请求时，会发送的HTTP头部信息："><span class="toc-number">1.3.</span> <span class="toc-text">发送XHR请求时，会发送的HTTP头部信息：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#服务器响应："><span class="toc-number">1.4.</span> <span class="toc-text">服务器响应：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#原生JS写Ajax"><span class="toc-number">1.5.</span> <span class="toc-text">原生JS写Ajax</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JQuery的Ajax使用"><span class="toc-number">1.6.</span> <span class="toc-text">JQuery的Ajax使用</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#跨域"><span class="toc-number">2.</span> <span class="toc-text">跨域</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#CORS-Cross-Origin-Resource-Sharing-跨域资源共享"><span class="toc-number">2.1.</span> <span class="toc-text">CORS(Cross-Origin Resource Sharing, 跨域资源共享)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JSONP"><span class="toc-number">2.2.</span> <span class="toc-text">JSONP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#document-domain"><span class="toc-number">2.3.</span> <span class="toc-text">document.domain</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#window-name"><span class="toc-number">2.4.</span> <span class="toc-text">window.name</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HTML5-PostMessage"><span class="toc-number">2.5.</span> <span class="toc-text">HTML5 PostMessage</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#前端安全"><span class="toc-number">3.</span> <span class="toc-text">前端安全</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#XSS-Cross-Site-Scripting"><span class="toc-number">3.1.</span> <span class="toc-text">XSS(Cross Site Scripting)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CSRF-Cross-Site-Request-Forgery"><span class="toc-number">3.2.</span> <span class="toc-text">CSRF(Cross Site Request Forgery)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#小结："><span class="toc-number">4.</span> <span class="toc-text">小结：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-number">5.</span> <span class="toc-text">Reference</span></a></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="Hide"  title="Show or Hide Table of Contents">
+
+    <script>
+        yiliaConfig.toc = ["Hide", "Show", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"Ajax和跨域总结　| Adong Kong's Blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+<!--
+
+    
+
+-->
+
+
+  <section id="comments">
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="post-ajax" data-title="Ajax和跨域总结" data-url="http://kad0108.github.io/2017/03/11/ajax/"></div>
+    <!-- 多说评论框 end -->
+    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:'kad0108'};
+      (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] 
+         || document.getElementsByTagName('body')[0]).appendChild(ds);
+      })();
+      </script>
+    <!-- 多说公共JS代码 end -->
+  </section>
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2017/03/24/layout/" title="Pre: CSS布局">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="Mini Archives"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2017/03/09/url/" title="Next: 输入URL到页面加载完成这个过程中都发生了什么">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/04/22/git/">Git</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/04/2017-summary/">2017 Summary</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/26/reduction/">Nonlinear Dimensionality Reduction —— LE & LLE</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/30/sparse-representation/">Face Recognition via Sparse Representation</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/17/md5/">MD5</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/29/server-sent/">服务器推送信息</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/28/custom-event/">JS自定义事件</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/10/you-dont-know-js-II/">You Don't Know JavaScript II —— This & Object & Prototypes</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/09/you-dont-know-js-I/">You Don't Know JavaScript I —— Scope & Closures</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/23/virtual-dom/">Virtual DOM</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/17/regexp/">RegExp</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/24/layout/">CSS布局</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/11/ajax/">Ajax和跨域总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/09/url/">输入URL到页面加载完成这个过程中都发生了什么</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/08/optimize/">前端性能优化</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/03/datatype/">关于JS中变量类型的一些知识总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/02/bfc/">BFC</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/24/scope/">Scope and Thread</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/21/cookie/">Cookie</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/20/prototype/">JS Prototype</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/15/websocket/">WebSocket</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/08/http/">HTTP协议</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/05/jsprotocol/">JS伪协议</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/28/hidedom/">隐藏页面元素的几种方法</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/26/build/">完善博客功能</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/25/float/">CSS布局模型之浮动模型</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/25/hello-world/">Hello World</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2016-2018 Adong Kong
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="A fast, simple &amp; powerful blog framework">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="Another simple and elegant theme for Hexo  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="Site Visitors"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="Page Hits"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+    <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script src="//cdn.bootcss.com/mathjax/2.6.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="Back to Top"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="Comments"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="Go to Bottom"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+</body>
+</html>

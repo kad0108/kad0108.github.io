@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html >
+<head>
+
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="Adong Kong" />
+
+
+
+<meta name="description" content="WebSocket是Html5新增的协议，目的就是为了在浏览器和服务器之间建立不受限的双向通信通道，使得服务器能够主动向客户端发送数据。
+传统的HTTP协议不能实现WebSocket的功能吗？HTTP是一个请求－响应协议，必须是浏览器向服务器发起请求，服务器才能响应这个请求，再把数据发送给客户端。也就是说浏览器不主动请求，服务器是没法主动发数据给浏览器的。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="WebSocket">
+<meta property="og:url" content="http://kad0108.github.io/2017/02/15/websocket/index.html">
+<meta property="og:site_name" content="Adong Kong's Blog">
+<meta property="og:description" content="WebSocket是Html5新增的协议，目的就是为了在浏览器和服务器之间建立不受限的双向通信通道，使得服务器能够主动向客户端发送数据。
+传统的HTTP协议不能实现WebSocket的功能吗？HTTP是一个请求－响应协议，必须是浏览器向服务器发起请求，服务器才能响应这个请求，再把数据发送给客户端。也就是说浏览器不主动请求，服务器是没法主动发数据给浏览器的。">
+<meta property="og:image" content="http://kad0108.github.io/2017/02/15/websocket/websocket.png">
+<meta property="og:updated_time" content="2017-03-31T10:40:50.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="WebSocket">
+<meta name="twitter:description" content="WebSocket是Html5新增的协议，目的就是为了在浏览器和服务器之间建立不受限的双向通信通道，使得服务器能够主动向客户端发送数据。
+传统的HTTP协议不能实现WebSocket的功能吗？HTTP是一个请求－响应协议，必须是浏览器向服务器发起请求，服务器才能响应这个请求，再把数据发送给客户端。也就是说浏览器不主动请求，服务器是没法主动发数据给浏览器的。">
+<meta name="twitter:image" content="http://kad0108.github.io/2017/02/15/websocket/websocket.png">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="Adong Kong&#39;s Blog" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.ico">
+
+
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>WebSocket | Adong Kong&#39;s Blog</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: false,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: true
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?1dbd558cf5d5b4dfae10344f2a043bbd";
+            var s = document.getElementsByTagName("script")[0]; 
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?1dbd558cf5d5b4dfae10344f2a043bbd";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+</head>
+<body>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="https://github.com/kad0108/"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://camo.githubusercontent.com/121cd7cbdc3e4855075ea8b558508b91ac463ac2/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f677265656e5f3030373230302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_left_green_007200.png"></a>
+        <a href="/" class="profilepic">
+            <img src="/img/avatar.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">Adong Kong</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">Do what you love and love what you do.</p>
+        
+
+        
+            <form id="search-form">
+            <input type="text" id="local-search-input" name="q" placeholder="search..." class="search form-control" autocomplete="off" autocorrect="off" searchonload="false" />
+            <i class="fa fa-times" onclick="resetSearch()"></i>
+            </form>
+            <div id="local-search-result"></div>
+            <p class='no-result'>No results found <i class='fa fa-spinner fa-pulse'></i></p>
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>Menu</li>
+                        <li>Tags</li>
+                        
+                        <li>Friends</li>
+                        
+                        
+                        <li>About Me</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="mailto:kad0108@foxmail.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" href="https://github.com/kad0108" title="GitHub"></a>
+                            
+                                <a class="fa RSS" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Float/">Float</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/">HTTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Html5/">Html5</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://pages.github.com/">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://moxfive.xyz/">MOxFIVE</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">专注于前端</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">Adong Kong</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">Adong Kong</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">Do what you love and love what you do.</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="mailto:kad0108@foxmail.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="https://github.com/kad0108" title="GitHub"></a>
+                            
+                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="Tags" friends="Friends" about="About Me"/>
+</nav>
+      <div class="body-wrap"><article id="post-websocket" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/02/15/websocket/" class="article-date">
+      <time datetime="2017-02-15T11:23:41.000Z" itemprop="datePublished">2017-02-15</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      WebSocket
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/Front-End/">Front-End</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Html5/">Html5</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p><strong>WebSocket是Html5新增的协议，目的就是为了在浏览器和服务器之间建立不受限的双向通信通道，使得服务器能够主动向客户端发送数据。</strong></p>
+<h2 id="传统的HTTP协议不能实现WebSocket的功能吗？"><a href="#传统的HTTP协议不能实现WebSocket的功能吗？" class="headerlink" title="传统的HTTP协议不能实现WebSocket的功能吗？"></a>传统的HTTP协议不能实现WebSocket的功能吗？</h2><p>HTTP是一个请求－响应协议，必须是浏览器向服务器发起请求，服务器才能响应这个请求，再把数据发送给客户端。也就是说浏览器不主动请求，服务器是没法主动发数据给浏览器的。</p>
+<a id="more"></a>
+<h3 id="轮询能实现啊"><a href="#轮询能实现啊" class="headerlink" title="轮询能实现啊"></a>轮询能实现啊</h3><p>ajax轮询的原理是启动一个定时器，固定间隔向服务器发起请求，问服务器是否有新信息。这种机制频繁请求会给服务器带来巨大的压力。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">场景再现：</div><div class="line">C：有没有新信息？（Request）</div><div class="line">S：没有（Response）</div><div class="line">C：哎呀有没有新信息 （Request）</div><div class="line">S：没有了啦！（Response）</div><div class="line">－－－loop</div></pre></td></tr></table></figure>
+<p>还有comet本质也是轮询，客户端在发起连接后，服务器没消息就一直不返回response，直到有消息才返回，返回之后客户端再建立起连接。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">场景再现：</div><div class="line">C：有没有消息？（Request）</div><div class="line">S：没有，等有的时候再给你。</div><div class="line">...</div><div class="line">S: 来，给你消息 (Response)</div><div class="line">－－－loop</div></pre></td></tr></table></figure>
+<blockquote>
+<p>如何判断用户是否是在网的状态，就可以采用轮询。也可以使用HTML5提供的navigator.onLine来判断设备是在线还是离线。</p>
+</blockquote>
+<h2 id="那WebSocket是怎么实现的啊"><a href="#那WebSocket是怎么实现的啊" class="headerlink" title="那WebSocket是怎么实现的啊"></a>那WebSocket是怎么实现的啊</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">场景再现：</div><div class="line">C：我要建立websocket协议，协议版本xx （Request）</div><div class="line">S：OK，已升级为WebSocket协议（HTTP Protocols Switched）</div><div class="line">C：麻烦你有信息的时候推送给我哈</div><div class="line">S：lalala</div><div class="line">S：我给你发送数据啦</div><div class="line">S：嗯，加油哦</div></pre></td></tr></table></figure>
+<p>也就是经过一次HTTP请求，就可以源源不断发送信息啦</p>
+<h3 id="WebSocket请求是什么样的呢？"><a href="#WebSocket请求是什么样的呢？" class="headerlink" title="WebSocket请求是什么样的呢？"></a>WebSocket请求是什么样的呢？</h3><p><img src="/2017/02/15/websocket/websocket.png" alt="websocket"></p>
+<p>该请求和普通的HTTP请求有几点不同：</p>
+<ol>
+<li>GET请求的地址不是类似/path/，而是以ws://开头的地址；</li>
+<li>请求头Upgrade: websocket和Connection: Upgrade表示这个连接将要被转换为WebSocket连接；</li>
+<li>Sec-WebSocket-Key是用于标识这个连接，并非用于加密数据；</li>
+<li>Sec-WebSocket-Version指定了WebSocket的协议版本。</li>
+</ol>
+<p>响应代码101表示本次连接的HTTP协议即将被更改，更改后的协议就是Upgrade: websocket指定的WebSocket协议。</p>
+<p><a href="https://github.com/kad0108/Html5/tree/gh-pages/webSocket" target="_blank" rel="external">简易小demo看这里</a></p>
+<h2 id="那HTTP不是也有keep-alive来实现长连接吗？"><a href="#那HTTP不是也有keep-alive来实现长连接吗？" class="headerlink" title="那HTTP不是也有keep-alive来实现长连接吗？"></a>那HTTP不是也有keep-alive来实现长连接吗？</h2><p>connection：keep-alive是指在一次 TCP 连接中完成多个 HTTP 请求，但是对每个请求仍然要单独发header。也就是除了真正的数据部分外，服务器和客户端还要大量交换 HTTP header，信息交换效率很低。</p>
+<p>WebSocket 解决的第一个问题是，通过第一个 HTTP request 建立了 TCP 连接之后，之后的交换数据都不需要再发 HTTP request了</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a href="https://www.zhihu.com/question/20215561" target="_blank" rel="external">websocket实现持久连接</a></p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>Title:</span><a href="/2017/02/15/websocket/">WebSocket</a></p>
+        <p><span>Author:</span><a href="/" title="Back to Homepage">Adong Kong</a></p>
+        <p><span>Created:</span>2017-02-15, 19:23:41</p>
+        <p><span>Updated:</span>2017-03-31, 18:40:50</p>
+        <p>
+            <span>Full URL:</span><a class="post-url" href="/2017/02/15/websocket/" title="WebSocket">http://kad0108.github.io/2017/02/15/websocket/</a>
+            <span class="copy-path" data-clipboard-text="From http://kad0108.github.io/2017/02/15/websocket/　　By Adong Kong" title="Copy Article&#39;s Link &amp; Author"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>License:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"CC BY-NC-SA 4.0"</a> Keep Link &amp; Author if Distribute.
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2017/02/20/prototype/">
+                    JS Prototype
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2017/02/08/http/">
+                    HTTP协议
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">Contents</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#传统的HTTP协议不能实现WebSocket的功能吗？"><span class="toc-number">1.</span> <span class="toc-text">传统的HTTP协议不能实现WebSocket的功能吗？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#轮询能实现啊"><span class="toc-number">1.1.</span> <span class="toc-text">轮询能实现啊</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#那WebSocket是怎么实现的啊"><span class="toc-number">2.</span> <span class="toc-text">那WebSocket是怎么实现的啊</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#WebSocket请求是什么样的呢？"><span class="toc-number">2.1.</span> <span class="toc-text">WebSocket请求是什么样的呢？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#那HTTP不是也有keep-alive来实现长连接吗？"><span class="toc-number">3.</span> <span class="toc-text">那HTTP不是也有keep-alive来实现长连接吗？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-number">4.</span> <span class="toc-text">Reference</span></a></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="Hide"  title="Show or Hide Table of Contents">
+
+    <script>
+        yiliaConfig.toc = ["Hide", "Show", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"WebSocket　| Adong Kong's Blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+<!--
+
+    
+
+-->
+
+
+  <section id="comments">
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="post-websocket" data-title="WebSocket" data-url="http://kad0108.github.io/2017/02/15/websocket/"></div>
+    <!-- 多说评论框 end -->
+    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:'kad0108'};
+      (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] 
+         || document.getElementsByTagName('body')[0]).appendChild(ds);
+      })();
+      </script>
+    <!-- 多说公共JS代码 end -->
+  </section>
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2017/02/20/prototype/" title="Pre: JS Prototype">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="Mini Archives"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2017/02/08/http/" title="Next: HTTP协议">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/04/22/git/">Git</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/04/2017-summary/">2017 Summary</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/26/reduction/">Nonlinear Dimensionality Reduction —— LE & LLE</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/30/sparse-representation/">Face Recognition via Sparse Representation</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/17/md5/">MD5</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/29/server-sent/">服务器推送信息</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/28/custom-event/">JS自定义事件</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/10/you-dont-know-js-II/">You Don't Know JavaScript II —— This & Object & Prototypes</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/09/you-dont-know-js-I/">You Don't Know JavaScript I —— Scope & Closures</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/23/virtual-dom/">Virtual DOM</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/17/regexp/">RegExp</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/24/layout/">CSS布局</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/11/ajax/">Ajax和跨域总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/09/url/">输入URL到页面加载完成这个过程中都发生了什么</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/08/optimize/">前端性能优化</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/03/datatype/">关于JS中变量类型的一些知识总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/02/bfc/">BFC</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/24/scope/">Scope and Thread</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/21/cookie/">Cookie</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/20/prototype/">JS Prototype</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/15/websocket/">WebSocket</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/08/http/">HTTP协议</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/05/jsprotocol/">JS伪协议</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/28/hidedom/">隐藏页面元素的几种方法</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/26/build/">完善博客功能</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/25/float/">CSS布局模型之浮动模型</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/25/hello-world/">Hello World</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2016-2018 Adong Kong
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="A fast, simple &amp; powerful blog framework">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="Another simple and elegant theme for Hexo  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="Site Visitors"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="Page Hits"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+    <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script src="//cdn.bootcss.com/mathjax/2.6.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="Back to Top"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="Comments"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="Go to Bottom"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+</body>
+</html>

@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html >
+<head>
+
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="Adong Kong" />
+
+
+
+<meta name="description" content="JS原型是前端面试时总会问到的知识点，这里具体总结一下。
+缘于问题：对JS原型有什么了解，用原型创建对象和普通new一个对象的区别，下面具体说明创建对象的几种方法。
+创建对象工厂模式1234567function person(name)&amp;#123;	var o = new Object();	o.name = name;	return o;&amp;#125;var p = person(&amp;quot;k">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JS Prototype">
+<meta property="og:url" content="http://kad0108.github.io/2017/02/20/prototype/index.html">
+<meta property="og:site_name" content="Adong Kong's Blog">
+<meta property="og:description" content="JS原型是前端面试时总会问到的知识点，这里具体总结一下。
+缘于问题：对JS原型有什么了解，用原型创建对象和普通new一个对象的区别，下面具体说明创建对象的几种方法。
+创建对象工厂模式1234567function person(name)&amp;#123;	var o = new Object();	o.name = name;	return o;&amp;#125;var p = person(&amp;quot;k">
+<meta property="og:image" content="http://kad0108.github.io/2017/02/20/prototype/prototype.png">
+<meta property="og:image" content="http://kad0108.github.io/2017/02/20/prototype/prototype3.png">
+<meta property="og:image" content="http://kad0108.github.io/2017/02/20/prototype/prototype2.png">
+<meta property="og:updated_time" content="2017-08-30T08:32:57.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JS Prototype">
+<meta name="twitter:description" content="JS原型是前端面试时总会问到的知识点，这里具体总结一下。
+缘于问题：对JS原型有什么了解，用原型创建对象和普通new一个对象的区别，下面具体说明创建对象的几种方法。
+创建对象工厂模式1234567function person(name)&amp;#123;	var o = new Object();	o.name = name;	return o;&amp;#125;var p = person(&amp;quot;k">
+<meta name="twitter:image" content="http://kad0108.github.io/2017/02/20/prototype/prototype.png">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="Adong Kong&#39;s Blog" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.ico">
+
+
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>JS Prototype | Adong Kong&#39;s Blog</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: false,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: true
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?1dbd558cf5d5b4dfae10344f2a043bbd";
+            var s = document.getElementsByTagName("script")[0]; 
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?1dbd558cf5d5b4dfae10344f2a043bbd";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+</head>
+<body>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="https://github.com/kad0108/"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://camo.githubusercontent.com/121cd7cbdc3e4855075ea8b558508b91ac463ac2/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f677265656e5f3030373230302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_left_green_007200.png"></a>
+        <a href="/" class="profilepic">
+            <img src="/img/avatar.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">Adong Kong</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">Do what you love and love what you do.</p>
+        
+
+        
+            <form id="search-form">
+            <input type="text" id="local-search-input" name="q" placeholder="search..." class="search form-control" autocomplete="off" autocorrect="off" searchonload="false" />
+            <i class="fa fa-times" onclick="resetSearch()"></i>
+            </form>
+            <div id="local-search-result"></div>
+            <p class='no-result'>No results found <i class='fa fa-spinner fa-pulse'></i></p>
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>Menu</li>
+                        <li>Tags</li>
+                        
+                        <li>Friends</li>
+                        
+                        
+                        <li>About Me</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="mailto:kad0108@foxmail.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" href="https://github.com/kad0108" title="GitHub"></a>
+                            
+                                <a class="fa RSS" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Float/">Float</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/">HTTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Html5/">Html5</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://pages.github.com/">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://moxfive.xyz/">MOxFIVE</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">专注于前端</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">Adong Kong</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">Adong Kong</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">Do what you love and love what you do.</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="mailto:kad0108@foxmail.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="https://github.com/kad0108" title="GitHub"></a>
+                            
+                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="Tags" friends="Friends" about="About Me"/>
+</nav>
+      <div class="body-wrap"><article id="post-prototype" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/02/20/prototype/" class="article-date">
+      <time datetime="2017-02-20T12:56:26.000Z" itemprop="datePublished">2017-02-20</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      JS Prototype
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/Front-End/">Front-End</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/">JavaScript</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>JS原型是前端面试时总会问到的知识点，这里具体总结一下。</p>
+<p>缘于问题：<strong>对JS原型有什么了解，用原型创建对象和普通new一个对象的区别</strong>，下面具体说明创建对象的几种方法。</p>
+<h2 id="创建对象"><a href="#创建对象" class="headerlink" title="创建对象"></a>创建对象</h2><h3 id="工厂模式"><a href="#工厂模式" class="headerlink" title="工厂模式"></a>工厂模式</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">function person(name)&#123;</div><div class="line">	var o = new Object();</div><div class="line">	o.name = name;</div><div class="line">	return o;</div><div class="line">&#125;</div><div class="line"></div><div class="line">var p = person(&quot;kad&quot;);</div></pre></td></tr></table></figure>
+<a id="more"></a>
+<p>工厂模式解决了使用Object一个接口创建很多对象产生大量重复代码的问题，但是无法识别对象类型。</p>
+<h3 id="构造函数模式"><a href="#构造函数模式" class="headerlink" title="构造函数模式"></a>构造函数模式</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">function Person(name)&#123;</div><div class="line">	this.name = name;</div><div class="line">	this.sayName = function()&#123;alert(this.name);&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">var person = new Person(&quot;kad&quot;);</div><div class="line">alert(person.constructor == Person); // true</div><div class="line">alert(person instanceof Person); // true</div></pre></td></tr></table></figure>
+<p>构造函数以大写字母开头。对象的constructor属性用来识别对象类型。</p>
+<p>但是构造函数的每个方法都要在每个实例上重新创建一遍。不同实例上的同名函数不相等。<code>person1.sayName != person2.sayName</code></p>
+<h3 id="原型模式"><a href="#原型模式" class="headerlink" title="原型模式"></a>原型模式</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">function Person()&#123;&#125;</div><div class="line">Person.prototype.name = &quot;kad&quot;;</div><div class="line">Person.prototype.sayName = function()&#123;alert(this.name);&#125;</div><div class="line">var person = new Person();</div></pre></td></tr></table></figure>
+<p>使用原型对象的好处是可以让所有对象实例共享原型对象所包含的属性和方法。<code>person1.sayName == person2.sayName</code></p>
+<h2 id="理解原型对象"><a href="#理解原型对象" class="headerlink" title="理解原型对象"></a>理解原型对象</h2><p><img src="/2017/02/20/prototype/prototype.png" alt="原型对象"></p>
+<p>从图中可以发现：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">1. Person.prototype.constructor == Person</div><div class="line"></div><div class="line">2. person.__proto__ == Person.prototype</div></pre></td></tr></table></figure>
+<p><strong>isPrototypeOf()</strong>用来判断原型对象和实例之间的关系： <code>Person.prototype.isPrototypeOf(person)</code>。</p>
+<p><strong>hasOwnProperty()</strong>检测实例自身的属性，会忽略从原型链上继承到的属性。</p>
+<p><strong>delete</strong>操作符可以删除实例属性。</p>
+<p><strong>in</strong>操作符用来判断实例是否含有某个属性，不管是不是本地属性。</p>
+<h3 id="proto-是连接实例与构造函数的原型对象之间。"><a href="#proto-是连接实例与构造函数的原型对象之间。" class="headerlink" title="__proto__是连接实例与构造函数的原型对象之间。"></a><code>__proto__</code>是连接实例与构造函数的原型对象之间。</h3><blockquote>
+<p><strong>new操作符做了什么</strong></p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">function F()&#123;</div><div class="line">	</div><div class="line">&#125;</div><div class="line"></div><div class="line">var f = new F();</div></pre></td></tr></table></figure>
+<p>new操作符的心路历程：</p>
+<ol>
+<li><p>新建一个对象 <code>f = new Object()</code></p>
+</li>
+<li><p>设置对象原型链 <code>f.__proto__ = F.prototype</code></p>
+</li>
+<li><p>改变构造函数内this的指向，让F中的this指向实例，执行F函数体 <code>F.call(f)</code></p>
+</li>
+</ol>
+<h2 id="JS继承"><a href="#JS继承" class="headerlink" title="JS继承"></a>JS继承</h2><h3 id="原型链继承：将父类的实例作为子类的原型"><a href="#原型链继承：将父类的实例作为子类的原型" class="headerlink" title="原型链继承：将父类的实例作为子类的原型"></a>原型链继承：将父类的实例作为子类的原型</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">function Father(name)&#123;</div><div class="line">	this.name = name;</div><div class="line">&#125;</div><div class="line">Father.prototype.sayName = function()&#123;</div><div class="line">	return this.name;</div><div class="line">&#125;</div><div class="line">function Child()&#123;&#125;</div><div class="line">Child.prototype = new Person(&quot;kad&quot;);</div><div class="line">var child = new Child();</div><div class="line">child.sayName();//&apos;kad&apos;</div></pre></td></tr></table></figure>
+<p>缺点：所有子类共享父类实例，如果某个子类修改了父类，其他子类继承会出问题。在构造子类型实例时不能给父类传参。</p>
+<h3 id="构造函数继承"><a href="#构造函数继承" class="headerlink" title="构造函数继承"></a>构造函数继承</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">function Parent(name)&#123;</div><div class="line">	console.log(this);</div><div class="line">	this.name = name;</div><div class="line">	this.sayName = function()&#123;</div><div class="line">		console.log(this.name);</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line">function Child(name)&#123;</div><div class="line">	this.parent = Parent;//此时Parent中的this指向的是Child，也就是把Parent中的属性和方法都给了Child</div><div class="line">	this.parent(name);</div><div class="line">	//这里直接delete this.parent也可以</div><div class="line">&#125;</div><div class="line">var child = new Child(&quot;kad&quot;);</div><div class="line">child.sayName(); //&apos;kad&apos;</div><div class="line">console.log(child); </div><div class="line">/**</div><div class="line">Child</div><div class="line">-name: &quot;kad&quot;</div><div class="line">-parent: Parent</div><div class="line">-sayName: ()</div><div class="line">*/</div></pre></td></tr></table></figure>
+<p>缺点：无法继承父类原型链上的属性和方法。</p>
+<h3 id="call、apply实现继承"><a href="#call、apply实现继承" class="headerlink" title="call、apply实现继承"></a>call、apply实现继承</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">function Parent(name)&#123;</div><div class="line">	console.log(this);</div><div class="line">	this.name = name;</div><div class="line">	this.sayName = function()&#123;</div><div class="line">		console.log(this.name);</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line">function Child(name)&#123;</div><div class="line">	Parent.call(this, name);</div><div class="line">&#125;</div><div class="line">var child = new Child(&quot;kad&quot;);</div><div class="line">child.sayName();//&apos;kad&apos;</div><div class="line">console.log(child);</div><div class="line">/**</div><div class="line">Child</div><div class="line">-name: &quot;kad&quot;</div><div class="line">sayName: ()</div><div class="line">*/</div></pre></td></tr></table></figure>
+<blockquote>
+<p><strong>为什么子类的原型要指向父类的实例，而不直接指向父类的原型呢？</strong></p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">function Person()&#123;</div><div class="line">	this.name = &apos;kad&apos;;</div><div class="line">&#125;</div><div class="line">Person.prototype.sayName = function()&#123;</div><div class="line">	console.log(this.name);</div><div class="line">&#125;</div><div class="line"></div><div class="line">function Test()&#123;</div><div class="line">	this.name = &apos;test&apos;;</div><div class="line">&#125;</div><div class="line">Test.prototype = Person.prototype;</div><div class="line"></div><div class="line">Test.prototype.tt = function()&#123;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><img src="/2017/02/20/prototype/prototype3.png" alt="看图说话"></p>
+<p>可以看出，当子类的原型指向父类的原型时，子类就不是继承父类了，因为此时对子类原型的修改会反映到父类上。</p>
+<h2 id="区别静态、私有、共享属性和方法"><a href="#区别静态、私有、共享属性和方法" class="headerlink" title="区别静态、私有、共享属性和方法"></a>区别静态、私有、共享属性和方法</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">function Person()&#123;</div><div class="line">	this.name = &quot;kad&quot;;</div><div class="line">	this.privFn = function()&#123;</div><div class="line">		console.log(&quot;I&apos;m private.&quot;);</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line">Person.staticFn = function()&#123;</div><div class="line">	console.log(&quot;I&apos;m static.&quot;);</div><div class="line">&#125;</div><div class="line">Person.prototype.shareFn = function()&#123;</div><div class="line">	console.log(&quot;I&apos;m public and shareable.&quot;);</div><div class="line">&#125;</div><div class="line">var p = new Person();</div><div class="line"></div><div class="line">function Stu()&#123;</div><div class="line">	this.name = &quot;student&quot;;</div><div class="line">&#125;</div><div class="line">Stu.prototype = new Person();</div><div class="line">var s = new Stu();</div></pre></td></tr></table></figure>
+<p><img src="/2017/02/20/prototype/prototype2.png" alt="member"></p>
+<p>区别静态属性/方法、私有属性/方法、共享属性/方法：</p>
+<ol>
+<li><p>静态属性/方法只能通过构造函数直接调用，即Person.staticFn()</p>
+</li>
+<li><p>私有属性/方法只能通过实例化调用，即p.privFn()</p>
+</li>
+<li><p>共享属性/方法可以通过原型对象调用，也可以实例化调用，即Person.prototype.shareFn()或p.shareFn()</p>
+</li>
+<li><p>私有属性/方法和共享属性/方法都可以被子对象继承，而静态属性/方法不可以被继承</p>
+</li>
+</ol>
+<h2 id="改变函数内部this指针的指向"><a href="#改变函数内部this指针的指向" class="headerlink" title="改变函数内部this指针的指向"></a>改变函数内部this指针的指向</h2><p>总是挺难理解call和apply，来点自己的记忆方法。</p>
+<blockquote>
+<p>比如<code>fn.call(obj)</code>，obj说：hi，fn，把你的this借我用用（即把fn的this指向obj）。</p>
+<p>再比如<code>fn.sayName.call(obj)</code>，obj说：hi，fn，把你的sayName借我用用（把sayName的this指向obj）。</p>
+</blockquote>
+<p>call方法应用于Function对象，测试了普通{}对象是不可以调用call的。</p>
+<p>call返回什么：比如animal.sayname.call(cat);语句返回的是修改了sayName的this，执行cat.sayName()的结果。</p>
+<p>call和apply的区别就只是第二个参数啦。bind的返回值是函数。</p>
+<p>bind最常用的场景：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">function Fn()&#123;</div><div class="line">	</div><div class="line">&#125;</div><div class="line">Fn.prototype.click = function()&#123;&#125;</div><div class="line">Fn.prototype.init = function()&#123;</div><div class="line">	document.addEventListener(&apos;click&apos;, this.click.bind(this));//也就是在监听事件函数中的this指向了Fn</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>看下面的问题，加深对context上下文和this的理解</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">var User = &#123;</div><div class="line">	count: 1,</div><div class="line">	getCount: function ()&#123;</div><div class="line">		console.log(this);</div><div class="line">		return this.count;		</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line">console.log(User.getCount());//1</div><div class="line">var fn = User.getCount;</div><div class="line">console.log(fn());//undefined,此时fn的上下文是window</div></pre></td></tr></table></figure>
+<p><strong>如何确保fn的上下文始终和User关联?</strong></p>
+<p>正确答案是使用Function.prototype.bind</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">var func = User.getCount.bind(User);  </div><div class="line">console.log(func());</div></pre></td></tr></table></figure>
+<p>兼容老浏览器</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">Function.prototype.bind = Function.prototype.bind || function(context)&#123;</div><div class="line">	var self = this;</div><div class="line">	return function()&#123;</div><div class="line">		return self.apply(context, arguments);		</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>Title:</span><a href="/2017/02/20/prototype/">JS Prototype</a></p>
+        <p><span>Author:</span><a href="/" title="Back to Homepage">Adong Kong</a></p>
+        <p><span>Created:</span>2017-02-20, 20:56:26</p>
+        <p><span>Updated:</span>2017-08-30, 16:32:57</p>
+        <p>
+            <span>Full URL:</span><a class="post-url" href="/2017/02/20/prototype/" title="JS Prototype">http://kad0108.github.io/2017/02/20/prototype/</a>
+            <span class="copy-path" data-clipboard-text="From http://kad0108.github.io/2017/02/20/prototype/　　By Adong Kong" title="Copy Article&#39;s Link &amp; Author"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>License:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"CC BY-NC-SA 4.0"</a> Keep Link &amp; Author if Distribute.
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2017/02/21/cookie/">
+                    Cookie
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2017/02/15/websocket/">
+                    WebSocket
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">Contents</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#创建对象"><span class="toc-number">1.</span> <span class="toc-text">创建对象</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#工厂模式"><span class="toc-number">1.1.</span> <span class="toc-text">工厂模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#构造函数模式"><span class="toc-number">1.2.</span> <span class="toc-text">构造函数模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#原型模式"><span class="toc-number">1.3.</span> <span class="toc-text">原型模式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#理解原型对象"><span class="toc-number">2.</span> <span class="toc-text">理解原型对象</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#proto-是连接实例与构造函数的原型对象之间。"><span class="toc-number">2.1.</span> <span class="toc-text">__proto__是连接实例与构造函数的原型对象之间。</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JS继承"><span class="toc-number">3.</span> <span class="toc-text">JS继承</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#原型链继承：将父类的实例作为子类的原型"><span class="toc-number">3.1.</span> <span class="toc-text">原型链继承：将父类的实例作为子类的原型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#构造函数继承"><span class="toc-number">3.2.</span> <span class="toc-text">构造函数继承</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#call、apply实现继承"><span class="toc-number">3.3.</span> <span class="toc-text">call、apply实现继承</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#区别静态、私有、共享属性和方法"><span class="toc-number">4.</span> <span class="toc-text">区别静态、私有、共享属性和方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#改变函数内部this指针的指向"><span class="toc-number">5.</span> <span class="toc-text">改变函数内部this指针的指向</span></a></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="Hide"  title="Show or Hide Table of Contents">
+
+    <script>
+        yiliaConfig.toc = ["Hide", "Show", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"JS Prototype　| Adong Kong's Blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+<!--
+
+    
+
+-->
+
+
+  <section id="comments">
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="post-prototype" data-title="JS Prototype" data-url="http://kad0108.github.io/2017/02/20/prototype/"></div>
+    <!-- 多说评论框 end -->
+    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:'kad0108'};
+      (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] 
+         || document.getElementsByTagName('body')[0]).appendChild(ds);
+      })();
+      </script>
+    <!-- 多说公共JS代码 end -->
+  </section>
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2017/02/21/cookie/" title="Pre: Cookie">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="Mini Archives"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2017/02/15/websocket/" title="Next: WebSocket">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/04/22/git/">Git</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/04/2017-summary/">2017 Summary</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/26/reduction/">Nonlinear Dimensionality Reduction —— LE & LLE</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/30/sparse-representation/">Face Recognition via Sparse Representation</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/17/md5/">MD5</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/29/server-sent/">服务器推送信息</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/28/custom-event/">JS自定义事件</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/10/you-dont-know-js-II/">You Don't Know JavaScript II —— This & Object & Prototypes</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/09/you-dont-know-js-I/">You Don't Know JavaScript I —— Scope & Closures</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/23/virtual-dom/">Virtual DOM</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/17/regexp/">RegExp</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/24/layout/">CSS布局</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/11/ajax/">Ajax和跨域总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/09/url/">输入URL到页面加载完成这个过程中都发生了什么</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/08/optimize/">前端性能优化</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/03/datatype/">关于JS中变量类型的一些知识总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/02/bfc/">BFC</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/24/scope/">Scope and Thread</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/21/cookie/">Cookie</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/20/prototype/">JS Prototype</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/15/websocket/">WebSocket</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/08/http/">HTTP协议</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/05/jsprotocol/">JS伪协议</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/28/hidedom/">隐藏页面元素的几种方法</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/26/build/">完善博客功能</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/25/float/">CSS布局模型之浮动模型</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/25/hello-world/">Hello World</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2016-2018 Adong Kong
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="A fast, simple &amp; powerful blog framework">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="Another simple and elegant theme for Hexo  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="Site Visitors"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="Page Hits"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+    <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script src="//cdn.bootcss.com/mathjax/2.6.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="Back to Top"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="Comments"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="Go to Bottom"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+</body>
+</html>

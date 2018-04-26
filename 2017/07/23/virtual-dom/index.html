@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html >
+<head>
+
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="Adong Kong" />
+
+
+
+<meta name="description" content="DOM操作是JS最基础的部分，前段时间重构的一个项目中使用JQuery来操作大量的DOM节点，就算是操作相同的节点也直接使用$去直接获取元素，JQuery是可以很方便的操作DOM，但是其底层封装的实现也依然是原生JS中提供的获取元素的API。现在项目里用到的knockoutJS，算是MVVM的鼻祖，虽说实现了数据绑定渲染，但其底层没有用到虚拟DOM，也就还是应该用了原生JS获取DOM元素的API。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Virtual DOM">
+<meta property="og:url" content="http://kad0108.github.io/2017/07/23/virtual-dom/index.html">
+<meta property="og:site_name" content="Adong Kong's Blog">
+<meta property="og:description" content="DOM操作是JS最基础的部分，前段时间重构的一个项目中使用JQuery来操作大量的DOM节点，就算是操作相同的节点也直接使用$去直接获取元素，JQuery是可以很方便的操作DOM，但是其底层封装的实现也依然是原生JS中提供的获取元素的API。现在项目里用到的knockoutJS，算是MVVM的鼻祖，虽说实现了数据绑定渲染，但其底层没有用到虚拟DOM，也就还是应该用了原生JS获取DOM元素的API。">
+<meta property="og:image" content="http://kad0108.github.io/2017/07/23/virtual-dom/dom.png">
+<meta property="og:updated_time" content="2017-07-25T16:03:57.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Virtual DOM">
+<meta name="twitter:description" content="DOM操作是JS最基础的部分，前段时间重构的一个项目中使用JQuery来操作大量的DOM节点，就算是操作相同的节点也直接使用$去直接获取元素，JQuery是可以很方便的操作DOM，但是其底层封装的实现也依然是原生JS中提供的获取元素的API。现在项目里用到的knockoutJS，算是MVVM的鼻祖，虽说实现了数据绑定渲染，但其底层没有用到虚拟DOM，也就还是应该用了原生JS获取DOM元素的API。">
+<meta name="twitter:image" content="http://kad0108.github.io/2017/07/23/virtual-dom/dom.png">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="Adong Kong&#39;s Blog" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.ico">
+
+
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>Virtual DOM | Adong Kong&#39;s Blog</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: false,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: true
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?1dbd558cf5d5b4dfae10344f2a043bbd";
+            var s = document.getElementsByTagName("script")[0]; 
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?1dbd558cf5d5b4dfae10344f2a043bbd";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+</head>
+<body>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="https://github.com/kad0108/"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://camo.githubusercontent.com/121cd7cbdc3e4855075ea8b558508b91ac463ac2/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f677265656e5f3030373230302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_left_green_007200.png"></a>
+        <a href="/" class="profilepic">
+            <img src="/img/avatar.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">Adong Kong</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">Do what you love and love what you do.</p>
+        
+
+        
+            <form id="search-form">
+            <input type="text" id="local-search-input" name="q" placeholder="search..." class="search form-control" autocomplete="off" autocorrect="off" searchonload="false" />
+            <i class="fa fa-times" onclick="resetSearch()"></i>
+            </form>
+            <div id="local-search-result"></div>
+            <p class='no-result'>No results found <i class='fa fa-spinner fa-pulse'></i></p>
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>Menu</li>
+                        <li>Tags</li>
+                        
+                        <li>Friends</li>
+                        
+                        
+                        <li>About Me</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="mailto:kad0108@foxmail.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" href="https://github.com/kad0108" title="GitHub"></a>
+                            
+                                <a class="fa RSS" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Float/">Float</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/">HTTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Html5/">Html5</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://pages.github.com/">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://moxfive.xyz/">MOxFIVE</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">专注于前端</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">Adong Kong</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">Adong Kong</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">Do what you love and love what you do.</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="mailto:kad0108@foxmail.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="https://github.com/kad0108" title="GitHub"></a>
+                            
+                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="Tags" friends="Friends" about="About Me"/>
+</nav>
+      <div class="body-wrap"><article id="post-virtual-dom" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/07/23/virtual-dom/" class="article-date">
+      <time datetime="2017-07-23T13:42:13.000Z" itemprop="datePublished">2017-07-23</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Virtual DOM
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/Front-End/">Front-End</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/">JavaScript</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>DOM操作是JS最基础的部分，前段时间重构的一个项目中使用JQuery来操作大量的DOM节点，就算是操作相同的节点也直接使用<code>$</code>去直接获取元素，JQuery是可以很方便的操作DOM，但是其底层封装的实现也依然是原生JS中提供的获取元素的API。现在项目里用到的knockoutJS，算是MVVM的鼻祖，虽说实现了数据绑定渲染，但其底层没有用到虚拟DOM，也就还是应该用了原生JS获取DOM元素的API。</p>
+<h2 id="前端应用状态管理"><a href="#前端应用状态管理" class="headerlink" title="前端应用状态管理"></a>前端应用状态管理</h2><p>记得最开始做IFE的任务中有个题目是让实现一个排序表格，附上当时写的<a href="https://github.com/BaiduGo3/task03/blob/gh-pages/task03_038/kad/kad.js" target="_blank" rel="external">代码</a>，每次点击排序按钮，都要重新渲染整个table中的元素。DOM操作有多耗性能？看下图：</p>
+<a id="more"></a>
+<p><img src="/2017/07/23/virtual-dom/dom.png" alt="dom"></p>
+<p>可以看到div元素的属性的庞大，所以每次的dom操作都会触发repaint、reflow，性能可想而知。</p>
+<p>其实上面的问题就是状态改变时需要更新相应的dom元素，那么是不是可以实现让视图和状态进行绑定，状态变更视图自动变更，这也就是MVVM模式数据双向绑定。Virtual DOM解决的就是<strong>维护状态，更新视图</strong>。</p>
+<h2 id="Virtual-DOM"><a href="#Virtual-DOM" class="headerlink" title="Virtual DOM"></a>Virtual DOM</h2><p>用原生JS对象可以很容易表示DOM节点。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">var ele = &#123;</div><div class="line">	tagName: &apos;ul&apos;, // 节点名</div><div class="line">	props: &#123; //  dom属性</div><div class="line">		id: &apos;list&apos;</div><div class="line">	&#125;,</div><div class="line">	childs: [ // 子节点</div><div class="line">		&#123;tagName: &apos;li&apos;, props: &#123;class: &apos;item&apos;&#125;, childs: [&quot;Item1&quot;]&#125;,</div><div class="line">		&#123;tagName: &apos;li&apos;, props: &#123;class: &apos;item&apos;&#125;, childs: [&quot;Item2&quot;]&#125;,</div><div class="line">		&#123;tagName: &apos;li&apos;, props: &#123;class: &apos;item&apos;&#125;, childs: [&quot;Item3&quot;]&#125;,</div><div class="line">	]</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>用上面的JS对象可以表示如下的DOM结构</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;ul id=&apos;list&apos;&gt;</div><div class="line">  &lt;li class=&apos;item&apos;&gt;Item 1&lt;/li&gt;</div><div class="line">  &lt;li class=&apos;item&apos;&gt;Item 2&lt;/li&gt;</div><div class="line">  &lt;li class=&apos;item&apos;&gt;Item 3&lt;/li&gt;</div><div class="line">&lt;/ul&gt;</div></pre></td></tr></table></figure>
+<p>那么状态变更-&gt;渲染视图就可以通过这种方式来实现：用JS对象表示DOM信息结构，当状态变更时，重新渲染整个JS对象结构，然后用新渲染的对象树和旧的树进行对比，纪录两棵树的差异，然后将差异应用到真正的DOM树上。</p>
+<p>这就是Virtual DOM的整体思想：</p>
+<ol>
+<li><p>用JS对象模拟DOM树</p>
+</li>
+<li><p>比较两棵虚拟DOM树的差异</p>
+</li>
+<li><p>把差异应用到真正的DOM树上</p>
+</li>
+</ol>
+<h3 id="步骤一：用JS对象模拟DOM树"><a href="#步骤一：用JS对象模拟DOM树" class="headerlink" title="步骤一：用JS对象模拟DOM树"></a>步骤一：用JS对象模拟DOM树</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">function Element(tagName, props, childs) &#123;</div><div class="line">	this.tagName = tagName;</div><div class="line">	this.props = props;</div><div class="line">	this.childs = childs;</div><div class="line">&#125;</div><div class="line">module.exports = function (tagName, props, children) &#123;</div><div class="line">	return new Element(tagName, props, children)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>上面的DOM结构就可以表示为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">var ele = require(&apos;./element&apos;)</div><div class="line"></div><div class="line">var ul = el(&apos;ul&apos;, &#123;id: &apos;list&apos;&#125;, [</div><div class="line">	ele(&apos;li&apos;, &#123;class: &apos;item&apos;&#125;, [&apos;Item 1&apos;]),</div><div class="line">	ele(&apos;li&apos;, &#123;class: &apos;item&apos;&#125;, [&apos;Item 2&apos;]),</div><div class="line">	ele(&apos;li&apos;, &#123;class: &apos;item&apos;&#125;, [&apos;Item 3&apos;])</div><div class="line">])</div></pre></td></tr></table></figure>
+<p>需要根据JS对象ul构件真正的<code>&lt;ul&gt;</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">Element.prototype.render = function()&#123;</div><div class="line">	var ele = document.createElement(this.tagName);</div><div class="line">	var props = this.props</div><div class="line"></div><div class="line">	for (var propName in props) &#123; </div><div class="line">		var propValue = props[propName]</div><div class="line">		ele.setAttribute(propName, propValue)</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	var childs = this.childs || [];</div><div class="line">	childs.forEach(function(child)&#123;</div><div class="line">		var childEle = (child instanceof Element)</div><div class="line">	      ? child.render() // 如果子节点也是虚拟DOM，递归构建DOM节点</div><div class="line">	      : document.createTextNode(child); // 如果字符串，只构建文本节点</div><div class="line">	    ele.appendChild(childEle);</div><div class="line">	&#125;)</div><div class="line"></div><div class="line">	return ele;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>render方法会根据tagName构建一个真正的DOM节点，然后设置这个节点的属性，最后递归地把自己的子节点也构建起来。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">var ulRoot = ul.render()</div><div class="line">document.body.appendChild(ulRoot)</div></pre></td></tr></table></figure>
+<h3 id="步骤二：比较两棵虚拟DOM树的差异"><a href="#步骤二：比较两棵虚拟DOM树的差异" class="headerlink" title="步骤二：比较两棵虚拟DOM树的差异"></a>步骤二：比较两棵虚拟DOM树的差异</h3><p>比较两棵DOM树的差异是 Virtual DOM 算法最核心的部分，这也就是 Virtual DOM 的 diff 算法。在前端当中，很少会跨越层级地移动DOM元素。<strong>所以 Virtual DOM 只会对同一个层级的元素进行对比，这样算法复杂度就可以达到 O(n)。</strong></p>
+<p>对新旧两棵树进行深度优先遍历，每遍历到一个节点就把该节点和新的的树进行对比。如果有差异的话就记录到一个对象里面。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">// diff 函数，对比两棵树</div><div class="line">function diff (oldTree, newTree) &#123;</div><div class="line">	var index = 0; // 当前节点的标志</div><div class="line">	var patches = &#123;&#125;; // 用来记录每个节点差异的对象</div><div class="line">	dfsWalk(oldTree, newTree, index, patches);</div><div class="line">	return patches;</div><div class="line">&#125;</div><div class="line"></div><div class="line">// 对两棵树进行深度优先遍历</div><div class="line">function dfsWalk (oldNode, newNode, index, patches) &#123;</div><div class="line">	// 对比oldNode和newNode的不同，记录下来</div><div class="line">	patches[index] = [...];</div><div class="line"></div><div class="line">	diffChilds(oldNode.childs, newNode.childs, index, patches);</div><div class="line">&#125;</div><div class="line"></div><div class="line">// 遍历子节点</div><div class="line">function diffChilds (oldChilds, newChilds, index, patches) &#123;</div><div class="line">	var leftNode = null;</div><div class="line">	var currentNodeIndex = index;</div><div class="line">	oldChilds.forEach(function (child, i) &#123;</div><div class="line">		var newChild = newChilds[i];</div><div class="line">		currentNodeIndex = (leftNode &amp;&amp; leftNode.count) // 计算节点的标识</div><div class="line">			  ? currentNodeIndex + leftNode.count + 1</div><div class="line">			  : currentNodeIndex + 1;</div><div class="line">		dfsWalk(child, newChild, currentNodeIndex, patches) // 深度遍历子节点</div><div class="line">		leftNode = child</div><div class="line">	&#125;)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>上面的ul和新的ul有差异，当前的标记是0，那么：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">patches[0] = [&#123;difference&#125;, &#123;difference&#125;, ...] // 用数组存储新旧节点的不同</div></pre></td></tr></table></figure>
+<p>同理li1是patches[1]，li1的文本节点是patches[2]类推。</p>
+<h4 id="差异类型"><a href="#差异类型" class="headerlink" title="差异类型"></a>差异类型</h4><p>对 DOM 操作可能会：</p>
+<ol>
+<li>替换掉原来的节点</li>
+<li>移动、删除、新增子节点</li>
+<li>修改了节点的属性</li>
+<li>对于文本节点，文本内容可能会改变</li>
+</ol>
+<p>定义节点差异为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">var REPLACE = 0</div><div class="line">var REORDER = 1</div><div class="line">var PROPS = 2</div><div class="line">var TEXT = 3</div></pre></td></tr></table></figure>
+<p>对于节点替换，很简单。判断新旧节点的tagName和是不是一样的，如果不一样的说明需要替换掉。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">patches[0] = [&#123;</div><div class="line">  type: REPALCE,</div><div class="line">  node: newNode // el(&apos;section&apos;, props, children)</div><div class="line">&#125;]</div></pre></td></tr></table></figure>
+<p>如果给div新增了属性id为container:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">patches[0] = [&#123;</div><div class="line">  type: REPALCE,</div><div class="line">  node: newNode // el(&apos;section&apos;, props, children)</div><div class="line">&#125;, &#123;</div><div class="line">  type: PROPS,</div><div class="line">  props: &#123;</div><div class="line">    id: &quot;container&quot;</div><div class="line">  &#125;</div><div class="line">&#125;]</div></pre></td></tr></table></figure>
+<p>如果是文本节点:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">patches[2] = [&#123;</div><div class="line">  type: TEXT,</div><div class="line">  content: &quot;Virtual DOM2&quot;</div><div class="line">&#125;]</div></pre></td></tr></table></figure>
+<p>如果是节点重新排序呢？<code>div ul p</code>的顺序换成了<code>ul div p</code>，应该怎么对比？如果按照同层级进行顺序对比的话，它们都会被替换掉。如ul和div的tagName不同，div会被ul所替代。最终，三个节点都会被替换，这样DOM开销就非常大。</p>
+<p><strong>React给子节点加上唯一标识key，对比的时候，使用key进行对比，这样就能复用老的 DOM 树上的节点。</strong></p>
+<h3 id="步骤三：把差异应用到真正的DOM树上"><a href="#步骤三：把差异应用到真正的DOM树上" class="headerlink" title="步骤三：把差异应用到真正的DOM树上"></a>步骤三：把差异应用到真正的DOM树上</h3><p>对新DOM树进行深度优先的遍历，遍历的时候从步骤二生成的patches对象中找出当前遍历的节点差异，然后进行 DOM 操作.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">function patch (node, patches) &#123;</div><div class="line">  var walker = &#123;index: 0&#125;</div><div class="line">  dfs(node, walker, patches)</div><div class="line">&#125;</div><div class="line"></div><div class="line">function dfs (node, walker, patches) &#123;</div><div class="line">  var currentPatches = patches[walker.index] // 从patches拿出当前节点的差异</div><div class="line"></div><div class="line">  var len = node.childNodes</div><div class="line">    ? node.childNodes.length</div><div class="line">    : 0</div><div class="line">  for (var i = 0; i &lt; len; i++) &#123; // 深度遍历子节点</div><div class="line">    var child = node.childNodes[i]</div><div class="line">    walker.index++</div><div class="line">    dfs(child, walker, patches)</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  if (currentPatches) &#123;</div><div class="line">    applyPatches(node, currentPatches) // 根据不同类型的差异对当前节点进行 DOM 操作</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>Virtual DOM 算法主要是实现上面步骤：<code>element，diff，patch</code>。然后就可以实际的进行使用：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">// 1. 构建虚拟DOM</div><div class="line">var tree = el(&apos;div&apos;, &#123;&apos;id&apos;: &apos;container&apos;&#125;, [</div><div class="line">    el(&apos;h1&apos;, &#123;style: &apos;color: blue&apos;&#125;, [&apos;simple virtal dom&apos;]),</div><div class="line">    el(&apos;p&apos;, [&apos;Hello, virtual-dom&apos;]),</div><div class="line">    el(&apos;ul&apos;, [el(&apos;li&apos;)])</div><div class="line">])</div><div class="line">// 2. 通过虚拟DOM构建真正的DOM</div><div class="line">var root = tree.render()</div><div class="line">document.body.appendChild(root)</div><div class="line">// 3. 生成新的虚拟DOM</div><div class="line">var newTree = el(&apos;div&apos;, &#123;&apos;id&apos;: &apos;container&apos;&#125;, [</div><div class="line">    el(&apos;h1&apos;, &#123;style: &apos;color: red&apos;&#125;, [&apos;simple virtal dom&apos;]),</div><div class="line">    el(&apos;p&apos;, [&apos;Hello, virtual-dom&apos;]),</div><div class="line">    el(&apos;ul&apos;, [el(&apos;li&apos;), el(&apos;li&apos;)])</div><div class="line">])</div><div class="line">// 4. 比较两棵虚拟DOM树的不同</div><div class="line">var patches = diff(tree, newTree)</div><div class="line">// 5. 在真正的DOM元素上应用变更</div><div class="line">patch(root, patches)</div></pre></td></tr></table></figure>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a href="https://github.com/livoras/blog/issues/13" target="_blank" rel="external">深度剖析：如何实现一个 Virtual DOM 算法</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/20346379?columnSlug=purerender" target="_blank" rel="external">React 源码剖析系列 － 不可思议的 react diff</a></p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>Title:</span><a href="/2017/07/23/virtual-dom/">Virtual DOM</a></p>
+        <p><span>Author:</span><a href="/" title="Back to Homepage">Adong Kong</a></p>
+        <p><span>Created:</span>2017-07-23, 21:42:13</p>
+        <p><span>Updated:</span>2017-07-26, 00:03:57</p>
+        <p>
+            <span>Full URL:</span><a class="post-url" href="/2017/07/23/virtual-dom/" title="Virtual DOM">http://kad0108.github.io/2017/07/23/virtual-dom/</a>
+            <span class="copy-path" data-clipboard-text="From http://kad0108.github.io/2017/07/23/virtual-dom/　　By Adong Kong" title="Copy Article&#39;s Link &amp; Author"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>License:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"CC BY-NC-SA 4.0"</a> Keep Link &amp; Author if Distribute.
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2017/08/09/you-dont-know-js-I/">
+                    You Don&#39;t Know JavaScript I —— Scope &amp; Closures
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2017/07/17/regexp/">
+                    RegExp
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">Contents</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前端应用状态管理"><span class="toc-number">1.</span> <span class="toc-text">前端应用状态管理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Virtual-DOM"><span class="toc-number">2.</span> <span class="toc-text">Virtual DOM</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#步骤一：用JS对象模拟DOM树"><span class="toc-number">2.1.</span> <span class="toc-text">步骤一：用JS对象模拟DOM树</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#步骤二：比较两棵虚拟DOM树的差异"><span class="toc-number">2.2.</span> <span class="toc-text">步骤二：比较两棵虚拟DOM树的差异</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#差异类型"><span class="toc-number">2.2.1.</span> <span class="toc-text">差异类型</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#步骤三：把差异应用到真正的DOM树上"><span class="toc-number">2.3.</span> <span class="toc-text">步骤三：把差异应用到真正的DOM树上</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#总结"><span class="toc-number">2.4.</span> <span class="toc-text">总结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-number">3.</span> <span class="toc-text">Reference</span></a></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="Hide"  title="Show or Hide Table of Contents">
+
+    <script>
+        yiliaConfig.toc = ["Hide", "Show", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"Virtual DOM　| Adong Kong's Blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+<!--
+
+    
+
+-->
+
+
+  <section id="comments">
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="post-virtual-dom" data-title="Virtual DOM" data-url="http://kad0108.github.io/2017/07/23/virtual-dom/"></div>
+    <!-- 多说评论框 end -->
+    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:'kad0108'};
+      (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] 
+         || document.getElementsByTagName('body')[0]).appendChild(ds);
+      })();
+      </script>
+    <!-- 多说公共JS代码 end -->
+  </section>
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2017/08/09/you-dont-know-js-I/" title="Pre: You Don&#39;t Know JavaScript I —— Scope &amp; Closures">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="Mini Archives"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2017/07/17/regexp/" title="Next: RegExp">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/04/22/git/">Git</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/04/2017-summary/">2017 Summary</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/26/reduction/">Nonlinear Dimensionality Reduction —— LE & LLE</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/30/sparse-representation/">Face Recognition via Sparse Representation</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/17/md5/">MD5</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/29/server-sent/">服务器推送信息</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/28/custom-event/">JS自定义事件</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/10/you-dont-know-js-II/">You Don't Know JavaScript II —— This & Object & Prototypes</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/09/you-dont-know-js-I/">You Don't Know JavaScript I —— Scope & Closures</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/23/virtual-dom/">Virtual DOM</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/17/regexp/">RegExp</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/24/layout/">CSS布局</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/11/ajax/">Ajax和跨域总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/09/url/">输入URL到页面加载完成这个过程中都发生了什么</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/08/optimize/">前端性能优化</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/03/datatype/">关于JS中变量类型的一些知识总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/02/bfc/">BFC</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/24/scope/">Scope and Thread</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/21/cookie/">Cookie</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/20/prototype/">JS Prototype</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/15/websocket/">WebSocket</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/08/http/">HTTP协议</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/05/jsprotocol/">JS伪协议</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/28/hidedom/">隐藏页面元素的几种方法</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/26/build/">完善博客功能</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/25/float/">CSS布局模型之浮动模型</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/25/hello-world/">Hello World</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2016-2018 Adong Kong
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="A fast, simple &amp; powerful blog framework">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="Another simple and elegant theme for Hexo  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="Site Visitors"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="Page Hits"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+    <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script src="//cdn.bootcss.com/mathjax/2.6.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="Back to Top"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="Comments"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="Go to Bottom"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+</body>
+</html>
