@@ -2,7 +2,7 @@
 <html >
 <head>
 
-    <!-- hexo-inject:begin --><!-- hexo-inject:end --><!--[if lt IE 9]>
+    <!--[if lt IE 9]>
         <style>body {display: none; background: none !important} </style>
         <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
     <![endif]-->
@@ -50,7 +50,7 @@ TCP三次握手：浏览器向服务器发起TCP连接
 
 TCP四次挥手断开连接">
 <meta property="og:image" content="http://kad0108.github.io/2017/03/09/url/url.png">
-<meta property="og:updated_time" content="2017-04-08T11:52:48.000Z">
+<meta property="og:updated_time" content="2018-04-26T09:16:53.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="输入URL到页面加载完成这个过程中都发生了什么">
 <meta name="twitter:description" content="过程大致分为网络通信和页面渲染：
@@ -147,12 +147,12 @@ var _hmt = _hmt || [];
   var s = document.getElementsByTagName("script")[0]; 
   s.parentNode.insertBefore(hm, s);
 })();
-</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</script>
 
 
 </head>
 <body>
-  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+  <div id="container">
     <div class="left-col">
     <div class="overlay"></div>
 <div class="intrude-less">
@@ -251,7 +251,7 @@ var _hmt = _hmt || [];
                 
                 <section class="switch-part switch-part2">
                     <div class="widget tagcloud" id="js-tagcloud">
-                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Float/">Float</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/">HTTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Html5/">Html5</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a></li></ul>
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Float/">Float</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/">HTTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP缓存/">HTTP缓存</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Html5/">Html5</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a></li></ul>
                     </div>
                 </section>
                 
@@ -384,10 +384,22 @@ var _hmt = _hmt || [];
 </li>
 </ol>
 <a id="more"></a>
-<h2 id="DNS解析过程"><a href="#DNS解析过程" class="headerlink" title="DNS解析过程"></a>DNS解析过程</h2><p>DNS是应用层协议之一。</p>
-<p><strong>浏览器缓存 -&gt; 操作系统DNS缓存 -&gt; 操作系统hosts文件 -&gt; 本地DNS服务器</strong></p>
+<h2 id="DNS：应用层协议"><a href="#DNS：应用层协议" class="headerlink" title="DNS：应用层协议"></a>DNS：应用层协议</h2><p>DNS默认使用UDP协议，因为不需要TCP三次握手，传输速度快而且响应快。</p>
+<h3 id="DNS解析过程"><a href="#DNS解析过程" class="headerlink" title="DNS解析过程"></a>DNS解析过程</h3><p><strong>浏览器缓存 -&gt; 操作系统DNS缓存 -&gt; 操作系统hosts文件 -&gt; 本地DNS服务器</strong></p>
 <p>到本地DNS服务器一般有80%的域名解析成功了，如果没解析就会向根DNS服务器等顶级域名服务器发起迭代DNS解析请求。</p>
 <p>实际情况中，主机到本地DNS采用递归查询，DNS服务器之间采用迭代查询。</p>
+<p>DNS解析为什么设置成这种形式？分布式分层次的DNS解析可以覆盖所有域名系统，本地DNS缓存是为了加快速度。</p>
+<p>后端原来是ip为a的服务器，现在换到b了，你拿到了错误的域名解析ip地址会怎么样？出现域名解析错误，可以清除本地DNS缓存。</p>
+<h3 id="常见的DNS攻击"><a href="#常见的DNS攻击" class="headerlink" title="常见的DNS攻击"></a>常见的DNS攻击</h3><ol>
+<li><p>域名劫持：黑客控制域名管理邮箱密码，将该域名的记录指向黑客可控制的DNS服务器，使用户访问该域名时，进入黑客指向的内容。</p>
+</li>
+<li><p>缓存投毒：控制DNS缓存服务器，将错误域名记录存入缓存中，将本来访问某网站的用户带到黑客指向的网站。</p>
+</li>
+<li><p>DDOS攻击：攻击者向DNS服务器发送大量请求占用网络资源，使合法DNS请求得不到响应。</p>
+</li>
+<li><p>DNS欺骗：攻击者冒充域名服务器</p>
+</li>
+</ol>
 <h2 id="TCP建立连接"><a href="#TCP建立连接" class="headerlink" title="TCP建立连接"></a>TCP建立连接</h2><p>TCP是传输层协议，UDP也是。</p>
 <h3 id="三次握手的过程："><a href="#三次握手的过程：" class="headerlink" title="三次握手的过程："></a>三次握手的过程：</h3><ol>
 <li>客户端先发送一个带有SYN标志的报文给服务端</li>
@@ -421,6 +433,7 @@ var _hmt = _hmt || [];
 </ol>
 <p>当一方完成它的数据发送任务后就能发送一个FIN来终止这个方向的连接。收到一个FIN只意味着这一方向上没有数据流动，一个TCP连接在收到一个FIN后仍能发送数据。</p>
 <p><img src="/2017/03/09/url/url.png" alt="网上找到一张过程很详细的图"></p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a href="http://www.williamlong.info/archives/3813.html" target="_blank" rel="external">DNS攻击原理与防范</a></p>
 
       
     </div>
@@ -432,7 +445,7 @@ var _hmt = _hmt || [];
         <p><span>本文标题:</span><a href="/2017/03/09/url/">输入URL到页面加载完成这个过程中都发生了什么</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">Adong Kong</a></p>
         <p><span>发布时间:</span>2017-03-09, 19:27:10</p>
-        <p><span>最后更新:</span>2017-04-08, 19:52:48</p>
+        <p><span>最后更新:</span>2018-04-26, 17:16:53</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2017/03/09/url/" title="输入URL到页面加载完成这个过程中都发生了什么">http://kad0108.github.io/2017/03/09/url/</a>
             <span class="copy-path" data-clipboard-text="原文: http://kad0108.github.io/2017/03/09/url/　　作者: Adong Kong" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
@@ -468,7 +481,7 @@ var _hmt = _hmt || [];
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#DNS解析过程"><span class="toc-number">1.</span> <span class="toc-text">DNS解析过程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TCP建立连接"><span class="toc-number">2.</span> <span class="toc-text">TCP建立连接</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#三次握手的过程："><span class="toc-number">2.1.</span> <span class="toc-text">三次握手的过程：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#需要三次握手的主要原因是："><span class="toc-number">2.2.</span> <span class="toc-text">需要三次握手的主要原因是：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#浏览器页面渲染"><span class="toc-number">3.</span> <span class="toc-text">浏览器页面渲染</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#加载页面时浏览器的具体工作流程是："><span class="toc-number">3.1.</span> <span class="toc-text">加载页面时浏览器的具体工作流程是：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TCP断开连接"><span class="toc-number">4.</span> <span class="toc-text">TCP断开连接</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#四次挥手的过程："><span class="toc-number">4.1.</span> <span class="toc-text">四次挥手的过程：</span></a></li></ol></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#DNS：应用层协议"><span class="toc-number">1.</span> <span class="toc-text">DNS：应用层协议</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#DNS解析过程"><span class="toc-number">1.1.</span> <span class="toc-text">DNS解析过程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#常见的DNS攻击"><span class="toc-number">1.2.</span> <span class="toc-text">常见的DNS攻击</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TCP建立连接"><span class="toc-number">2.</span> <span class="toc-text">TCP建立连接</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#三次握手的过程："><span class="toc-number">2.1.</span> <span class="toc-text">三次握手的过程：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#需要三次握手的主要原因是："><span class="toc-number">2.2.</span> <span class="toc-text">需要三次握手的主要原因是：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#浏览器页面渲染"><span class="toc-number">3.</span> <span class="toc-text">浏览器页面渲染</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#加载页面时浏览器的具体工作流程是："><span class="toc-number">3.1.</span> <span class="toc-text">加载页面时浏览器的具体工作流程是：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TCP断开连接"><span class="toc-number">4.</span> <span class="toc-text">TCP断开连接</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#四次挥手的过程："><span class="toc-number">4.1.</span> <span class="toc-text">四次挥手的过程：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-number">5.</span> <span class="toc-text">Reference</span></a></li></ol>
         
     </div>
     <style>
@@ -676,23 +689,6 @@ MathJax.Hub.Queue(function() {
 
 <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
 </script>
-  </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
-</script>
-
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Queue(function() {
-    var all = MathJax.Hub.getAllJax(), i;
-    for(i=0; i < all.length; i += 1) {
-      all[i].SourceElement().parentNode.className += ' has-jax';
-    }
-  });
-</script>
-
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
-</script>
-<!-- End: Injected MathJax -->
-<!-- hexo-inject:end -->
+  </div>
 </body>
 </html>

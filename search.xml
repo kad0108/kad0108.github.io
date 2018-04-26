@@ -1389,7 +1389,7 @@
 <h3 id="flex一维布局"><a href="#flex一维布局" class="headerlink" title="flex一维布局"></a>flex一维布局</h3><p>父元素设置flex布局，子元素中需要自适应宽度的设置flex:1;，通过order来实现对子元素排列顺序的控制<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">html,body,div&#123;</div><div class="line">	height: 100%;</div><div class="line">&#125;</div><div class="line">.container&#123;</div><div class="line">	display: flex;</div><div class="line">&#125;</div><div class="line">.middle&#123;</div><div class="line">	order: 2;</div><div class="line">	flex: 1;</div><div class="line">&#125;</div><div class="line">.left, .right&#123;</div><div class="line">	background-color: purple;</div><div class="line">	width: 200px;</div><div class="line">&#125;</div><div class="line">.left&#123;</div><div class="line">	order: 1;</div><div class="line">&#125;</div><div class="line">.right&#123;</div><div class="line">	order: 3;</div><div class="line">&#125;</div><div class="line"></div><div class="line">&lt;div class=&quot;container&quot;&gt;</div><div class="line">	&lt;div class=&quot;left&quot;&gt;&lt;/div&gt;</div><div class="line">	&lt;div class=&quot;middle&quot;&gt;&lt;/div&gt;</div><div class="line">	&lt;div class=&quot;right&quot;&gt;&lt;/div&gt;</div><div class="line">&lt;/div&gt;</div></pre></td></tr></table></figure></p>
 <h3 id="grid-目前仍然在W3C草案中的栅格二维布局，需要确定浏览器支持"><a href="#grid-目前仍然在W3C草案中的栅格二维布局，需要确定浏览器支持" class="headerlink" title="grid: 目前仍然在W3C草案中的栅格二维布局，需要确定浏览器支持"></a>grid: 目前仍然在W3C草案中的栅格二维布局，需要确定浏览器支持</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">html,body,div&#123;</div><div class="line">	height: 100%;</div><div class="line">&#125;</div><div class="line">.container&#123;</div><div class="line">	display: grid;</div><div class="line">	grid-template-columns: 200px auto 200px;</div><div class="line">	grid-template-rows: 100%;</div><div class="line">&#125;</div><div class="line">.middle&#123;</div><div class="line">	</div><div class="line">&#125;</div><div class="line">.left, .right&#123;</div><div class="line">	background-color: purple;</div><div class="line">	width: 200px;</div><div class="line">&#125;</div><div class="line">.left&#123;</div><div class="line">	</div><div class="line">&#125;</div><div class="line">.right&#123;</div><div class="line">	</div><div class="line">&#125;</div><div class="line"></div><div class="line">&lt;div class=&quot;container&quot;&gt;</div><div class="line">	&lt;div class=&quot;left&quot;&gt;&lt;/div&gt;</div><div class="line">	&lt;div class=&quot;middle&quot;&gt;&lt;/div&gt;</div><div class="line">	&lt;div class=&quot;right&quot;&gt;&lt;/div&gt;</div><div class="line">&lt;/div&gt;</div></pre></td></tr></table></figure>
 <h2 id="两列布局"><a href="#两列布局" class="headerlink" title="两列布局"></a>两列布局</h2><p>左栏固定宽度，右栏自适应宽度<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">html,body,div&#123;</div><div class="line">	height: 100%;</div><div class="line">&#125;</div><div class="line">.left&#123;</div><div class="line">	width: 200px;</div><div class="line">	float: left;</div><div class="line">&#125;</div><div class="line">.right&#123;</div><div class="line">	margin-left: 200px;</div><div class="line">&#125;</div><div class="line"></div><div class="line">&lt;div class=&quot;left&quot;&gt;&lt;/div&gt;</div><div class="line">&lt;div class=&quot;right&quot;&gt;&lt;/div&gt;</div></pre></td></tr></table></figure></p>
-<p>也可以触发右栏元素的BFC实现自适应，见博文<a href="/2017/03/02/bfc/" title="BFC">BFC</a></p>
+<p>也可以触发右栏元素的BFC实现自适应，见<a href="http://kadong.space/2017/03/02/bfc/" target="_blank" rel="external">这篇博文</a></p>
 <h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a href="http://www.w3cplus.com/css/vertically-center-content-with-css" target="_blank" rel="external">CSS制作水平垂直居中对齐</a></p>
 <p><a href="http://www.ruanyifeng.com/blog/2015/07/flex-grammar.html?utm_source=tuicool" target="_blank" rel="external">Flex</a></p>
 <p><a href="http://www.jackpu.com/san-lie-bu-ju-zuo-you-gu-ding-zhong-jian-lie-zi-gua-ying-tan-jiu/" target="_blank" rel="external">CSS Grid</a></p>
@@ -1429,11 +1429,8 @@
 </ol>
 <p><strong>XMLHttpRequest Level 2新版本的功能：</strong></p>
 <ol>
-<li><p>可以设置HTTP请求的时限</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">xhr.timeout = 3000;</div><div class="line">xhr.ontimeout = function(event)&#123;</div><div class="line">　　　　alert(&apos;请求超时！&apos;);</div><div class="line">　　&#125;</div></pre></td></tr></table></figure>
-</li>
-<li><p>可以使用FormData对象管理表单数据，xhr.send(new FormData(form))。</p>
-</li>
+<li>可以设置HTTP请求的时限，xhr.timeout，xhr.ontimeout。</li>
+<li>可以使用FormData对象管理表单数据，xhr.send(new FormData(form))。</li>
 <li>可以上传文件, formData.append(‘files[]’, files[i])。</li>
 <li>可以请求不同域名下的数据（跨域请求）,CORS，使用跨域资源共享的前提是浏览器支持且服务器同意。</li>
 <li>可以获取服务器端的二进制数据。</li>
@@ -1514,10 +1511,22 @@
 </li>
 </ol>
 <a id="more"></a>
-<h2 id="DNS解析过程"><a href="#DNS解析过程" class="headerlink" title="DNS解析过程"></a>DNS解析过程</h2><p>DNS是应用层协议之一。</p>
-<p><strong>浏览器缓存 -&gt; 操作系统DNS缓存 -&gt; 操作系统hosts文件 -&gt; 本地DNS服务器</strong></p>
+<h2 id="DNS：应用层协议"><a href="#DNS：应用层协议" class="headerlink" title="DNS：应用层协议"></a>DNS：应用层协议</h2><p>DNS默认使用UDP协议，因为不需要TCP三次握手，传输速度快而且响应快。</p>
+<h3 id="DNS解析过程"><a href="#DNS解析过程" class="headerlink" title="DNS解析过程"></a>DNS解析过程</h3><p><strong>浏览器缓存 -&gt; 操作系统DNS缓存 -&gt; 操作系统hosts文件 -&gt; 本地DNS服务器</strong></p>
 <p>到本地DNS服务器一般有80%的域名解析成功了，如果没解析就会向根DNS服务器等顶级域名服务器发起迭代DNS解析请求。</p>
 <p>实际情况中，主机到本地DNS采用递归查询，DNS服务器之间采用迭代查询。</p>
+<p>DNS解析为什么设置成这种形式？分布式分层次的DNS解析可以覆盖所有域名系统，本地DNS缓存是为了加快速度。</p>
+<p>后端原来是ip为a的服务器，现在换到b了，你拿到了错误的域名解析ip地址会怎么样？出现域名解析错误，可以清除本地DNS缓存。</p>
+<h3 id="常见的DNS攻击"><a href="#常见的DNS攻击" class="headerlink" title="常见的DNS攻击"></a>常见的DNS攻击</h3><ol>
+<li><p>域名劫持：黑客控制域名管理邮箱密码，将该域名的记录指向黑客可控制的DNS服务器，使用户访问该域名时，进入黑客指向的内容。</p>
+</li>
+<li><p>缓存投毒：控制DNS缓存服务器，将错误域名记录存入缓存中，将本来访问某网站的用户带到黑客指向的网站。</p>
+</li>
+<li><p>DDOS攻击：攻击者向DNS服务器发送大量请求占用网络资源，使合法DNS请求得不到响应。</p>
+</li>
+<li><p>DNS欺骗：攻击者冒充域名服务器</p>
+</li>
+</ol>
 <h2 id="TCP建立连接"><a href="#TCP建立连接" class="headerlink" title="TCP建立连接"></a>TCP建立连接</h2><p>TCP是传输层协议，UDP也是。</p>
 <h3 id="三次握手的过程："><a href="#三次握手的过程：" class="headerlink" title="三次握手的过程："></a>三次握手的过程：</h3><ol>
 <li>客户端先发送一个带有SYN标志的报文给服务端</li>
@@ -1551,6 +1560,7 @@
 </ol>
 <p>当一方完成它的数据发送任务后就能发送一个FIN来终止这个方向的连接。收到一个FIN只意味着这一方向上没有数据流动，一个TCP连接在收到一个FIN后仍能发送数据。</p>
 <p><img src="/2017/03/09/url/url.png" alt="网上找到一张过程很详细的图"></p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a href="http://www.williamlong.info/archives/3813.html" target="_blank" rel="external">DNS攻击原理与防范</a></p>
 ]]></content>
     </entry>
     
@@ -1608,26 +1618,27 @@
 </li>
 </ol>
 <h3 id="CSS引用"><a href="#CSS引用" class="headerlink" title="CSS引用"></a>CSS引用</h3><p>尽量使用link代替@import，因为link是在页面加载时同时加载，import是等页面加载完再加载。</p>
-<h2 id="有关缓存"><a href="#有关缓存" class="headerlink" title="有关缓存"></a>有关缓存</h2><h3 id="http缓存"><a href="#http缓存" class="headerlink" title="http缓存"></a>http缓存</h3><p>缓存可以减少响应延迟，减少网络带宽消耗。</p>
-<p><img src="http-cache.jpg" alt="http cache"></p>
-<p>http header中与缓存控制相关的有：</p>
+<h2 id="有关缓存"><a href="#有关缓存" class="headerlink" title="有关缓存"></a>有关缓存</h2><h3 id="http缓存"><a href="#http缓存" class="headerlink" title="http缓存"></a>http缓存</h3><p>缓存可以减少响应延迟，减少网络带宽消耗。http header中与缓存控制相关的头部有：Cache-Control、Expires、Etag、Last-Modified。</p>
+<p>浏览器在第一次第一次请求后，再次请求时：</p>
 <ol>
-<li><p><strong>cache-control</strong>：请求报文的请求头部，控制缓存行为。</p>
-<p> <strong>max-age</strong>这个值也爱考，max-age&gt;0直接从浏览器缓存中提取，max-age&lt;=0向server发送http请求确认该资源是否有修改，有返回200，无返回304。</p>
+<li><p>浏览器会先看header中的Cache-Control和Expires(强缓存)，如果有缓存则直接从本地缓存中获取资源，不和服务器通信，返回200。</p>
 </li>
-<li><p><strong>expires</strong>：响应内容过期时间。如果max-age和Expires同时存在，cache-control覆盖expires。</p>
+<li><p>如果没有缓存，则携带Etag和Last-Modified(协商缓存)发请求给服务器，如果服务器端没有变化，返回304，告诉浏览器可以从缓存中获取资源。</p>
 </li>
-<li><p><strong>etag</strong>：请求报文的响应头部，响应中资源的校验值，用于标示URL对象是否改变，是与web资源关联的记号(token)。</p>
-<p> 请求头中<strong>If-Match</strong>和<strong>If-None-Match</strong>用来比较Etag是否一致。</p>
-</li>
-<li><p><strong>last-Modified</strong>：响应中文件在服务器端最后一次修改的时间。</p>
-<p> 请求头中<strong>If-Modified-Since</strong>询问该时间后文件是否有被修改过。没有变化返回304。</p>
+<li><p>如果本地没有缓存或者服务器端资源有更新，或者用户强制刷新Ctrl+F5，浏览器会直接从服务器下载最新数据</p>
 </li>
 </ol>
+<h4 id="Cache-Control"><a href="#Cache-Control" class="headerlink" title="Cache-Control"></a>Cache-Control</h4><p>请求报文的请求头部，控制缓存行为，相对时间。</p>
+<p><strong>max-age</strong>这个值也爱考，max-age&gt;0直接从浏览器缓存中提取，max-age&lt;=0向server发送http请求确认该资源是否有修改，有返回200，无返回304。</p>
+<h4 id="Expires"><a href="#Expires" class="headerlink" title="Expires"></a>Expires</h4><p>响应内容过期时间，是绝对时间。如果max-age和Expires同时存在，<strong>cache-control覆盖expires</strong>。</p>
+<h4 id="Etag"><a href="#Etag" class="headerlink" title="Etag"></a>Etag</h4><p>请求报文的响应头部，响应中资源的校验值，用于标示URL对象是否改变，是与web资源关联的记号(token)。</p>
+<p>请求头中<strong>If-Match</strong>和<strong>If-None-Match</strong>用来比较Etag是否一致。</p>
+<h4 id="Last-Modified"><a href="#Last-Modified" class="headerlink" title="Last-Modified"></a>Last-Modified</h4><p>响应中文件在服务器端最后一次修改的时间。</p>
+<p>请求头中<strong>If-Modified-Since</strong>询问该时间后文件是否有被修改过。没有变化返回304。</p>
 <p>ETag解决了Last-modified无法解决的问题：</p>
 <ul>
 <li>一些文件修改时间改变了，但是内容没有改变，此时使用Last-modified会认为资源更新了，而ETag不会。</li>
-<li>Last-modified只能精确到秒，如果资源修改非常频繁，在秒一下的时间进行修改，Last-modified无法正确响应。</li>
+<li>Last-modified只能精确到秒，如果资源修改非常频繁，在秒以下的时间进行修改，Last-modified无法正确响应。</li>
 <li>某些服务器不能精确的得到文件的最后修改时间，这样就无法通过最后修改时间判断资源是否更新。</li>
 </ul>
 <blockquote>
@@ -2053,18 +2064,19 @@
 </tr>
 </tbody>
 </table>
-<h3 id="OPTION"><a href="#OPTION" class="headerlink" title="OPTION"></a>OPTION</h3><blockquote>
-<p>更新于2017-07-31</p>
-</blockquote>
-<p>最近在做项目时发现，当前端向后端的RESTFUL接口发起POST请求时，会有两条HTTP Request纪录，第一条的Request Method为OPTIONS，第二条的Request Method为POST。</p>
-<p><img src="/2017/02/08/http/option1.png" alt=""></p>
-<p><img src="/2017/02/08/http/option2.png" alt=""></p>
-<p>第一次带option参数是用来验证真正的请求是否可以的一个pre-request，就是哪些http method被服务器允许，跨域是否允许等等。</p>
-<p>OPTIONS请求方法的主要用途有两个：</p>
-<ol>
-<li><p>获取服务器支持的HTTP请求方法；也是黑客经常使用的方法。</p>
+<h3 id="POST提交数据的几种数据格式"><a href="#POST提交数据的几种数据格式" class="headerlink" title="POST提交数据的几种数据格式"></a>POST提交数据的几种数据格式</h3><p>POST提交的数据必须放在HTTP的body中，服务器端根据http header中的<strong>Content-Type</strong>字段来判断数据是用哪种编码方式编码的，然后进行解码。</p>
+<h4 id="先看Form表单的enctype属性："><a href="#先看Form表单的enctype属性：" class="headerlink" title="先看Form表单的enctype属性："></a>先看Form表单的<strong>enctype</strong>属性：</h4><ol>
+<li><p>默认编码方式发送前编码所有字符：<code>application/x-www-form-urlencoded</code></p>
 </li>
-<li><p>用来检查服务器的性能。例如：AJAX进行跨域请求时的预检，需要向另外一个域名的资源发送一个HTTP OPTIONS请求头，用以判断实际发送的请求是否安全。</p>
+<li><p>不对字符编码，在使用包含文件上传的表单时必须使用该值：<code>multipart/form-data</code></p>
+</li>
+<li><p>空格转换为+加号，不对特殊字符编码：<code>text/plain</code></p>
+</li>
+</ol>
+<h4 id="Ajax以POST请求向服务器提交数据时，可以通过setRequestHeader设置头部属性Content-Type定义发送内容编码属性。"><a href="#Ajax以POST请求向服务器提交数据时，可以通过setRequestHeader设置头部属性Content-Type定义发送内容编码属性。" class="headerlink" title="Ajax以POST请求向服务器提交数据时，可以通过setRequestHeader设置头部属性Content-Type定义发送内容编码属性。"></a>Ajax以POST请求向服务器提交数据时，可以通过setRequestHeader设置头部属性Content-Type定义发送内容编码属性。</h4><ol>
+<li><p><code>application/json</code>：json数据</p>
+</li>
+<li><p><code>application/xml</code>：根据xml头指定的编码格式进行编码。还有<code>text/xml</code>这种编码方式但是不推荐，因为<code>text/*</code>这种MIME类型有一个US-ASCII字符集，<code>text/xml</code>会忽略xml头指定的编码格式而默认采用US-ASCII编码。</p>
 </li>
 </ol>
 <h2 id="状态码"><a href="#状态码" class="headerlink" title="状态码"></a>状态码</h2><p><strong>1xx：临时响应（表示请求已接收，继续处理）</strong></p>
@@ -2081,8 +2093,6 @@
 <p>500 Internal Server Error</p>
 <p>503 Service Unavailable</p>
 <h2 id="HTTPS"><a href="#HTTPS" class="headerlink" title="HTTPS"></a>HTTPS</h2><p>与HTTP协议紧密相关的还有HTTPS协议，它通过SSL和HTTP协议构建可进行加密传输、身份认证的网络协议，能防止数据在传输过程中被劫持或篡改。</p>
-<p>HTTPS在传输数据之前需要客户端（浏览器）与服务端（网站）之间进行一次握手，在握手过程中将确立双方加密传输数据的密码信息。这里浏览器与服务器互相发送加密的握手消息并验证，目的是为了保证双方都获得了一致的密码，并且可以正常的加密解密数据，为后续真正数据的传输做一次测试。HTTPS对应的通信时序图如下：</p>
-<p><img src="https.png" alt="https"></p>
 <table>
 <thead>
 <tr>
@@ -2109,8 +2119,7 @@
 </tr>
 </tbody>
 </table>
-<p>HTTPS协议是由SSL+HTTP协议构建的可进行加密传输、身份认证的网络协议， 要比http协议安全。</p>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a href="http://www.cnblogs.com/ttltry-air/archive/2012/08/20/2647898.html" target="_blank" rel="external">HTTPS工作原理和TCP握手机制</a></p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a href="https://imququ.com/post/four-ways-to-post-data-in-http.html" target="_blank" rel="external">四种常见的 POST 提交数据方式</a></p>
 ]]></content>
     </entry>
     

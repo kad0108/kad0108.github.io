@@ -2,7 +2,7 @@
 <html >
 <head>
 
-    <!-- hexo-inject:begin --><!-- hexo-inject:end --><!--[if lt IE 9]>
+    <!--[if lt IE 9]>
         <style>body {display: none; background: none !important} </style>
         <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
     <![endif]-->
@@ -23,15 +23,11 @@ HTTP是互联网上应用最广泛的一种网络协议，也是浏览器和服�
 <meta property="og:site_name" content="Adong Kong's Blog">
 <meta property="og:description" content="从浏览器地址栏的请求链接开始，浏览器通过DNS解析查到域名映射的IP地址，然后浏览器端向此IP地址取得连接，成功连接之后，浏览器端将请求头信息通过HTTP协议向此IP地址所在服务器发起请求，服务器接受到请求后处理发回响应。浏览器从服务器接收到text/html类型的代码，浏览器开始显示此html。
 HTTP是互联网上应用最广泛的一种网络协议，也是浏览器和服务器通信时所采用的协议。HTTP是基于TC">
-<meta property="og:image" content="http://kad0108.github.io/2017/02/08/http/option1.png">
-<meta property="og:image" content="http://kad0108.github.io/2017/02/08/http/option2.png">
-<meta property="og:image" content="http://kad0108.github.io/https.png">
-<meta property="og:updated_time" content="2017-09-01T02:29:41.000Z">
+<meta property="og:updated_time" content="2018-04-26T09:16:53.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="HTTP协议">
 <meta name="twitter:description" content="从浏览器地址栏的请求链接开始，浏览器通过DNS解析查到域名映射的IP地址，然后浏览器端向此IP地址取得连接，成功连接之后，浏览器端将请求头信息通过HTTP协议向此IP地址所在服务器发起请求，服务器接受到请求后处理发回响应。浏览器从服务器接收到text/html类型的代码，浏览器开始显示此html。
 HTTP是互联网上应用最广泛的一种网络协议，也是浏览器和服务器通信时所采用的协议。HTTP是基于TC">
-<meta name="twitter:image" content="http://kad0108.github.io/2017/02/08/http/option1.png">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -110,12 +106,12 @@ var _hmt = _hmt || [];
   var s = document.getElementsByTagName("script")[0]; 
   s.parentNode.insertBefore(hm, s);
 })();
-</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</script>
 
 
 </head>
 <body>
-  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+  <div id="container">
     <div class="left-col">
     <div class="overlay"></div>
 <div class="intrude-less">
@@ -214,7 +210,7 @@ var _hmt = _hmt || [];
                 
                 <section class="switch-part switch-part2">
                     <div class="widget tagcloud" id="js-tagcloud">
-                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Float/">Float</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/">HTTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Html5/">Html5</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a></li></ul>
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Float/">Float</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/">HTTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP缓存/">HTTP缓存</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Html5/">Html5</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a></li></ul>
                     </div>
                 </section>
                 
@@ -371,18 +367,19 @@ var _hmt = _hmt || [];
 </tr>
 </tbody>
 </table>
-<h3 id="OPTION"><a href="#OPTION" class="headerlink" title="OPTION"></a>OPTION</h3><blockquote>
-<p>更新于2017-07-31</p>
-</blockquote>
-<p>最近在做项目时发现，当前端向后端的RESTFUL接口发起POST请求时，会有两条HTTP Request纪录，第一条的Request Method为OPTIONS，第二条的Request Method为POST。</p>
-<p><img src="/2017/02/08/http/option1.png" alt=""></p>
-<p><img src="/2017/02/08/http/option2.png" alt=""></p>
-<p>第一次带option参数是用来验证真正的请求是否可以的一个pre-request，就是哪些http method被服务器允许，跨域是否允许等等。</p>
-<p>OPTIONS请求方法的主要用途有两个：</p>
-<ol>
-<li><p>获取服务器支持的HTTP请求方法；也是黑客经常使用的方法。</p>
+<h3 id="POST提交数据的几种数据格式"><a href="#POST提交数据的几种数据格式" class="headerlink" title="POST提交数据的几种数据格式"></a>POST提交数据的几种数据格式</h3><p>POST提交的数据必须放在HTTP的body中，服务器端根据http header中的<strong>Content-Type</strong>字段来判断数据是用哪种编码方式编码的，然后进行解码。</p>
+<h4 id="先看Form表单的enctype属性："><a href="#先看Form表单的enctype属性：" class="headerlink" title="先看Form表单的enctype属性："></a>先看Form表单的<strong>enctype</strong>属性：</h4><ol>
+<li><p>默认编码方式发送前编码所有字符：<code>application/x-www-form-urlencoded</code></p>
 </li>
-<li><p>用来检查服务器的性能。例如：AJAX进行跨域请求时的预检，需要向另外一个域名的资源发送一个HTTP OPTIONS请求头，用以判断实际发送的请求是否安全。</p>
+<li><p>不对字符编码，在使用包含文件上传的表单时必须使用该值：<code>multipart/form-data</code></p>
+</li>
+<li><p>空格转换为+加号，不对特殊字符编码：<code>text/plain</code></p>
+</li>
+</ol>
+<h4 id="Ajax以POST请求向服务器提交数据时，可以通过setRequestHeader设置头部属性Content-Type定义发送内容编码属性。"><a href="#Ajax以POST请求向服务器提交数据时，可以通过setRequestHeader设置头部属性Content-Type定义发送内容编码属性。" class="headerlink" title="Ajax以POST请求向服务器提交数据时，可以通过setRequestHeader设置头部属性Content-Type定义发送内容编码属性。"></a>Ajax以POST请求向服务器提交数据时，可以通过setRequestHeader设置头部属性Content-Type定义发送内容编码属性。</h4><ol>
+<li><p><code>application/json</code>：json数据</p>
+</li>
+<li><p><code>application/xml</code>：根据xml头指定的编码格式进行编码。还有<code>text/xml</code>这种编码方式但是不推荐，因为<code>text/*</code>这种MIME类型有一个US-ASCII字符集，<code>text/xml</code>会忽略xml头指定的编码格式而默认采用US-ASCII编码。</p>
 </li>
 </ol>
 <h2 id="状态码"><a href="#状态码" class="headerlink" title="状态码"></a>状态码</h2><p><strong>1xx：临时响应（表示请求已接收，继续处理）</strong></p>
@@ -399,8 +396,6 @@ var _hmt = _hmt || [];
 <p>500 Internal Server Error</p>
 <p>503 Service Unavailable</p>
 <h2 id="HTTPS"><a href="#HTTPS" class="headerlink" title="HTTPS"></a>HTTPS</h2><p>与HTTP协议紧密相关的还有HTTPS协议，它通过SSL和HTTP协议构建可进行加密传输、身份认证的网络协议，能防止数据在传输过程中被劫持或篡改。</p>
-<p>HTTPS在传输数据之前需要客户端（浏览器）与服务端（网站）之间进行一次握手，在握手过程中将确立双方加密传输数据的密码信息。这里浏览器与服务器互相发送加密的握手消息并验证，目的是为了保证双方都获得了一致的密码，并且可以正常的加密解密数据，为后续真正数据的传输做一次测试。HTTPS对应的通信时序图如下：</p>
-<p><img src="https.png" alt="https"></p>
 <table>
 <thead>
 <tr>
@@ -427,8 +422,7 @@ var _hmt = _hmt || [];
 </tr>
 </tbody>
 </table>
-<p>HTTPS协议是由SSL+HTTP协议构建的可进行加密传输、身份认证的网络协议， 要比http协议安全。</p>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a href="http://www.cnblogs.com/ttltry-air/archive/2012/08/20/2647898.html" target="_blank" rel="external">HTTPS工作原理和TCP握手机制</a></p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a href="https://imququ.com/post/four-ways-to-post-data-in-http.html" target="_blank" rel="external">四种常见的 POST 提交数据方式</a></p>
 
       
     </div>
@@ -440,7 +434,7 @@ var _hmt = _hmt || [];
         <p><span>本文标题:</span><a href="/2017/02/08/http/">HTTP协议</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">Adong Kong</a></p>
         <p><span>发布时间:</span>2017-02-08, 20:46:10</p>
-        <p><span>最后更新:</span>2017-09-01, 10:29:41</p>
+        <p><span>最后更新:</span>2018-04-26, 17:16:53</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2017/02/08/http/" title="HTTP协议">http://kad0108.github.io/2017/02/08/http/</a>
             <span class="copy-path" data-clipboard-text="原文: http://kad0108.github.io/2017/02/08/http/　　作者: Adong Kong" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
@@ -476,7 +470,7 @@ var _hmt = _hmt || [];
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTP的报文格式"><span class="toc-number">1.</span> <span class="toc-text">HTTP的报文格式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#请求方法中GET和POST的区别"><span class="toc-number">1.1.</span> <span class="toc-text">请求方法中GET和POST的区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#OPTION"><span class="toc-number">1.2.</span> <span class="toc-text">OPTION</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#状态码"><span class="toc-number">2.</span> <span class="toc-text">状态码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTPS"><span class="toc-number">3.</span> <span class="toc-text">HTTPS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-number">4.</span> <span class="toc-text">Reference</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTP的报文格式"><span class="toc-number">1.</span> <span class="toc-text">HTTP的报文格式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#请求方法中GET和POST的区别"><span class="toc-number">1.1.</span> <span class="toc-text">请求方法中GET和POST的区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#POST提交数据的几种数据格式"><span class="toc-number">1.2.</span> <span class="toc-text">POST提交数据的几种数据格式</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#先看Form表单的enctype属性："><span class="toc-number">1.2.1.</span> <span class="toc-text">先看Form表单的enctype属性：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Ajax以POST请求向服务器提交数据时，可以通过setRequestHeader设置头部属性Content-Type定义发送内容编码属性。"><span class="toc-number">1.2.2.</span> <span class="toc-text">Ajax以POST请求向服务器提交数据时，可以通过setRequestHeader设置头部属性Content-Type定义发送内容编码属性。</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#状态码"><span class="toc-number">2.</span> <span class="toc-text">状态码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTPS"><span class="toc-number">3.</span> <span class="toc-text">HTTPS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-number">4.</span> <span class="toc-text">Reference</span></a></li></ol>
         
     </div>
     <style>
@@ -684,23 +678,6 @@ MathJax.Hub.Queue(function() {
 
 <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
 </script>
-  </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
-</script>
-
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Queue(function() {
-    var all = MathJax.Hub.getAllJax(), i;
-    for(i=0; i < all.length; i += 1) {
-      all[i].SourceElement().parentNode.className += ' has-jax';
-    }
-  });
-</script>
-
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
-</script>
-<!-- End: Injected MathJax -->
-<!-- hexo-inject:end -->
+  </div>
 </body>
 </html>

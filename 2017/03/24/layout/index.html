@@ -2,7 +2,7 @@
 <html >
 <head>
 
-    <!-- hexo-inject:begin --><!-- hexo-inject:end --><!--[if lt IE 9]>
+    <!--[if lt IE 9]>
         <style>body {display: none; background: none !important} </style>
         <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
     <![endif]-->
@@ -33,7 +33,7 @@
 弹性布局 display:flex; + justify-content:center; + align-items:center;
 
 表格布局 display:table;text">
-<meta property="og:updated_time" content="2018-04-22T09:16:48.000Z">
+<meta property="og:updated_time" content="2018-04-26T09:16:47.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CSS布局">
 <meta name="twitter:description" content="水平垂直居中文本的水平垂直居中text-align + line-height
@@ -121,12 +121,12 @@ var _hmt = _hmt || [];
   var s = document.getElementsByTagName("script")[0]; 
   s.parentNode.insertBefore(hm, s);
 })();
-</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</script>
 
 
 </head>
 <body>
-  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+  <div id="container">
     <div class="left-col">
     <div class="overlay"></div>
 <div class="intrude-less">
@@ -225,7 +225,7 @@ var _hmt = _hmt || [];
                 
                 <section class="switch-part switch-part2">
                     <div class="widget tagcloud" id="js-tagcloud">
-                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Float/">Float</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/">HTTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Html5/">Html5</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a></li></ul>
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Float/">Float</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/">HTTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP缓存/">HTTP缓存</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Html5/">Html5</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a></li></ul>
                     </div>
                 </section>
                 
@@ -362,7 +362,7 @@ var _hmt = _hmt || [];
 <h3 id="flex一维布局"><a href="#flex一维布局" class="headerlink" title="flex一维布局"></a>flex一维布局</h3><p>父元素设置flex布局，子元素中需要自适应宽度的设置flex:1;，通过order来实现对子元素排列顺序的控制<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">html,body,div&#123;</div><div class="line">	height: 100%;</div><div class="line">&#125;</div><div class="line">.container&#123;</div><div class="line">	display: flex;</div><div class="line">&#125;</div><div class="line">.middle&#123;</div><div class="line">	order: 2;</div><div class="line">	flex: 1;</div><div class="line">&#125;</div><div class="line">.left, .right&#123;</div><div class="line">	background-color: purple;</div><div class="line">	width: 200px;</div><div class="line">&#125;</div><div class="line">.left&#123;</div><div class="line">	order: 1;</div><div class="line">&#125;</div><div class="line">.right&#123;</div><div class="line">	order: 3;</div><div class="line">&#125;</div><div class="line"></div><div class="line">&lt;div class=&quot;container&quot;&gt;</div><div class="line">	&lt;div class=&quot;left&quot;&gt;&lt;/div&gt;</div><div class="line">	&lt;div class=&quot;middle&quot;&gt;&lt;/div&gt;</div><div class="line">	&lt;div class=&quot;right&quot;&gt;&lt;/div&gt;</div><div class="line">&lt;/div&gt;</div></pre></td></tr></table></figure></p>
 <h3 id="grid-目前仍然在W3C草案中的栅格二维布局，需要确定浏览器支持"><a href="#grid-目前仍然在W3C草案中的栅格二维布局，需要确定浏览器支持" class="headerlink" title="grid: 目前仍然在W3C草案中的栅格二维布局，需要确定浏览器支持"></a>grid: 目前仍然在W3C草案中的栅格二维布局，需要确定浏览器支持</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">html,body,div&#123;</div><div class="line">	height: 100%;</div><div class="line">&#125;</div><div class="line">.container&#123;</div><div class="line">	display: grid;</div><div class="line">	grid-template-columns: 200px auto 200px;</div><div class="line">	grid-template-rows: 100%;</div><div class="line">&#125;</div><div class="line">.middle&#123;</div><div class="line">	</div><div class="line">&#125;</div><div class="line">.left, .right&#123;</div><div class="line">	background-color: purple;</div><div class="line">	width: 200px;</div><div class="line">&#125;</div><div class="line">.left&#123;</div><div class="line">	</div><div class="line">&#125;</div><div class="line">.right&#123;</div><div class="line">	</div><div class="line">&#125;</div><div class="line"></div><div class="line">&lt;div class=&quot;container&quot;&gt;</div><div class="line">	&lt;div class=&quot;left&quot;&gt;&lt;/div&gt;</div><div class="line">	&lt;div class=&quot;middle&quot;&gt;&lt;/div&gt;</div><div class="line">	&lt;div class=&quot;right&quot;&gt;&lt;/div&gt;</div><div class="line">&lt;/div&gt;</div></pre></td></tr></table></figure>
 <h2 id="两列布局"><a href="#两列布局" class="headerlink" title="两列布局"></a>两列布局</h2><p>左栏固定宽度，右栏自适应宽度<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">html,body,div&#123;</div><div class="line">	height: 100%;</div><div class="line">&#125;</div><div class="line">.left&#123;</div><div class="line">	width: 200px;</div><div class="line">	float: left;</div><div class="line">&#125;</div><div class="line">.right&#123;</div><div class="line">	margin-left: 200px;</div><div class="line">&#125;</div><div class="line"></div><div class="line">&lt;div class=&quot;left&quot;&gt;&lt;/div&gt;</div><div class="line">&lt;div class=&quot;right&quot;&gt;&lt;/div&gt;</div></pre></td></tr></table></figure></p>
-<p>也可以触发右栏元素的BFC实现自适应，见博文<a href="/2017/03/02/bfc/" title="BFC">BFC</a></p>
+<p>也可以触发右栏元素的BFC实现自适应，见<a href="http://kadong.space/2017/03/02/bfc/" target="_blank" rel="external">这篇博文</a></p>
 <h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a href="http://www.w3cplus.com/css/vertically-center-content-with-css" target="_blank" rel="external">CSS制作水平垂直居中对齐</a></p>
 <p><a href="http://www.ruanyifeng.com/blog/2015/07/flex-grammar.html?utm_source=tuicool" target="_blank" rel="external">Flex</a></p>
 <p><a href="http://www.jackpu.com/san-lie-bu-ju-zuo-you-gu-ding-zhong-jian-lie-zi-gua-ying-tan-jiu/" target="_blank" rel="external">CSS Grid</a></p>
@@ -377,7 +377,7 @@ var _hmt = _hmt || [];
         <p><span>本文标题:</span><a href="/2017/03/24/layout/">CSS布局</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">Adong Kong</a></p>
         <p><span>发布时间:</span>2017-03-24, 21:27:13</p>
-        <p><span>最后更新:</span>2018-04-22, 17:16:48</p>
+        <p><span>最后更新:</span>2018-04-26, 17:16:47</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2017/03/24/layout/" title="CSS布局">http://kad0108.github.io/2017/03/24/layout/</a>
             <span class="copy-path" data-clipboard-text="原文: http://kad0108.github.io/2017/03/24/layout/　　作者: Adong Kong" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
@@ -621,23 +621,6 @@ MathJax.Hub.Queue(function() {
 
 <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
 </script>
-  </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
-</script>
-
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Queue(function() {
-    var all = MathJax.Hub.getAllJax(), i;
-    for(i=0; i < all.length; i += 1) {
-      all[i].SourceElement().parentNode.className += ' has-jax';
-    }
-  });
-</script>
-
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
-</script>
-<!-- End: Injected MathJax -->
-<!-- hexo-inject:end -->
+  </div>
 </body>
 </html>

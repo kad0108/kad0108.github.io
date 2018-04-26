@@ -2,7 +2,7 @@
 <html >
 <head>
 
-    <!-- hexo-inject:begin --><!-- hexo-inject:end --><!--[if lt IE 9]>
+    <!--[if lt IE 9]>
         <style>body {display: none; background: none !important} </style>
         <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
     <![endif]-->
@@ -77,9 +77,8 @@ CSS Sprites，合并脚本和样式表
 
 代码校验
 避免CSS表达式，避免重定">
-<meta property="og:image" content="http://kad0108.github.io/http-cache.jpg">
 <meta property="og:image" content="http://kad0108.github.io/2017/03/08/optimize/cache.png">
-<meta property="og:updated_time" content="2017-08-19T13:40:15.000Z">
+<meta property="og:updated_time" content="2018-04-26T09:16:53.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="前端性能优化">
 <meta name="twitter:description" content="前端性能优化，目的是为什么？让用户有更友好的体验，让服务商节省可观的资源。
@@ -111,7 +110,7 @@ CSS Sprites，合并脚本和样式表
 
 代码校验
 避免CSS表达式，避免重定">
-<meta name="twitter:image" content="http://kad0108.github.io/http-cache.jpg">
+<meta name="twitter:image" content="http://kad0108.github.io/2017/03/08/optimize/cache.png">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -190,12 +189,12 @@ var _hmt = _hmt || [];
   var s = document.getElementsByTagName("script")[0]; 
   s.parentNode.insertBefore(hm, s);
 })();
-</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</script>
 
 
 </head>
 <body>
-  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+  <div id="container">
     <div class="left-col">
     <div class="overlay"></div>
 <div class="intrude-less">
@@ -294,7 +293,7 @@ var _hmt = _hmt || [];
                 
                 <section class="switch-part switch-part2">
                     <div class="widget tagcloud" id="js-tagcloud">
-                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Float/">Float</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/">HTTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Html5/">Html5</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a></li></ul>
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Float/">Float</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/">HTTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP缓存/">HTTP缓存</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Html5/">Html5</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a></li></ul>
                     </div>
                 </section>
                 
@@ -402,6 +401,10 @@ var _hmt = _hmt || [];
 
 
         
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HTTP缓存/">HTTP缓存</a></li></ul>
+    </div>
+
         <div class="clearfix"></div>
       </div>
       
@@ -460,26 +463,27 @@ var _hmt = _hmt || [];
 </li>
 </ol>
 <h3 id="CSS引用"><a href="#CSS引用" class="headerlink" title="CSS引用"></a>CSS引用</h3><p>尽量使用link代替@import，因为link是在页面加载时同时加载，import是等页面加载完再加载。</p>
-<h2 id="有关缓存"><a href="#有关缓存" class="headerlink" title="有关缓存"></a>有关缓存</h2><h3 id="http缓存"><a href="#http缓存" class="headerlink" title="http缓存"></a>http缓存</h3><p>缓存可以减少响应延迟，减少网络带宽消耗。</p>
-<p><img src="http-cache.jpg" alt="http cache"></p>
-<p>http header中与缓存控制相关的有：</p>
+<h2 id="有关缓存"><a href="#有关缓存" class="headerlink" title="有关缓存"></a>有关缓存</h2><h3 id="http缓存"><a href="#http缓存" class="headerlink" title="http缓存"></a>http缓存</h3><p>缓存可以减少响应延迟，减少网络带宽消耗。http header中与缓存控制相关的头部有：Cache-Control、Expires、Etag、Last-Modified。</p>
+<p>浏览器在第一次第一次请求后，再次请求时：</p>
 <ol>
-<li><p><strong>cache-control</strong>：请求报文的请求头部，控制缓存行为。</p>
-<p> <strong>max-age</strong>这个值也爱考，max-age&gt;0直接从浏览器缓存中提取，max-age&lt;=0向server发送http请求确认该资源是否有修改，有返回200，无返回304。</p>
+<li><p>浏览器会先看header中的Cache-Control和Expires(强缓存)，如果有缓存则直接从本地缓存中获取资源，不和服务器通信，返回200。</p>
 </li>
-<li><p><strong>expires</strong>：响应内容过期时间。如果max-age和Expires同时存在，cache-control覆盖expires。</p>
+<li><p>如果没有缓存，则携带Etag和Last-Modified(协商缓存)发请求给服务器，如果服务器端没有变化，返回304，告诉浏览器可以从缓存中获取资源。</p>
 </li>
-<li><p><strong>etag</strong>：请求报文的响应头部，响应中资源的校验值，用于标示URL对象是否改变，是与web资源关联的记号(token)。</p>
-<p> 请求头中<strong>If-Match</strong>和<strong>If-None-Match</strong>用来比较Etag是否一致。</p>
-</li>
-<li><p><strong>last-Modified</strong>：响应中文件在服务器端最后一次修改的时间。</p>
-<p> 请求头中<strong>If-Modified-Since</strong>询问该时间后文件是否有被修改过。没有变化返回304。</p>
+<li><p>如果本地没有缓存或者服务器端资源有更新，或者用户强制刷新Ctrl+F5，浏览器会直接从服务器下载最新数据</p>
 </li>
 </ol>
+<h4 id="Cache-Control"><a href="#Cache-Control" class="headerlink" title="Cache-Control"></a>Cache-Control</h4><p>请求报文的请求头部，控制缓存行为，相对时间。</p>
+<p><strong>max-age</strong>这个值也爱考，max-age&gt;0直接从浏览器缓存中提取，max-age&lt;=0向server发送http请求确认该资源是否有修改，有返回200，无返回304。</p>
+<h4 id="Expires"><a href="#Expires" class="headerlink" title="Expires"></a>Expires</h4><p>响应内容过期时间，是绝对时间。如果max-age和Expires同时存在，<strong>cache-control覆盖expires</strong>。</p>
+<h4 id="Etag"><a href="#Etag" class="headerlink" title="Etag"></a>Etag</h4><p>请求报文的响应头部，响应中资源的校验值，用于标示URL对象是否改变，是与web资源关联的记号(token)。</p>
+<p>请求头中<strong>If-Match</strong>和<strong>If-None-Match</strong>用来比较Etag是否一致。</p>
+<h4 id="Last-Modified"><a href="#Last-Modified" class="headerlink" title="Last-Modified"></a>Last-Modified</h4><p>响应中文件在服务器端最后一次修改的时间。</p>
+<p>请求头中<strong>If-Modified-Since</strong>询问该时间后文件是否有被修改过。没有变化返回304。</p>
 <p>ETag解决了Last-modified无法解决的问题：</p>
 <ul>
 <li>一些文件修改时间改变了，但是内容没有改变，此时使用Last-modified会认为资源更新了，而ETag不会。</li>
-<li>Last-modified只能精确到秒，如果资源修改非常频繁，在秒一下的时间进行修改，Last-modified无法正确响应。</li>
+<li>Last-modified只能精确到秒，如果资源修改非常频繁，在秒以下的时间进行修改，Last-modified无法正确响应。</li>
 <li>某些服务器不能精确的得到文件的最后修改时间，这样就无法通过最后修改时间判断资源是否更新。</li>
 </ul>
 <blockquote>
@@ -525,7 +529,7 @@ var _hmt = _hmt || [];
         <p><span>本文标题:</span><a href="/2017/03/08/optimize/">前端性能优化</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">Adong Kong</a></p>
         <p><span>发布时间:</span>2017-03-08, 10:07:03</p>
-        <p><span>最后更新:</span>2017-08-19, 21:40:15</p>
+        <p><span>最后更新:</span>2018-04-26, 17:16:53</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2017/03/08/optimize/" title="前端性能优化">http://kad0108.github.io/2017/03/08/optimize/</a>
             <span class="copy-path" data-clipboard-text="原文: http://kad0108.github.io/2017/03/08/optimize/　　作者: Adong Kong" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
@@ -561,7 +565,7 @@ var _hmt = _hmt || [];
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#CDN"><span class="toc-number">1.</span> <span class="toc-text">CDN</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#减少repaint和reflow"><span class="toc-number">2.</span> <span class="toc-text">减少repaint和reflow</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CSS引用"><span class="toc-number">3.</span> <span class="toc-text">CSS引用</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#有关缓存"><span class="toc-number"></span> <span class="toc-text">有关缓存</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#http缓存"><span class="toc-number">1.</span> <span class="toc-text">http缓存</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#离线缓存"><span class="toc-number">2.</span> <span class="toc-text">离线缓存</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-number"></span> <span class="toc-text">Reference</span></a>
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#CDN"><span class="toc-number">1.</span> <span class="toc-text">CDN</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#减少repaint和reflow"><span class="toc-number">2.</span> <span class="toc-text">减少repaint和reflow</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CSS引用"><span class="toc-number">3.</span> <span class="toc-text">CSS引用</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#有关缓存"><span class="toc-number"></span> <span class="toc-text">有关缓存</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#http缓存"><span class="toc-number">1.</span> <span class="toc-text">http缓存</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Cache-Control"><span class="toc-number">1.1.</span> <span class="toc-text">Cache-Control</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Expires"><span class="toc-number">1.2.</span> <span class="toc-text">Expires</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Etag"><span class="toc-number">1.3.</span> <span class="toc-text">Etag</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Last-Modified"><span class="toc-number">1.4.</span> <span class="toc-text">Last-Modified</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#离线缓存"><span class="toc-number">2.</span> <span class="toc-text">离线缓存</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-number"></span> <span class="toc-text">Reference</span></a>
         
     </div>
     <style>
@@ -769,23 +773,6 @@ MathJax.Hub.Queue(function() {
 
 <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
 </script>
-  </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
-</script>
-
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Queue(function() {
-    var all = MathJax.Hub.getAllJax(), i;
-    for(i=0; i < all.length; i += 1) {
-      all[i].SourceElement().parentNode.className += ' has-jax';
-    }
-  });
-</script>
-
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
-</script>
-<!-- End: Injected MathJax -->
-<!-- hexo-inject:end -->
+  </div>
 </body>
 </html>
