@@ -44,7 +44,8 @@ Git：分布式版本控制系统Git自动记录每次文件改动，还可以�
 <meta property="og:image" content="http://kad0108.github.io/2018/04/22/git/git-log-merge.png">
 <meta property="og:image" content="http://kad0108.github.io/2018/04/22/git/branch-team.png">
 <meta property="og:image" content="http://kad0108.github.io/2018/04/22/git/git-pull.png">
-<meta property="og:updated_time" content="2018-04-26T08:30:14.000Z">
+<meta property="og:image" content="http://kad0108.github.io/2018/04/22/git/git-cache.jpg">
+<meta property="og:updated_time" content="2018-04-27T06:24:42.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Git">
 <meta name="twitter:description" content="写在前面毕业🎓前的日子真是度日如年，厌倦反感学校的一切，只能看书学英语参加各种英语角活动看视频，而且除了跑实验写的那点已经很久很久没有敲代码了。。。稍微学点东西安慰自己。。。之前只是知道Git这些命令怎么用，没有更详细地了解过。看廖老师的博文学习再学一遍Git加深印象。
@@ -189,13 +190,13 @@ var _hmt = _hmt || [];
                 <div class="tips-box hide">
                     <div class="tips-arrow"></div>
                     <ul class="tips-inner">
-                        <li>菜单</li>
-                        <li>标签</li>
+                        <li>Menu</li>
+                        <li>Tags</li>
                         
-                        <li>友情链接</li>
+                        <li>Friends</li>
                         
                         
-                        <li>关于我</li>
+                        <li>About Me</li>
                         
                     </ul>
                 </div>
@@ -305,7 +306,7 @@ var _hmt = _hmt || [];
             </nav>
         </header>                
     </div>
-    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+    <link class="menu-list" tags="Tags" friends="Friends" about="About Me"/>
 </nav>
       <div class="body-wrap"><article id="post-git" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -655,7 +656,14 @@ var _hmt = _hmt || [];
 <p>或者你发现，可能是<code>.gitignore</code>写得有问题，需要找出来到底哪个规则写错了，可以用<code>git check-ignore</code>命令检查:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git check-ignore -v App.class</div></pre></td></tr></table></figure>
 <p><code>.gitignore</code>文件本身要放到版本库里，并且可以对<code>.gitignore</code>做版本管理！</p>
-<h3 id="配置别名－Link"><a href="#配置别名－Link" class="headerlink" title="配置别名－Link"></a><a href="https://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000/001375234012342f90be1fc4d81446c967bbdc19e7c03d3000" target="_blank" rel="external">配置别名－Link</a></h3><h3 id="搭建Git服务器－Link"><a href="#搭建Git服务器－Link" class="headerlink" title="搭建Git服务器－Link"></a><a href="https://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000/00137583770360579bc4b458f044ce7afed3df579123eca000" target="_blank" rel="external">搭建Git服务器－Link</a></h3><h2 id="GIT-CHEAT-SHEET-pdf"><a href="#GIT-CHEAT-SHEET-pdf" class="headerlink" title="GIT CHEAT SHEET.pdf"></a><a href="git-cheatsheet.pdf">GIT CHEAT SHEET.pdf</a></h2>
+<h3 id="其它"><a href="#其它" class="headerlink" title="其它"></a>其它</h3><p><a href="https://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000/001375234012342f90be1fc4d81446c967bbdc19e7c03d3000" target="_blank" rel="external">配置别名－Link</a></p>
+<p><a href="https://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000/00137583770360579bc4b458f044ce7afed3df579123eca000" target="_blank" rel="external">搭建Git服务器－Link</a></p>
+<p><a href="git-cheatsheet.pdf">GIT CHEAT SHEET.pdf</a></p>
+<h2 id="小插曲"><a href="#小插曲" class="headerlink" title="小插曲"></a>小插曲</h2><p>因为这次学习Git过程中配置了另一个Github小号的信息，导致在<code>hexo deploy</code>的时候报错提示<code>permission denied</code>。一开始一直以为是<code>SSH key</code>的问题，就重新生成了一遍<code>SSH key</code>然后添加到Github，发现并不好使。而且我跑了命令:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ git config user.name</div><div class="line">$ git config user.email</div><div class="line">$ git remote -v</div></pre></td></tr></table></figure>
+<p>验证信息都是对的，那就奇怪了，怎么可能提交的时候还认为本地是Github小号呢，有想到可能是cache的问题，查了一下然后试了一下，果然。。。</p>
+<p><img src="/2018/04/22/git/git-cache.jpg" alt=""></p>
+
       
     </div>
     
@@ -663,17 +671,17 @@ var _hmt = _hmt || [];
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2018/04/22/git/">Git</a></p>
-        <p><span>文章作者:</span><a href="/" title="回到主页">Adong Kong</a></p>
-        <p><span>发布时间:</span>2018-04-22, 16:58:01</p>
-        <p><span>最后更新:</span>2018-04-26, 16:30:14</p>
+        <p><span>Title:</span><a href="/2018/04/22/git/">Git</a></p>
+        <p><span>Author:</span><a href="/" title="Back to Homepage">Adong Kong</a></p>
+        <p><span>Created:</span>2018-04-22, 16:58:01</p>
+        <p><span>Updated:</span>2018-04-27, 14:24:42</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2018/04/22/git/" title="Git">http://kad0108.github.io/2018/04/22/git/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://kad0108.github.io/2018/04/22/git/　　作者: Adong Kong" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>Full URL:</span><a class="post-url" href="/2018/04/22/git/" title="Git">http://kad0108.github.io/2018/04/22/git/</a>
+            <span class="copy-path" data-clipboard-text="From http://kad0108.github.io/2018/04/22/git/　　By Adong Kong" title="Copy Article&#39;s Link &amp; Author"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
-            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+            <span>License:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"CC BY-NC-SA 4.0"</a> Keep Link &amp; Author if Distribute.
         </p>
     </div>
 
@@ -694,9 +702,9 @@ var _hmt = _hmt || [];
 </article>
 
     <div id="toc" class="toc-article">
-        <strong class="toc-title">文章目录</strong>
+        <strong class="toc-title">Contents</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#写在前面"><span class="toc-number">1.</span> <span class="toc-text">写在前面</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Git：分布式版本控制系统"><span class="toc-number">2.</span> <span class="toc-text">Git：分布式版本控制系统</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#创建版本库"><span class="toc-number">3.</span> <span class="toc-text">创建版本库</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#小结"><span class="toc-number">3.1.</span> <span class="toc-text">小结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#时光机穿梭"><span class="toc-number">4.</span> <span class="toc-text">时光机穿梭</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#版本回退"><span class="toc-number">4.1.</span> <span class="toc-text">版本回退</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#工作区与暂存区"><span class="toc-number">4.2.</span> <span class="toc-text">工作区与暂存区</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#管理修改"><span class="toc-number">4.3.</span> <span class="toc-text">管理修改</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#撤销修改"><span class="toc-number">4.4.</span> <span class="toc-text">撤销修改</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#删除文件"><span class="toc-number">4.5.</span> <span class="toc-text">删除文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#小结-1"><span class="toc-number">4.6.</span> <span class="toc-text">小结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#远程仓库"><span class="toc-number">5.</span> <span class="toc-text">远程仓库</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#添加远程库"><span class="toc-number">5.1.</span> <span class="toc-text">添加远程库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#从远程库克隆"><span class="toc-number">5.2.</span> <span class="toc-text">从远程库克隆</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#小结-2"><span class="toc-number">5.3.</span> <span class="toc-text">小结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#分支管理"><span class="toc-number">6.</span> <span class="toc-text">分支管理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#创建与合并分支"><span class="toc-number">6.1.</span> <span class="toc-text">创建与合并分支</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#解决冲突"><span class="toc-number">6.2.</span> <span class="toc-text">解决冲突</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分支策略"><span class="toc-number">6.3.</span> <span class="toc-text">分支策略</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Bug分支"><span class="toc-number">6.4.</span> <span class="toc-text">Bug分支</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#多人协作"><span class="toc-number">6.5.</span> <span class="toc-text">多人协作</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#推送分支"><span class="toc-number">6.5.1.</span> <span class="toc-text">推送分支</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#抓取分支"><span class="toc-number">6.5.2.</span> <span class="toc-text">抓取分支</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#小结-3"><span class="toc-number">6.6.</span> <span class="toc-text">小结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#标签管理"><span class="toc-number">7.</span> <span class="toc-text">标签管理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#创建标签"><span class="toc-number">7.1.</span> <span class="toc-text">创建标签</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#操作标签"><span class="toc-number">7.2.</span> <span class="toc-text">操作标签</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#小结-4"><span class="toc-number">7.3.</span> <span class="toc-text">小结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用Github"><span class="toc-number">8.</span> <span class="toc-text">使用Github</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#自定义Git"><span class="toc-number">9.</span> <span class="toc-text">自定义Git</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#忽略特殊文件"><span class="toc-number">9.1.</span> <span class="toc-text">忽略特殊文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#配置别名－Link"><span class="toc-number">9.2.</span> <span class="toc-text">配置别名－Link</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#搭建Git服务器－Link"><span class="toc-number">9.3.</span> <span class="toc-text">搭建Git服务器－Link</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#GIT-CHEAT-SHEET-pdf"><span class="toc-number">10.</span> <span class="toc-text">GIT CHEAT SHEET.pdf</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#写在前面"><span class="toc-number">1.</span> <span class="toc-text">写在前面</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Git：分布式版本控制系统"><span class="toc-number">2.</span> <span class="toc-text">Git：分布式版本控制系统</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#创建版本库"><span class="toc-number">3.</span> <span class="toc-text">创建版本库</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#小结"><span class="toc-number">3.1.</span> <span class="toc-text">小结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#时光机穿梭"><span class="toc-number">4.</span> <span class="toc-text">时光机穿梭</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#版本回退"><span class="toc-number">4.1.</span> <span class="toc-text">版本回退</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#工作区与暂存区"><span class="toc-number">4.2.</span> <span class="toc-text">工作区与暂存区</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#管理修改"><span class="toc-number">4.3.</span> <span class="toc-text">管理修改</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#撤销修改"><span class="toc-number">4.4.</span> <span class="toc-text">撤销修改</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#删除文件"><span class="toc-number">4.5.</span> <span class="toc-text">删除文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#小结-1"><span class="toc-number">4.6.</span> <span class="toc-text">小结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#远程仓库"><span class="toc-number">5.</span> <span class="toc-text">远程仓库</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#添加远程库"><span class="toc-number">5.1.</span> <span class="toc-text">添加远程库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#从远程库克隆"><span class="toc-number">5.2.</span> <span class="toc-text">从远程库克隆</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#小结-2"><span class="toc-number">5.3.</span> <span class="toc-text">小结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#分支管理"><span class="toc-number">6.</span> <span class="toc-text">分支管理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#创建与合并分支"><span class="toc-number">6.1.</span> <span class="toc-text">创建与合并分支</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#解决冲突"><span class="toc-number">6.2.</span> <span class="toc-text">解决冲突</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分支策略"><span class="toc-number">6.3.</span> <span class="toc-text">分支策略</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Bug分支"><span class="toc-number">6.4.</span> <span class="toc-text">Bug分支</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#多人协作"><span class="toc-number">6.5.</span> <span class="toc-text">多人协作</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#推送分支"><span class="toc-number">6.5.1.</span> <span class="toc-text">推送分支</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#抓取分支"><span class="toc-number">6.5.2.</span> <span class="toc-text">抓取分支</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#小结-3"><span class="toc-number">6.6.</span> <span class="toc-text">小结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#标签管理"><span class="toc-number">7.</span> <span class="toc-text">标签管理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#创建标签"><span class="toc-number">7.1.</span> <span class="toc-text">创建标签</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#操作标签"><span class="toc-number">7.2.</span> <span class="toc-text">操作标签</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#小结-4"><span class="toc-number">7.3.</span> <span class="toc-text">小结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用Github"><span class="toc-number">8.</span> <span class="toc-text">使用Github</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#自定义Git"><span class="toc-number">9.</span> <span class="toc-text">自定义Git</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#忽略特殊文件"><span class="toc-number">9.1.</span> <span class="toc-text">忽略特殊文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#其它"><span class="toc-number">9.2.</span> <span class="toc-text">其它</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#小插曲"><span class="toc-number">10.</span> <span class="toc-text">小插曲</span></a></li></ol>
         
     </div>
     <style>
@@ -710,10 +718,10 @@ var _hmt = _hmt || [];
         }
     </style>
 
-    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+    <input type="button" id="tocButton" value="Hide"  title="Show or Hide Table of Contents">
 
     <script>
-        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+        yiliaConfig.toc = ["Hide", "Show", !!"false"];
     </script>
 
 
@@ -775,13 +783,13 @@ var _hmt = _hmt || [];
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+            <a href="/" title="Back to Homepage"><i class="fa fa-home"></i></a>
         
 
-        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+        <a title="Mini Archives"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2018/01/04/2017-summary/" title="下一篇: 2017 Summary">
+            <a href="/2018/01/04/2017-summary/" title="Next: 2017 Summary">
                 <i class="fa fa-angle-right"></i>
             </a>
         
@@ -804,14 +812,14 @@ var _hmt = _hmt || [];
                 2016-2018 Adong Kong
             </div>
             <div class="footer-right">
-                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+                <a href="http://hexo.io/" target="_blank" title="A fast, simple &amp; powerful blog framework">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="Another simple and elegant theme for Hexo  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
             </div>
         </div>
         
             <div class="visit">
                 
                     <span id="busuanzi_container_site_pv" style='display:none'>
-                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        <span id="site-visit" title="Site Visitors"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
                         </span>
                     </span>
                 
@@ -820,7 +828,7 @@ var _hmt = _hmt || [];
                 
                 
                     <span id="busuanzi_container_page_pv" style='display:none'>
-                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        <span id="page-visit"  title="Page Hits"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
                         </span>
                     </span>
                 
@@ -874,9 +882,9 @@ MathJax.Hub.Queue(function() {
 
 
 <div class="scroll" id="scroll">
-    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
-    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
-    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+    <a href="#" title="Back to Top"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="Comments"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="Go to Bottom"><i class="fa fa-arrow-down"></i></a>
 </div>
 <script>
     // Open in New Window

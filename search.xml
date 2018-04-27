@@ -310,7 +310,14 @@
 <p>或者你发现，可能是<code>.gitignore</code>写得有问题，需要找出来到底哪个规则写错了，可以用<code>git check-ignore</code>命令检查:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git check-ignore -v App.class</div></pre></td></tr></table></figure>
 <p><code>.gitignore</code>文件本身要放到版本库里，并且可以对<code>.gitignore</code>做版本管理！</p>
-<h3 id="配置别名－Link"><a href="#配置别名－Link" class="headerlink" title="配置别名－Link"></a><a href="https://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000/001375234012342f90be1fc4d81446c967bbdc19e7c03d3000" target="_blank" rel="external">配置别名－Link</a></h3><h3 id="搭建Git服务器－Link"><a href="#搭建Git服务器－Link" class="headerlink" title="搭建Git服务器－Link"></a><a href="https://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000/00137583770360579bc4b458f044ce7afed3df579123eca000" target="_blank" rel="external">搭建Git服务器－Link</a></h3><h2 id="GIT-CHEAT-SHEET-pdf"><a href="#GIT-CHEAT-SHEET-pdf" class="headerlink" title="GIT CHEAT SHEET.pdf"></a><a href="git-cheatsheet.pdf">GIT CHEAT SHEET.pdf</a></h2>]]></content>
+<h3 id="其它"><a href="#其它" class="headerlink" title="其它"></a>其它</h3><p><a href="https://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000/001375234012342f90be1fc4d81446c967bbdc19e7c03d3000" target="_blank" rel="external">配置别名－Link</a></p>
+<p><a href="https://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000/00137583770360579bc4b458f044ce7afed3df579123eca000" target="_blank" rel="external">搭建Git服务器－Link</a></p>
+<p><a href="git-cheatsheet.pdf">GIT CHEAT SHEET.pdf</a></p>
+<h2 id="小插曲"><a href="#小插曲" class="headerlink" title="小插曲"></a>小插曲</h2><p>因为这次学习Git过程中配置了另一个Github小号的信息，导致在<code>hexo deploy</code>的时候报错提示<code>permission denied</code>。一开始一直以为是<code>SSH key</code>的问题，就重新生成了一遍<code>SSH key</code>然后添加到Github，发现并不好使。而且我跑了命令:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ git config user.name</div><div class="line">$ git config user.email</div><div class="line">$ git remote -v</div></pre></td></tr></table></figure>
+<p>验证信息都是对的，那就奇怪了，怎么可能提交的时候还认为本地是Github小号呢，有想到可能是cache的问题，查了一下然后试了一下，果然。。。</p>
+<p><img src="/2018/04/22/git/git-cache.jpg" alt=""></p>
+]]></content>
     </entry>
     
     <entry>
