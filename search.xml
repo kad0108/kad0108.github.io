@@ -4,12 +4,34 @@
   
     
     <entry>
+      <title><![CDATA[Sapiens —— A Brief History of Humankind]]></title>
+      <url>http://kad0108.github.io/2018/05/03/sapiens/</url>
+      <content type="html"><![CDATA[<h2 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h2><p>这学期无脑的写论文和改论文学习生活实在是百无聊赖，尽管同时也在学习英语看英语原著，但总是感觉有些乏味没能满足我的精神需求。虽然被困在学校困在实验室里，但我的思想不能被束缚。之前听过《人类简史》的大名，偶然在知乎上刷推荐书单看到，就决定读了。从小看的最多都是教科书课外辅导书作文书，可能是因为反感死记硬背，一直不喜欢文科类的科目，只喜欢理科思维性的科目，所以课外阅读很少，也直接导致了我看问题肤浅不够深入。不想说这本书论点论据的正确性，因为我还不够格来评价，只是在看的过程中发现书中很多观点和诠释问题的角度是对我固有思维的冲击，第一次在看书的过程中思维有了饥渴的感觉。看前半部分内容的过程中都在惊叹作者奇特的角度和观点，看到后面慢慢地自己能通过作者独特的视角去思考看待一些问题了。这本《人类简史》应该算是我的思维启蒙书了～～</p>
+<a id="more"></a>
+<h3 id="整本书看完印象最深的观点是："><a href="#整本书看完印象最深的观点是：" class="headerlink" title="整本书看完印象最深的观点是："></a>整本书看完印象最深的观点是：</h3><p><strong>难点不在于讲故事，而在于要让人相信</strong>。任何形式的群体都需要坚信由想象所构建的秩序才能维持久远。适用于神灵、国家、有限公司等等。</p>
+<h3 id="和别人讨论最多的衍生观点是："><a href="#和别人讨论最多的衍生观点是：" class="headerlink" title="和别人讨论最多的衍生观点是："></a>和别人讨论最多的衍生观点是：</h3><p><strong>科学发展是第一生产力</strong>。中国几千年的治乱兴衰都是由于科学发展不能满足由于人口过多而产生的需求。简单说就是当时生产的粮食不够当时的人吃，土地的承载力有限，这也是为什么每个朝代开始的时候一般都政治清明、欣欣向荣，就是因为每个朝代开始前经历过大的战争，消耗了很多人口，生产与需求矛盾不大。随着发展，人口数增加，导致人口又超过了土地的承载力，这个时候社会矛盾极大，极易发生动乱。中国历史上每个朝代都是一个无可奈何的轮回，除非当时的人们可以进行计划生育。现在不必要计划生育，一方面就是由于科技发展保证了还没达到可供养人数的上限。</p>
+<hr>
+<p>书非借不能读也，也促使我写下了这篇读书笔记。准确地说这应该是第三篇读书笔记，却是第一篇非技术类的阅读笔记。前两篇<a href="http://kadong.space/categories/Reading-Notes/" target="_blank" rel="external">看这里</a>。总是敲键盘，很久没有大篇幅写过字了，所以原谅我潦草的字迹。</p>
+<p><img src="/2018/05/03/sapiens/0.jpg" alt=""></p>
+<p><img src="/2018/05/03/sapiens/1.jpg" alt=""></p>
+<p><img src="/2018/05/03/sapiens/2.jpg" alt=""></p>
+<p><img src="/2018/05/03/sapiens/3.jpg" alt=""></p>
+<p><img src="/2018/05/03/sapiens/4.jpg" alt=""></p>
+<p><img src="/2018/05/03/sapiens/5.jpg" alt=""></p>
+<p><img src="/2018/05/03/sapiens/6.jpg" alt=""></p>
+<!--
+<a href="/2017/08/09/you-dont-know-js-I/" title="You Don't Know JavaScript I —— Scope & Closures">You Don't Know JavaScript I —— Scope & Closures</a><br><a href="/2017/08/10/you-dont-know-js-II/" title="You Don't Know JavaScript II —— This & Object & Prototypes">You Don't Know JavaScript II —— This & Object & Prototypes</a>
+<p>–&gt;</p>
+-->]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[Git]]></title>
       <url>http://kad0108.github.io/2018/04/22/git/</url>
       <content type="html"><![CDATA[<h2 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h2><p>毕业🎓前的日子真是度日如年，厌倦反感学校的一切，只能看书学英语参加各种英语角活动看视频，而且除了跑实验写的那点已经很久很久没有敲代码了。。。稍微学点东西安慰自己。。。之前只是知道Git这些命令怎么用，没有更详细地了解过。看廖老师的博文学习再学一遍Git加深印象。</p>
 <h2 id="Git：分布式版本控制系统"><a href="#Git：分布式版本控制系统" class="headerlink" title="Git：分布式版本控制系统"></a>Git：分布式版本控制系统</h2><p>Git自动记录每次文件改动，还可以多人协作编辑，即版本控制，Github则是为开源项目免费提供Git存储。</p>
 <p>Git是Linus为了方便管理Linux内核开发而开发的一个源码版本控制软件。</p>
-<p>分布式版本控制系统没有中央服务器，比集中式版本控制系统 （例如：SVN）安全性高很多。Git不仅仅是不需要联网这么简单，还有其及其强大的分支管理。</p>
+<p>分布式版本控制系统没有中央服务器，比集中式版本控制系统 （例如：SVN）安全性高很多。Git不仅仅是不需要联网这么简单，还有极其强大的分支管理。</p>
 <p>安装成功后Git需要自报家门，<code>--global</code>参数，用了这个参数，表示你这台机器上所有的Git仓库都会使用这个配置，当然也可以对某个仓库指定不同的用户名和Email地址。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ git config --global user.name &quot;Your Name&quot;</div><div class="line">$ git config --global user.email &quot;email@example.com&quot;</div></pre></td></tr></table></figure>
 <a id="more"></a>
@@ -360,7 +382,7 @@
 <p>因为自己想去南方工作，北方自然环境毕竟比不上南方，所以也尽量只考虑了南方的工作地点和公司。杭州是我很喜欢很喜欢的城市，去过三次，两次是去面网易云音乐。对杭州真的有种说不出来的特殊感情，就是感觉很舒服，第一次在西湖看喷泉我就哭了，觉得在这个城市生活的人真的好幸福，希望自己以后能在这个城市定居。</p>
 <p>很感谢遇到的腾讯面试官，能够在只有实习电面反馈的情况下认可我，为我校招开绿灯没有面试直接发了offer。感觉是我职业路上的一位贵人，想起刘邦的用人之道：“夫运筹帷幄之中，决胜千里之外，吾不如子房；镇国家，抚百姓，给馈饷，不绝粮道，吾不如萧何；连百万之军，战必胜，攻必取，吾不如韩信。此三人，皆人杰也，吾能用之，此吾所以取天下也”。以后工作中有这样一位认可自己看重自己的leader感觉很幸运。很期待。</p>
 <p>有个字述一年的活动，我给自己总结的是“<strong>行</strong>”，一路都在努力进步前行。<strong>认真做好每件事，感恩一路上遇到的人和事，投资自己，提升自己，站在阳光里。</strong></p>
-<p>新的一年对自己有很多期待：刚入手了kpw，希望可以提升自己的阅读量（小时候书读的少（捂脸）），尤其是英文阅读；运动要一直坚持，让自己一直健健康康的；拓宽自己的知识面，技术知识面，找到自己感兴趣深入的领域有所提升；一直都很羡慕出国留学的同学，被周围同学问过很多次为什么没想过出国，我想，我很想，只是我不想让家里因为我留学增添负担，所以要攒钱供自己出国留学；最后希望父母能健康、快乐、永远年轻～～</p>
+<p>新的一年对自己有很多期待：刚入手了kpw，希望可以提升自己的阅读量（小时候书读的少（捂脸）），尤其是英文阅读；运动要一直坚持，让自己一直健健康康的；拓宽自己的知识面，技术知识面，找到自己感兴趣深入的领域有所提升；一直都很羡慕出国留学的同学，被周围同学问过很多次为什么没想过出国，我很想，只是我不想让家里因为我留学增添负担，所以要攒钱供自己出国留学；希望萌卓能够拿到Google的Offer；自己和父母、妹妹、萌卓一起，都能健康、快乐、永远年轻～～</p>
 <p>Happy New Year!</p>
 <p><img src="/2018/01/04/2017-summary/fireworks.jpg" alt="Happy New Year!"></p>
 ]]></content>
@@ -1396,7 +1418,7 @@
 <h3 id="flex一维布局"><a href="#flex一维布局" class="headerlink" title="flex一维布局"></a>flex一维布局</h3><p>父元素设置flex布局，子元素中需要自适应宽度的设置flex:1;，通过order来实现对子元素排列顺序的控制<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">html,body,div&#123;</div><div class="line">	height: 100%;</div><div class="line">&#125;</div><div class="line">.container&#123;</div><div class="line">	display: flex;</div><div class="line">&#125;</div><div class="line">.middle&#123;</div><div class="line">	order: 2;</div><div class="line">	flex: 1;</div><div class="line">&#125;</div><div class="line">.left, .right&#123;</div><div class="line">	background-color: purple;</div><div class="line">	width: 200px;</div><div class="line">&#125;</div><div class="line">.left&#123;</div><div class="line">	order: 1;</div><div class="line">&#125;</div><div class="line">.right&#123;</div><div class="line">	order: 3;</div><div class="line">&#125;</div><div class="line"></div><div class="line">&lt;div class=&quot;container&quot;&gt;</div><div class="line">	&lt;div class=&quot;left&quot;&gt;&lt;/div&gt;</div><div class="line">	&lt;div class=&quot;middle&quot;&gt;&lt;/div&gt;</div><div class="line">	&lt;div class=&quot;right&quot;&gt;&lt;/div&gt;</div><div class="line">&lt;/div&gt;</div></pre></td></tr></table></figure></p>
 <h3 id="grid-目前仍然在W3C草案中的栅格二维布局，需要确定浏览器支持"><a href="#grid-目前仍然在W3C草案中的栅格二维布局，需要确定浏览器支持" class="headerlink" title="grid: 目前仍然在W3C草案中的栅格二维布局，需要确定浏览器支持"></a>grid: 目前仍然在W3C草案中的栅格二维布局，需要确定浏览器支持</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">html,body,div&#123;</div><div class="line">	height: 100%;</div><div class="line">&#125;</div><div class="line">.container&#123;</div><div class="line">	display: grid;</div><div class="line">	grid-template-columns: 200px auto 200px;</div><div class="line">	grid-template-rows: 100%;</div><div class="line">&#125;</div><div class="line">.middle&#123;</div><div class="line">	</div><div class="line">&#125;</div><div class="line">.left, .right&#123;</div><div class="line">	background-color: purple;</div><div class="line">	width: 200px;</div><div class="line">&#125;</div><div class="line">.left&#123;</div><div class="line">	</div><div class="line">&#125;</div><div class="line">.right&#123;</div><div class="line">	</div><div class="line">&#125;</div><div class="line"></div><div class="line">&lt;div class=&quot;container&quot;&gt;</div><div class="line">	&lt;div class=&quot;left&quot;&gt;&lt;/div&gt;</div><div class="line">	&lt;div class=&quot;middle&quot;&gt;&lt;/div&gt;</div><div class="line">	&lt;div class=&quot;right&quot;&gt;&lt;/div&gt;</div><div class="line">&lt;/div&gt;</div></pre></td></tr></table></figure>
 <h2 id="两列布局"><a href="#两列布局" class="headerlink" title="两列布局"></a>两列布局</h2><p>左栏固定宽度，右栏自适应宽度<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">html,body,div&#123;</div><div class="line">	height: 100%;</div><div class="line">&#125;</div><div class="line">.left&#123;</div><div class="line">	width: 200px;</div><div class="line">	float: left;</div><div class="line">&#125;</div><div class="line">.right&#123;</div><div class="line">	margin-left: 200px;</div><div class="line">&#125;</div><div class="line"></div><div class="line">&lt;div class=&quot;left&quot;&gt;&lt;/div&gt;</div><div class="line">&lt;div class=&quot;right&quot;&gt;&lt;/div&gt;</div></pre></td></tr></table></figure></p>
-<p>也可以触发右栏元素的BFC实现自适应，见<a href="http://kadong.space/2017/03/02/bfc/" target="_blank" rel="external">这篇博文</a></p>
+<p>也可以触发右栏元素的BFC实现自适应，见<a href="/2017/03/02/bfc/" title="BFC">BFC</a>这篇博文。</p>
 <h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a href="http://www.w3cplus.com/css/vertically-center-content-with-css" target="_blank" rel="external">CSS制作水平垂直居中对齐</a></p>
 <p><a href="http://www.ruanyifeng.com/blog/2015/07/flex-grammar.html?utm_source=tuicool" target="_blank" rel="external">Flex</a></p>
 <p><a href="http://www.jackpu.com/san-lie-bu-ju-zuo-you-gu-ding-zhong-jian-lie-zi-gua-ying-tan-jiu/" target="_blank" rel="external">CSS Grid</a></p>
