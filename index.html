@@ -206,7 +206,7 @@ var _hmt = _hmt || [];
                 
                 <section class="switch-part switch-part2">
                     <div class="widget tagcloud" id="js-tagcloud">
-                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Float/">Float</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/">HTTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP缓存/">HTTP缓存</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Html5/">Html5</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a></li></ul>
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Float/">Float</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/">HTTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP缓存/">HTTP缓存</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Html5/">Html5</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NodeJS/">NodeJS</a></li></ul>
                     </div>
                 </section>
                 
@@ -282,6 +282,82 @@ var _hmt = _hmt || [];
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
       <div class="body-wrap">
+  
+    <article id="post-spider" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2018/08/27/spider/" class="article-date">
+      <time datetime="2018-08-27T14:54:29.000Z" itemprop="datePublished">2018-08-27</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/08/27/spider/">那些天玩过的爬虫</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <blockquote>
+<p>最近沉迷爬虫无法自拔。。。做到现在也算是有点收获，总结一下。</p>
+</blockquote>
+<p>最开始想要爬阿里系的一个APP，用Charles抓包发现，抓到携带数据的包都是zip，批量解压后分析发现并没有有效的数据。所以结论是，数据传输不是HTTP协议，抓不到包，只能通过<a href="https://mp.weixin.qq.com/s/vaqFkjj5Mg_f3JkZXhzLYQ">群控</a>来做。</p>
+<p>然后想分析一些其它同类的APP，鉴于之前分析移动端APP可能抓不到包的情况，转而去看有没有对应的微信小程序。微信小程序的请求是一定能抓到包的，因为，微信小程序的项目在编译时是将wxml、wxss编译成js来压缩打包为wxapkg文件，微信小程序在微信中的运行其实就是在微信内嵌浏览器（渲染引擎：安卓端X5内核，IOS端Webkit内核）的JSCore（JS引擎）中解压执行JS代码。而浏览器中的请求一定是遵循http协议的（HTTP协议是Web浏览器和服务器之间通信一定遵循的规则）。所以比移动端APP抓到包的概率大很多。</p>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/Front-End/">Front-End</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NodeJS/">NodeJS</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2018/08/27/spider/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+<!--
+
+-->
+
+
+
+
+
+
   
     <article id="post-base64" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -1742,80 +1818,6 @@ var _hmt = _hmt || [];
       
         <p class="article-more-link">
           <a href="/2017/03/02/bfc/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-<!--
-
--->
-
-
-
-
-
-
-  
-    <article id="post-scope" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2017/02/24/scope/" class="article-date">
-      <time datetime="2017-02-24T10:37:15.000Z" itemprop="datePublished">2017-02-24</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/02/24/scope/">Scope and Thread</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <p>有关作用域和执行栈的几道题目，直接来看例子：</p>
-<h3 id="例子一："><a href="#例子一：" class="headerlink" title="例子一："></a>例子一：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">for(var i = 0; i &lt; 10; i++)&#123;&#125;</div><div class="line">console.log(i);</div></pre></td></tr></table></figure>
-<p>输出10，var声明的变量i在全局范围内都有效。</p>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/Front-End/">Front-End</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/">JavaScript</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2017/02/24/scope/#more">more >></a>
         </p>
       
       <div class="clearfix"></div>

@@ -15,27 +15,25 @@
 
 
 
-<meta name="description" content="域名绑定使用Hexo搭建了静态博客，托管到了github上可通过kad0108.github.io访问。然而GitHub 屏蔽了百度爬虫，GitHub Pages 中的内容无法被百度索引。
-然后自己也申请了域名，下面是github绑定域名时间——————
+<meta name="description" content="最近沉迷爬虫无法自拔。。。做到现在也算是有点收获，总结一下。
 
-source文件夹中新建CNAME文件（无后缀名），首行添加域名，我的是kadong.space，注意前面不加http://或www，然后使用">
+最开始想要爬阿里系的一个APP，用Charles抓包发现，抓到携带数据的包都是zip，批量解压后分析发现并没有有效的数据。所以结论是，数据传输不是HTTP协议，抓不到包，只能通过群控来做。
+然后想分析一些其它同类的APP，鉴于之前分析移动端APP可能抓不到包的情况，转而去看有没有对应的微信小程序。微信小程序的请求是一定能抓到包的，因">
 <meta property="og:type" content="article">
-<meta property="og:title" content="完善博客功能">
-<meta property="og:url" content="http://kad0108.github.io/2017/01/26/build/index.html">
+<meta property="og:title" content="那些天玩过的爬虫">
+<meta property="og:url" content="http://kad0108.github.io/2018/08/27/spider/index.html">
 <meta property="og:site_name" content="Adong Kong's Blog">
-<meta property="og:description" content="域名绑定使用Hexo搭建了静态博客，托管到了github上可通过kad0108.github.io访问。然而GitHub 屏蔽了百度爬虫，GitHub Pages 中的内容无法被百度索引。
-然后自己也申请了域名，下面是github绑定域名时间——————
+<meta property="og:description" content="最近沉迷爬虫无法自拔。。。做到现在也算是有点收获，总结一下。
 
-source文件夹中新建CNAME文件（无后缀名），首行添加域名，我的是kadong.space，注意前面不加http://或www，然后使用">
-<meta property="og:image" content="http://kad0108.github.io/2017/01/26/build/domain.png">
-<meta property="og:updated_time" content="2017-01-26T16:07:16.000Z">
+最开始想要爬阿里系的一个APP，用Charles抓包发现，抓到携带数据的包都是zip，批量解压后分析发现并没有有效的数据。所以结论是，数据传输不是HTTP协议，抓不到包，只能通过群控来做。
+然后想分析一些其它同类的APP，鉴于之前分析移动端APP可能抓不到包的情况，转而去看有没有对应的微信小程序。微信小程序的请求是一定能抓到包的，因">
+<meta property="og:updated_time" content="2018-08-28T15:23:18.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="完善博客功能">
-<meta name="twitter:description" content="域名绑定使用Hexo搭建了静态博客，托管到了github上可通过kad0108.github.io访问。然而GitHub 屏蔽了百度爬虫，GitHub Pages 中的内容无法被百度索引。
-然后自己也申请了域名，下面是github绑定域名时间——————
+<meta name="twitter:title" content="那些天玩过的爬虫">
+<meta name="twitter:description" content="最近沉迷爬虫无法自拔。。。做到现在也算是有点收获，总结一下。
 
-source文件夹中新建CNAME文件（无后缀名），首行添加域名，我的是kadong.space，注意前面不加http://或www，然后使用">
-<meta name="twitter:image" content="http://kad0108.github.io/2017/01/26/build/domain.png">
+最开始想要爬阿里系的一个APP，用Charles抓包发现，抓到携带数据的包都是zip，批量解压后分析发现并没有有效的数据。所以结论是，数据传输不是HTTP协议，抓不到包，只能通过群控来做。
+然后想分析一些其它同类的APP，鉴于之前分析移动端APP可能抓不到包的情况，转而去看有没有对应的微信小程序。微信小程序的请求是一定能抓到包的，因">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -65,7 +63,7 @@ source文件夹中新建CNAME文件（无后缀名），首行添加域名，我
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>完善博客功能 | Adong Kong&#39;s Blog</title>
+<title>那些天玩过的爬虫 | Adong Kong&#39;s Blog</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -293,11 +291,11 @@ var _hmt = _hmt || [];
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-build" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-spider" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2017/01/26/build/" class="article-date">
-      <time datetime="2017-01-26T15:08:32.000Z" itemprop="datePublished">2017-01-26</time>
+      <a href="/2018/08/27/spider/" class="article-date">
+      <time datetime="2018-08-27T14:54:29.000Z" itemprop="datePublished">2018-08-27</time>
 </a>
 
 
@@ -312,7 +310,7 @@ var _hmt = _hmt || [];
         
   
     <h1 class="article-title" itemprop="name">
-      完善博客功能
+      那些天玩过的爬虫
     </h1>
   
 
@@ -321,11 +319,15 @@ var _hmt = _hmt || [];
       <div class="article-info article-info-post">
         
     <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/Geek/">Geek</a>
+    <a class="article-category-link" href="/categories/Front-End/">Front-End</a>
     </div>
 
 
         
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NodeJS/">NodeJS</a></li></ul>
+    </div>
+
         <div class="clearfix"></div>
       </div>
       
@@ -333,23 +335,55 @@ var _hmt = _hmt || [];
     <div class="article-entry" itemprop="articleBody">
       
           
-        <h2 id="域名绑定"><a href="#域名绑定" class="headerlink" title="域名绑定"></a>域名绑定</h2><p>使用Hexo搭建了静态博客，托管到了github上可通过<a href="https://kad0108.github.io/">kad0108.github.io</a>访问。然而GitHub 屏蔽了百度爬虫，GitHub Pages 中的内容无法被百度索引。</p>
-<p>然后自己也申请了域名，下面是github绑定域名时间——————</p>
-<ol>
-<li><p>source文件夹中新建CNAME文件（无后缀名），首行添加域名，我的是<a href="http://kadong.space/" target="_blank" rel="external">kadong.space</a>，注意前面不加<code>http://或www</code>，然后使用<code>hexo g &amp;&amp; hexo d</code>部署。</p>
+        <blockquote>
+<p>最近沉迷爬虫无法自拔。。。做到现在也算是有点收获，总结一下。</p>
+</blockquote>
+<p>最开始想要爬阿里系的一个APP，用Charles抓包发现，抓到携带数据的包都是zip，批量解压后分析发现并没有有效的数据。所以结论是，数据传输不是HTTP协议，抓不到包，只能通过<a href="https://mp.weixin.qq.com/s/vaqFkjj5Mg_f3JkZXhzLYQ" target="_blank" rel="external">群控</a>来做。</p>
+<p>然后想分析一些其它同类的APP，鉴于之前分析移动端APP可能抓不到包的情况，转而去看有没有对应的微信小程序。微信小程序的请求是一定能抓到包的，因为，微信小程序的项目在编译时是将wxml、wxss编译成js来压缩打包为wxapkg文件，微信小程序在微信中的运行其实就是在微信内嵌浏览器（渲染引擎：安卓端X5内核，IOS端Webkit内核）的JSCore（JS引擎）中解压执行JS代码。而浏览器中的请求一定是遵循http协议的（HTTP协议是Web浏览器和服务器之间通信一定遵循的规则）。所以比移动端APP抓到包的概率大很多。</p>
+<a id="more"></a>
+<!-- X5内核是渲染引擎，浏览器内核也称为渲染引擎 -->
+<h3 id="其他方式："><a href="#其他方式：" class="headerlink" title="其他方式："></a>其他方式：</h3><ol>
+<li>一些移动端App如果开启了debug模式，在手机连接电脑之后可以在<code>chrome://inspect</code>中进行<code>inspect</code>调试。</li>
+<li>尝试了一下类似<code>selenium</code>的移动端自动化测试工具<code>appium</code>，在App授权的操作上卡死了。</li>
+</ol>
+<h2 id="有关抓包"><a href="#有关抓包" class="headerlink" title="有关抓包"></a>有关抓包</h2><p>先来理解 <strong>代理</strong> ：正常浏览器访问网页时是直接去访问服务器，如果中间通过代理来访问，代理可以帮忙做很多事，比如修改你请求的内容或者将请求的资源映射为本地的资源。</p>
+<p>Charles实际上就是一个代理服务器，对手机、电脑等抓包分析。</p>
+<h3 id="Charles抓不到包时，可以查看"><a href="#Charles抓不到包时，可以查看" class="headerlink" title="Charles抓不到包时，可以查看"></a>Charles抓不到包时，可以查看</h3><ol>
+<li><p>是否勾选了电脑系统代理<code>windows proxy</code>或<code>Mac OSX Proxy</code></p>
 </li>
-<li><p>在域名解析提供商，我的域名是在万网购买。步骤：进入工作台－》域名－》解析－》域名解析－》解析设置－》添加解析。</p>
+<li><p>是否关闭了电脑的自动代理<code>Automatic Proxy Configuration</code></p>
+</li>
+<li><p>是否给手机配置了代理？</p>
+</li>
+<li><p>是否给电脑或手机安装了信任证书<code>SSL Proxying &gt; Install Charles Root Certificate</code>或<code>https://chls.pro/ssl</code> </p>
 </li>
 </ol>
-<a id="more"></a>
-<p><img src="/2017/01/26/build/domain.png" alt="domain"></p>
-<h2 id="评论功能"><a href="#评论功能" class="headerlink" title="评论功能"></a>评论功能</h2><p>Hexo评论模块支持Disqus, 多说和友言。</p>
-<p><a href="http://duoshuo.com/create-site/" target="_blank" rel="external">创建多说站点</a>，然后后面<a href="http://dev.duoshuo.com/threads/541d3b2b40b5abcd2e4df0e9" target="_blank" rel="external">配置</a>会用到站点名称。</p>
-<h2 id="留言板功能"><a href="#留言板功能" class="headerlink" title="留言板功能"></a>留言板功能</h2><p>参考<a href="http://blog.csdn.net/shenshanlaoyuan/article/details/52774473" target="_blank" rel="external">这里</a>，我把留言板功能和关于我页面集合在一起。</p>
-<p>在多说控制台，修改多说CSS</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">#ds-recent-visitors .ds-avatar &#123;</div><div class="line">	display: inline;</div><div class="line">	padding: 0 !important;</div><div class="line">	margin: 4px !important;</div><div class="line">&#125;</div><div class="line">#ds-recent-visitors div img &#123;</div><div class="line">    display: inline-block !important;</div><div class="line">    width: 56px !important;</div><div class="line">    height: 56px !important;</div><div class="line">    border-radius: 50%;</div><div class="line">    border: 1px solid #ddd;</div><div class="line">    padding: 2px;</div><div class="line">    /* box-shadow: 1px 1px 1px rgba(0,0,0, .15); */</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h2 id="音乐功能"><a href="#音乐功能" class="headerlink" title="音乐功能"></a>音乐功能</h2><p>使用网易云音乐，生成外链播放器，后续继续探索如何集成多个歌曲。</p>
-<p><br></p>
+<h3 id="抓包分析了四个小程序，可以很明显地发现对应的请求拦截策略的不同："><a href="#抓包分析了四个小程序，可以很明显地发现对应的请求拦截策略的不同：" class="headerlink" title="抓包分析了四个小程序，可以很明显地发现对应的请求拦截策略的不同："></a>抓包分析了四个小程序，可以很明显地发现对应的请求拦截策略的不同：</h3><ol>
+<li><p>最基本的会对爬取频率有限制，那就每个请求<a href="https://www.reddit.com/r/javascript/comments/5abyi2/is_there_a_way_to_implement_sleep_with_es6/" target="_blank" rel="external">sleep</a>几秒钟</p>
+</li>
+<li><p>针对定位的拦截，定位信息包括经纬度<code>lat,lng</code>、城市<code>city_id</code>、编码串<code>address_code</code></p>
+</li>
+<li><p>针对设备有关参数的拦截：设备信息包括<code>User Agent</code>、编码串<code>device_id</code></p>
+</li>
+<li><p>针对<code>token</code>的拦截：大多抓取到的<code>token</code>不会很快过期，伪造方式不明。其中有一个小程序的<code>token</code>获取基于微信接口返回的<code>code</code>参数，这个请求过期时间在一分钟左右，而微信根据用户信息去获取<code>code</code>的请求是抓不到包的。</p>
+</li>
+<li><p>针对签名串<code>sign</code>的拦截：这个参数是基于请求<code>query</code>中携带的其他参数加密得到的签名串，同样不知如何伪造。</p>
+</li>
+</ol>
+<hr>
+<p>通过真机定位去爬取定位地区的数据，自己对爬虫的分析目前只能做到这个程度，想要进一步实现爬虫自动化，需要考虑的问题列在下面：</p>
+<ul>
+<li>数据存储方式，与做数据分析的小伙伴如何对接。</li>
+<li>遇到这种接口变更或者反爬策略变更的情况如何实时应对。</li>
+<li>每款App请求构造规则都不同，需要每个都写一套爬虫？可复用性如何考虑。</li>
+<li>各种参数编码串如何伪造。</li>
+<li>针对定位的不同，不同App可拉取数据方式不同，比如：<ul>
+<li>一款App是定位到同一城市不同地区可拉取到的数据是一致的，这种形式的数据拉取可以通过一些地图接口批量给不同城市的地址解析得到对应的经纬度信息。</li>
+<li>另一款App是定位到同一城市不同地区会有不同的数据来源，针对这种形式的数据获取，可能需要先在地图中搜索到需要的地址，然后伪造对应经纬度信息作为拉取参数。</li>
+</ul>
+</li>
+</ul>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a href="https://cloud.tencent.com/developer/article/1004875" target="_blank" rel="external">JavaScriptCore解析</a><br><a href="https://www.charlesproxy.com/documentation/faqs/using-charles-from-an-iphone/" target="_blank" rel="external">Using Charles from an iPhone（可能需要翻墙）</a><br><a href="https://www.charlesproxy.com/documentation/using-charles/ssl-certificates/" target="_blank" rel="external">SSL Certificates （可能需要翻墙）</a></p>
 
       
     </div>
@@ -358,13 +392,13 @@ var _hmt = _hmt || [];
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2017/01/26/build/">完善博客功能</a></p>
+        <p><span>本文标题:</span><a href="/2018/08/27/spider/">那些天玩过的爬虫</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">Adong Kong</a></p>
-        <p><span>发布时间:</span>2017-01-26, 23:08:32</p>
-        <p><span>最后更新:</span>2017-01-27, 00:07:16</p>
+        <p><span>发布时间:</span>2018-08-27, 22:54:29</p>
+        <p><span>最后更新:</span>2018-08-28, 23:23:18</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2017/01/26/build/" title="完善博客功能">http://kad0108.github.io/2017/01/26/build/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://kad0108.github.io/2017/01/26/build/　　作者: Adong Kong" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2018/08/27/spider/" title="那些天玩过的爬虫">http://kad0108.github.io/2018/08/27/spider/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://kad0108.github.io/2018/08/27/spider/　　作者: Adong Kong" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -376,16 +410,10 @@ var _hmt = _hmt || [];
 
     <nav id="article-nav">
         
-            <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2017/01/28/hidedom/">
-                    隐藏页面元素的几种方法
-                </a>
-            </div>
-        
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2017/01/25/float/">
-                    CSS布局模型之浮动模型
+                <a href="/2018/08/04/base64/">
+                    Base64
                 </a>
             </div>
         
@@ -397,7 +425,7 @@ var _hmt = _hmt || [];
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#域名绑定"><span class="toc-number">1.</span> <span class="toc-text">域名绑定</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#评论功能"><span class="toc-number">2.</span> <span class="toc-text">评论功能</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#留言板功能"><span class="toc-number">3.</span> <span class="toc-text">留言板功能</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#音乐功能"><span class="toc-number">4.</span> <span class="toc-text">音乐功能</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#其他方式："><span class="toc-number">1.</span> <span class="toc-text">其他方式：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#有关抓包"><span class="toc-number"></span> <span class="toc-text">有关抓包</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Charles抓不到包时，可以查看"><span class="toc-number">1.</span> <span class="toc-text">Charles抓不到包时，可以查看</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#抓包分析了四个小程序，可以很明显地发现对应的请求拦截策略的不同："><span class="toc-number">2.</span> <span class="toc-text">抓包分析了四个小程序，可以很明显地发现对应的请求拦截策略的不同：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-number"></span> <span class="toc-text">Reference</span></a>
         
     </div>
     <style>
@@ -433,7 +461,7 @@ var _hmt = _hmt || [];
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"完善博客功能　| Adong Kong's Blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"那些天玩过的爬虫　| Adong Kong's Blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -454,7 +482,7 @@ var _hmt = _hmt || [];
 
   <section id="comments">
     <!-- 多说评论框 start -->
-    <div class="ds-thread" data-thread-key="post-build" data-title="完善博客功能" data-url="http://kad0108.github.io/2017/01/26/build/"></div>
+    <div class="ds-thread" data-thread-key="post-spider" data-title="那些天玩过的爬虫" data-url="http://kad0108.github.io/2018/08/27/spider/"></div>
     <!-- 多说评论框 end -->
     <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
     <script type="text/javascript">
@@ -476,15 +504,13 @@ var _hmt = _hmt || [];
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2017/01/28/hidedom/" title="上一篇: 隐藏页面元素的几种方法">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
 
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2017/01/25/float/" title="下一篇: CSS布局模型之浮动模型">
+            <a href="/2018/08/04/base64/" title="下一篇: Base64">
                 <i class="fa fa-angle-right"></i>
             </a>
         
