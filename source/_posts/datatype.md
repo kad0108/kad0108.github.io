@@ -1,7 +1,6 @@
 ---
 title: 关于JS中变量类型的一些知识总结
 date: 2017-03-03 14:48:32
-top: true
 categories: 
 - Front-End
 tags:

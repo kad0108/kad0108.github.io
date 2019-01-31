@@ -1,7 +1,6 @@
 ---
 title: Ajax和跨域总结
 date: 2017-03-11 21:41:17
-top: true
 categories: 
 - Front-End
 tags:

@@ -1,7 +1,6 @@
 ---
 title: JS Prototype
 date: 2017-02-20 20:56:26
-top: true
 categories: 
 - Front-End
 tags:

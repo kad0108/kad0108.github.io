@@ -168,7 +168,7 @@ html,body,div{
 <div class="right"></div>
 ```
 
-也可以触发右栏元素的BFC实现自适应，见[这篇博文](http://kadong.space/2017/03/02/bfc/)
+也可以触发右栏元素的BFC实现自适应，见{% post_link bfc BFC %}这篇博文。
 
 ## Reference
 

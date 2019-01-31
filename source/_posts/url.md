@@ -76,6 +76,15 @@ TCP是双通道连接，即client和server都需要互相通信，并且双方�
 
 最终决定浏览器表现出来的页面效果的差异是：渲染引擎 Rendering Engine，也就是我们通常所说的“浏览器内核”，负责解析网页语法（如HTML、JavaScript）并渲染、展示网页。
 
+市面上使用的主流浏览器内核有5类：
+
+* Trident（IE内核）
+* Gecko（Firefox内核）
+* Presto（Opera前内核）
+* Webkit（Safari内核，chrome内核原型）
+* Blink（Blink 其实是 Webkit 的一个分支，添加了一些优化的新特性）
+
+
 ### 加载页面时浏览器的具体工作流程是：
 
 1. 解析HTML，转换树中的标签到DOM节点，构建DOM。
