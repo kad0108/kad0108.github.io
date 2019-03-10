@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html >
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="Adong Kong" />
+
+
+
+<meta name="description" content="MD5(Message Digest Algorithm 5)是一种信息摘要算法，它可以从任意长度的明文字符串生成128位的哈希值，是不可逆的。
+MD5算法原理：处理原文计算原文长度(bit)对512取余的结果，如果不等于448，就需要填充原文使得原文对512求余的结果等于448。填充的方法是第一位填1，其余位填0。填充后，信息长度为512*N+448(N为每512位为一组的组数)。用剩余位置(5">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MD5">
+<meta property="og:url" content="http://kad0108.github.io/2017/10/17/md5/index.html">
+<meta property="og:site_name" content="Adong Kong's Blog">
+<meta property="og:description" content="MD5(Message Digest Algorithm 5)是一种信息摘要算法，它可以从任意长度的明文字符串生成128位的哈希值，是不可逆的。
+MD5算法原理：处理原文计算原文长度(bit)对512取余的结果，如果不等于448，就需要填充原文使得原文对512求余的结果等于448。填充的方法是第一位填1，其余位填0。填充后，信息长度为512*N+448(N为每512位为一组的组数)。用剩余位置(5">
+<meta property="og:image" content="http://kad0108.github.io/2017/10/17/md5/h&r.png">
+<meta property="og:image" content="http://kad0108.github.io/2017/10/17/md5/rainbow.png">
+<meta property="og:updated_time" content="2019-03-10T05:18:33.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MD5">
+<meta name="twitter:description" content="MD5(Message Digest Algorithm 5)是一种信息摘要算法，它可以从任意长度的明文字符串生成128位的哈希值，是不可逆的。
+MD5算法原理：处理原文计算原文长度(bit)对512取余的结果，如果不等于448，就需要填充原文使得原文对512求余的结果等于448。填充的方法是第一位填1，其余位填0。填充后，信息长度为512*N+448(N为每512位为一组的组数)。用剩余位置(5">
+<meta name="twitter:image" content="http://kad0108.github.io/2017/10/17/md5/h&r.png">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="Adong Kong&#39;s Blog" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.ico">
+
+
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>MD5 | Adong Kong&#39;s Blog</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: false,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: true
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?1dbd558cf5d5b4dfae10344f2a043bbd";
+            var s = document.getElementsByTagName("script")[0]; 
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?1dbd558cf5d5b4dfae10344f2a043bbd";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="https://github.com/kad0108/"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://camo.githubusercontent.com/121cd7cbdc3e4855075ea8b558508b91ac463ac2/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f677265656e5f3030373230302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_left_green_007200.png"></a>
+        <a href="/" class="profilepic">
+            <img src="/img/avatar.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">Adong Kong</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">Do what you love and love what you do.</p>
+        
+
+        
+            <form id="search-form">
+            <input type="text" id="local-search-input" name="q" placeholder="search..." class="search form-control" autocomplete="off" autocorrect="off" searchonload="false" />
+            <i class="fa fa-times" onclick="resetSearch()"></i>
+            </form>
+            <div id="local-search-result"></div>
+            <p class='no-result'>No results found <i class='fa fa-spinner fa-pulse'></i></p>
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>Menu</li>
+                        <li>Tags</li>
+                        
+                        <li>Friends</li>
+                        
+                        
+                        <li>About Me</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="mailto:kad0108@foxmail.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" href="https://github.com/kad0108" title="GitHub"></a>
+                            
+                                <a class="fa RSS" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Float/">Float</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/">HTTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP缓存/">HTTP缓存</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Html5/">Html5</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NodeJS/">NodeJS</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://pages.github.com/">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://moxfive.xyz/">MOxFIVE</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">专注于前端</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">Adong Kong</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">Adong Kong</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">Do what you love and love what you do.</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="mailto:kad0108@foxmail.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="https://github.com/kad0108" title="GitHub"></a>
+                            
+                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="Tags" friends="Friends" about="About Me"/>
+</nav>
+      <div class="body-wrap"><article id="post-md5" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/10/17/md5/" class="article-date">
+      <time datetime="2017-10-17T14:45:46.000Z" itemprop="datePublished">2017-10-17</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      MD5
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/Front-End/">Front-End</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/">JavaScript</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p><strong>MD5(Message Digest Algorithm 5)</strong>是一种信息摘要算法，它可以从任意长度的明文字符串生成128位的哈希值，是不可逆的。</p>
+<h2 id="MD5算法原理："><a href="#MD5算法原理：" class="headerlink" title="MD5算法原理："></a>MD5算法原理：</h2><h3 id="处理原文"><a href="#处理原文" class="headerlink" title="处理原文"></a>处理原文</h3><p>计算原文长度(bit)对512取余的结果，如果不等于448，就需要填充原文使得原文对512求余的结果等于448。填充的方法是第一位填1，其余位填0。填充后，信息长度为512*N+448(N为每512位为一组的组数)。用剩余位置(512-448=64位)记录原文的真正长度，将长度的二进制值补在最后。信息长度变为512(N+1)。</p>
+<h3 id="设置初始值"><a href="#设置初始值" class="headerlink" title="设置初始值"></a>设置初始值</h3><p>MD5的哈希结果长度为128位，按每32位一组分成4组，这4组结果是由4个初始值A、B、C、D经过不断演变得到。MD5的官方实现中这4个32位的整数参数称为链接变量，设置如下：</p>
+<a id="more"></a>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">A=0x67452301</div><div class="line">B=0xefcdab89</div><div class="line">C=0x98badcfe</div><div class="line">D=0x10325476</div></pre></td></tr></table></figure>
+<p>按小端规则，数据在内存中的排列就是：<code>01 23 45 67 89 ab cd ... 32 10</code>。</p>
+<h3 id="循环加工"><a href="#循环加工" class="headerlink" title="循环加工"></a>循环加工</h3><ol>
+<li><p>循环的次数是分组的个数(N+1)</p>
+</li>
+<li><p>官方MD5所用到的函数有四种非线性函数：每次循环有四轮运算，每轮16次，F、G、H、I交替使用。</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">F(X, Y, Z) =(X&amp;Y) | ((~X) &amp; Z)</div><div class="line">G(X, Y, Z) =(X&amp;Z) | (Y &amp; (~Z))</div><div class="line">H(X, Y, Z) =X^Y^Z</div><div class="line">I(X, Y, Z)=Y^(X|(~Z))</div></pre></td></tr></table></figure>
+</li>
+<li><p>四种操作：</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">FF(a, b, c, d, M[j], s, Ki)表示 a = b + ((a + F(b, c, d) + Mj + Ki) &lt;&lt;&lt; s)</div><div class="line">GG(a, b, c, d, M[j], s, Ki)表示 a = b + ((a + G(b, c, d) + Mj + Ki) &lt;&lt;&lt; s)</div><div class="line">HH(a, b, c, d, M[j], s, Ki)表示 a = b + ((a + H(b, c, d) + Mj + Ki) &lt;&lt;&lt; s)</div><div class="line">II(a, b, c, d, M[j], s, Ki)表示 a = b + ((a + I(b, c, d) + Mj + Ki) &lt;&lt;&lt; s)</div></pre></td></tr></table></figure>
+</li>
+<li><p>Mi是第一步处理后的原文，原文长度是512的整数倍，把每512位再分成16等分，命名为M0~M15，每轮运算中交替用到M0~M15。</p>
+</li>
+<li><p>Ki是常量，每次运算都不相同。</p>
+</li>
+<li><p>左移S位，S也是常量，每次运算都不相同。</p>
+</li>
+<li><p>每次循环后将ABCD分别加上abcd，然后进入下一循环。</p>
+</li>
+</ol>
+<h3 id="拼接结果"><a href="#拼接结果" class="headerlink" title="拼接结果"></a>拼接结果</h3><p>把循环加工最终产生的ABCD四个值拼接在一起转换成字符串即可。</p>
+<h2 id="JS实现MD5算法"><a href="#JS实现MD5算法" class="headerlink" title="JS实现MD5算法"></a>JS实现MD5算法</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div><div class="line">170</div><div class="line">171</div><div class="line">172</div><div class="line">173</div><div class="line">174</div><div class="line">175</div><div class="line">176</div><div class="line">177</div><div class="line">178</div><div class="line">179</div><div class="line">180</div><div class="line">181</div><div class="line">182</div><div class="line">183</div><div class="line">184</div><div class="line">185</div><div class="line">186</div><div class="line">187</div><div class="line">188</div><div class="line">189</div><div class="line">190</div><div class="line">191</div><div class="line">192</div><div class="line">193</div><div class="line">194</div><div class="line">195</div><div class="line">196</div><div class="line">197</div><div class="line">198</div><div class="line">199</div><div class="line">200</div><div class="line">201</div><div class="line">202</div><div class="line">203</div><div class="line">204</div><div class="line">205</div><div class="line">206</div><div class="line">207</div><div class="line">208</div><div class="line">209</div><div class="line">210</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> *</div><div class="line"> * MD5 (Message-Digest Algorithm)</div><div class="line"> *</div><div class="line"> **/</div><div class="line">var MD5 = function(string) &#123;</div><div class="line">	function RotateLeft(lValue, iShiftBits) &#123;</div><div class="line">		return (lValue &lt;&lt; iShiftBits) | (lValue &gt;&gt;&gt; (32 - iShiftBits));</div><div class="line">	&#125;</div><div class="line">	function AddUnsigned(lX, lY) &#123;</div><div class="line">		var lX4, lY4, lX8, lY8, lResult;</div><div class="line">		lX8 = (lX &amp; 0x80000000);</div><div class="line">		lY8 = (lY &amp; 0x80000000);</div><div class="line">		lX4 = (lX &amp; 0x40000000);</div><div class="line">		lY4 = (lY &amp; 0x40000000);</div><div class="line">		lResult = (lX &amp; 0x3FFFFFFF) + (lY &amp; 0x3FFFFFFF);</div><div class="line">		if (lX4 &amp; lY4) &#123;</div><div class="line">			return (lResult ^ 0x80000000 ^ lX8 ^ lY8);</div><div class="line">		&#125;</div><div class="line">		if (lX4 | lY4) &#123;</div><div class="line">			if (lResult &amp; 0x40000000) &#123;</div><div class="line">				return (lResult ^ 0xC0000000 ^ lX8 ^ lY8);</div><div class="line">			&#125; else &#123;</div><div class="line">				return (lResult ^ 0x40000000 ^ lX8 ^ lY8);</div><div class="line">			&#125;</div><div class="line">		&#125; else &#123;</div><div class="line">			return (lResult ^ lX8 ^ lY8);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	function F(x, y, z) &#123;</div><div class="line">		return (x &amp; y) | ((~x) &amp; z);</div><div class="line">	&#125;</div><div class="line">	function G(x, y, z) &#123;</div><div class="line">		return (x &amp; z) | (y &amp; (~z));</div><div class="line">	&#125;</div><div class="line">	function H(x, y, z) &#123;</div><div class="line">		return (x ^ y ^ z);</div><div class="line">	&#125;</div><div class="line">	function I(x, y, z) &#123;</div><div class="line">		return (y ^ (x | (~z)));</div><div class="line">	&#125;</div><div class="line">	function FF(a, b, c, d, x, s, ac) &#123;</div><div class="line">		a = AddUnsigned(a, AddUnsigned(AddUnsigned(F(b, c, d), x), ac));</div><div class="line">		return AddUnsigned(RotateLeft(a, s), b);</div><div class="line">	&#125;;</div><div class="line">	function GG(a, b, c, d, x, s, ac) &#123;</div><div class="line">		a = AddUnsigned(a, AddUnsigned(AddUnsigned(G(b, c, d), x), ac));</div><div class="line">		return AddUnsigned(RotateLeft(a, s), b);</div><div class="line">	&#125;;</div><div class="line">	function HH(a, b, c, d, x, s, ac) &#123;</div><div class="line">		a = AddUnsigned(a, AddUnsigned(AddUnsigned(H(b, c, d), x), ac));</div><div class="line">		return AddUnsigned(RotateLeft(a, s), b);</div><div class="line">	&#125;;</div><div class="line">	function II(a, b, c, d, x, s, ac) &#123;</div><div class="line">		a = AddUnsigned(a, AddUnsigned(AddUnsigned(I(b, c, d), x), ac));</div><div class="line">		return AddUnsigned(RotateLeft(a, s), b);</div><div class="line">	&#125;;</div><div class="line">	function ConvertToWordArray(string) &#123;</div><div class="line">		var lWordCount;</div><div class="line">		var lMessageLength = string.length;</div><div class="line">		var lNumberOfWords_temp1 = lMessageLength + 8;</div><div class="line">		var lNumberOfWords_temp2 = (lNumberOfWords_temp1 - (lNumberOfWords_temp1 % 64)) / 64;</div><div class="line">		var lNumberOfWords = (lNumberOfWords_temp2 + 1) * 16;</div><div class="line">		var lWordArray = Array(lNumberOfWords - 1);</div><div class="line">		var lBytePosition = 0;</div><div class="line">		var lByteCount = 0;</div><div class="line">		while (lByteCount &lt; lMessageLength) &#123;</div><div class="line">			lWordCount = (lByteCount - (lByteCount % 4)) / 4;</div><div class="line">			lBytePosition = (lByteCount % 4) * 8;</div><div class="line">			lWordArray[lWordCount] = (lWordArray[lWordCount] | (string.charCodeAt(lByteCount) &lt;&lt; lBytePosition));</div><div class="line">			lByteCount++;</div><div class="line">		&#125;</div><div class="line">		lWordCount = (lByteCount - (lByteCount % 4)) / 4;</div><div class="line">		lBytePosition = (lByteCount % 4) * 8;</div><div class="line">		lWordArray[lWordCount] = lWordArray[lWordCount] | (0x80 &lt;&lt; lBytePosition);</div><div class="line">		lWordArray[lNumberOfWords - 2] = lMessageLength &lt;&lt; 3;</div><div class="line">		lWordArray[lNumberOfWords - 1] = lMessageLength &gt;&gt;&gt; 29;</div><div class="line">		return lWordArray;</div><div class="line">	&#125;;</div><div class="line">	function WordToHex(lValue) &#123;</div><div class="line">		var WordToHexValue = &quot;&quot;,</div><div class="line">			WordToHexValue_temp = &quot;&quot;,</div><div class="line">			lByte, lCount;</div><div class="line">		for (lCount = 0; lCount &lt;= 3; lCount++) &#123;</div><div class="line">			lByte = (lValue &gt;&gt;&gt; (lCount * 8)) &amp; 255;</div><div class="line">			WordToHexValue_temp = &quot;0&quot; + lByte.toString(16);</div><div class="line">			WordToHexValue = WordToHexValue + WordToHexValue_temp.substr(WordToHexValue_temp.length - 2, 2);</div><div class="line">		&#125;</div><div class="line">		console.log(lValue, WordToHexValue);</div><div class="line">		return WordToHexValue;</div><div class="line">	&#125;;</div><div class="line">	function Utf8Encode(string) &#123;</div><div class="line">		string = string.replace(/\r\n/g, &quot;\n&quot;);</div><div class="line">		var utftext = &quot;&quot;;</div><div class="line">		for (var n = 0; n &lt; string.length; n++) &#123;</div><div class="line">			var c = string.charCodeAt(n);</div><div class="line">			if (c &lt; 128) &#123;</div><div class="line">				utftext += String.fromCharCode(c);</div><div class="line">			&#125; else if ((c &gt; 127) &amp;&amp; (c &lt; 2048)) &#123;</div><div class="line">				utftext += String.fromCharCode((c &gt;&gt; 6) | 192);</div><div class="line">				utftext += String.fromCharCode((c &amp; 63) | 128);</div><div class="line">			&#125; else &#123;</div><div class="line">				utftext += String.fromCharCode((c &gt;&gt; 12) | 224);</div><div class="line">				utftext += String.fromCharCode(((c &gt;&gt; 6) &amp; 63) | 128);</div><div class="line">				utftext += String.fromCharCode((c &amp; 63) | 128);</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		return utftext;</div><div class="line">	&#125;;</div><div class="line">	var x = Array();</div><div class="line">	var k, AA, BB, CC, DD, a, b, c, d;</div><div class="line">	var S11 = 7,</div><div class="line">		S12 = 12,</div><div class="line">		S13 = 17,</div><div class="line">		S14 = 22;</div><div class="line">	var S21 = 5,</div><div class="line">		S22 = 9,</div><div class="line">		S23 = 14,</div><div class="line">		S24 = 20;</div><div class="line">	var S31 = 4,</div><div class="line">		S32 = 11,</div><div class="line">		S33 = 16,</div><div class="line">		S34 = 23;</div><div class="line">	var S41 = 6,</div><div class="line">		S42 = 10,</div><div class="line">		S43 = 15,</div><div class="line">		S44 = 21;</div><div class="line">	string = Utf8Encode(string);</div><div class="line">	x = ConvertToWordArray(string);</div><div class="line">	a = 0x67452301;</div><div class="line">	b = 0xEFCDAB89;</div><div class="line">	c = 0x98BADCFE;</div><div class="line">	d = 0x10325476;</div><div class="line">	for (k = 0; k &lt; x.length; k += 16) &#123;</div><div class="line">		AA = a;</div><div class="line">		BB = b;</div><div class="line">		CC = c;</div><div class="line">		DD = d;</div><div class="line">		a = FF(a, b, c, d, x[k + 0], S11, 0xD76AA478);</div><div class="line">		d = FF(d, a, b, c, x[k + 1], S12, 0xE8C7B756);</div><div class="line">		c = FF(c, d, a, b, x[k + 2], S13, 0x242070DB);</div><div class="line">		b = FF(b, c, d, a, x[k + 3], S14, 0xC1BDCEEE);</div><div class="line">		a = FF(a, b, c, d, x[k + 4], S11, 0xF57C0FAF);</div><div class="line">		d = FF(d, a, b, c, x[k + 5], S12, 0x4787C62A);</div><div class="line">		c = FF(c, d, a, b, x[k + 6], S13, 0xA8304613);</div><div class="line">		b = FF(b, c, d, a, x[k + 7], S14, 0xFD469501);</div><div class="line">		a = FF(a, b, c, d, x[k + 8], S11, 0x698098D8);</div><div class="line">		d = FF(d, a, b, c, x[k + 9], S12, 0x8B44F7AF);</div><div class="line">		c = FF(c, d, a, b, x[k + 10], S13, 0xFFFF5BB1);</div><div class="line">		b = FF(b, c, d, a, x[k + 11], S14, 0x895CD7BE);</div><div class="line">		a = FF(a, b, c, d, x[k + 12], S11, 0x6B901122);</div><div class="line">		d = FF(d, a, b, c, x[k + 13], S12, 0xFD987193);</div><div class="line">		c = FF(c, d, a, b, x[k + 14], S13, 0xA679438E);</div><div class="line">		b = FF(b, c, d, a, x[k + 15], S14, 0x49B40821);</div><div class="line">		a = GG(a, b, c, d, x[k + 1], S21, 0xF61E2562);</div><div class="line">		d = GG(d, a, b, c, x[k + 6], S22, 0xC040B340);</div><div class="line">		c = GG(c, d, a, b, x[k + 11], S23, 0x265E5A51);</div><div class="line">		b = GG(b, c, d, a, x[k + 0], S24, 0xE9B6C7AA);</div><div class="line">		a = GG(a, b, c, d, x[k + 5], S21, 0xD62F105D);</div><div class="line">		d = GG(d, a, b, c, x[k + 10], S22, 0x2441453);</div><div class="line">		c = GG(c, d, a, b, x[k + 15], S23, 0xD8A1E681);</div><div class="line">		b = GG(b, c, d, a, x[k + 4], S24, 0xE7D3FBC8);</div><div class="line">		a = GG(a, b, c, d, x[k + 9], S21, 0x21E1CDE6);</div><div class="line">		d = GG(d, a, b, c, x[k + 14], S22, 0xC33707D6);</div><div class="line">		c = GG(c, d, a, b, x[k + 3], S23, 0xF4D50D87);</div><div class="line">		b = GG(b, c, d, a, x[k + 8], S24, 0x455A14ED);</div><div class="line">		a = GG(a, b, c, d, x[k + 13], S21, 0xA9E3E905);</div><div class="line">		d = GG(d, a, b, c, x[k + 2], S22, 0xFCEFA3F8);</div><div class="line">		c = GG(c, d, a, b, x[k + 7], S23, 0x676F02D9);</div><div class="line">		b = GG(b, c, d, a, x[k + 12], S24, 0x8D2A4C8A);</div><div class="line">		a = HH(a, b, c, d, x[k + 5], S31, 0xFFFA3942);</div><div class="line">		d = HH(d, a, b, c, x[k + 8], S32, 0x8771F681);</div><div class="line">		c = HH(c, d, a, b, x[k + 11], S33, 0x6D9D6122);</div><div class="line">		b = HH(b, c, d, a, x[k + 14], S34, 0xFDE5380C);</div><div class="line">		a = HH(a, b, c, d, x[k + 1], S31, 0xA4BEEA44);</div><div class="line">		d = HH(d, a, b, c, x[k + 4], S32, 0x4BDECFA9);</div><div class="line">		c = HH(c, d, a, b, x[k + 7], S33, 0xF6BB4B60);</div><div class="line">		b = HH(b, c, d, a, x[k + 10], S34, 0xBEBFBC70);</div><div class="line">		a = HH(a, b, c, d, x[k + 13], S31, 0x289B7EC6);</div><div class="line">		d = HH(d, a, b, c, x[k + 0], S32, 0xEAA127FA);</div><div class="line">		c = HH(c, d, a, b, x[k + 3], S33, 0xD4EF3085);</div><div class="line">		b = HH(b, c, d, a, x[k + 6], S34, 0x4881D05);</div><div class="line">		a = HH(a, b, c, d, x[k + 9], S31, 0xD9D4D039);</div><div class="line">		d = HH(d, a, b, c, x[k + 12], S32, 0xE6DB99E5);</div><div class="line">		c = HH(c, d, a, b, x[k + 15], S33, 0x1FA27CF8);</div><div class="line">		b = HH(b, c, d, a, x[k + 2], S34, 0xC4AC5665);</div><div class="line">		a = II(a, b, c, d, x[k + 0], S41, 0xF4292244);</div><div class="line">		d = II(d, a, b, c, x[k + 7], S42, 0x432AFF97);</div><div class="line">		c = II(c, d, a, b, x[k + 14], S43, 0xAB9423A7);</div><div class="line">		b = II(b, c, d, a, x[k + 5], S44, 0xFC93A039);</div><div class="line">		a = II(a, b, c, d, x[k + 12], S41, 0x655B59C3);</div><div class="line">		d = II(d, a, b, c, x[k + 3], S42, 0x8F0CCC92);</div><div class="line">		c = II(c, d, a, b, x[k + 10], S43, 0xFFEFF47D);</div><div class="line">		b = II(b, c, d, a, x[k + 1], S44, 0x85845DD1);</div><div class="line">		a = II(a, b, c, d, x[k + 8], S41, 0x6FA87E4F);</div><div class="line">		d = II(d, a, b, c, x[k + 15], S42, 0xFE2CE6E0);</div><div class="line">		c = II(c, d, a, b, x[k + 6], S43, 0xA3014314);</div><div class="line">		b = II(b, c, d, a, x[k + 13], S44, 0x4E0811A1);</div><div class="line">		a = II(a, b, c, d, x[k + 4], S41, 0xF7537E82);</div><div class="line">		d = II(d, a, b, c, x[k + 11], S42, 0xBD3AF235);</div><div class="line">		c = II(c, d, a, b, x[k + 2], S43, 0x2AD7D2BB);</div><div class="line">		b = II(b, c, d, a, x[k + 9], S44, 0xEB86D391);</div><div class="line">		a = AddUnsigned(a, AA);</div><div class="line">		b = AddUnsigned(b, BB);</div><div class="line">		c = AddUnsigned(c, CC);</div><div class="line">		d = AddUnsigned(d, DD);</div><div class="line">	&#125;</div><div class="line">	var temp = WordToHex(a) + WordToHex(b) + WordToHex(c) + WordToHex(d);</div><div class="line">	return temp.toLowerCase();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="MD5应用"><a href="#MD5应用" class="headerlink" title="MD5应用"></a>MD5应用</h2><h3 id="一致性验证"><a href="#一致性验证" class="headerlink" title="一致性验证"></a>一致性验证</h3><p>MD5的典型应用是对一段文本信息产生信息摘要，以防止被篡改。常常在某些软件下载站点的某软件信息中看到其MD5值，它的作用就在于我们可以在下载该软件后，对下载回来的文件用专门的软件（如Windows MD5 Check等）做一次MD5校验，以确保我们获得的文件与该站点提供的文件为同一文件。</p>
+<h3 id="数字证书"><a href="#数字证书" class="headerlink" title="数字证书"></a>数字证书</h3><p>如果有一个第三方的认证机构，用MD5还可以防止文件作者的“抵赖”，这就是所谓的数字签名应用。</p>
+<h3 id="安全访问认证"><a href="#安全访问认证" class="headerlink" title="安全访问认证"></a>安全访问认证</h3><p>在Unix系统中用户的密码是以MD5（或其它类似的算法）经Hash运算后存储在文件系统中。当用户登录的时候，系统把用户输入的密码进行MD5 Hash运算，然后再去和保存在文件系统中的MD5值进行比较，进而确定输入的密码是否正确。通过这样的步骤，系统在并不知道用户密码的明码的情况下就可以确定用户登录系统的合法性。</p>
+<h2 id="MD5破解"><a href="#MD5破解" class="headerlink" title="MD5破解"></a>MD5破解</h2><p>所谓的破解并非把摘要还原成原文，对MD5的破解实际上都属于碰撞。比如原文A通过MD5可以生成摘要M，我们并不需要把M还原成A，只需要找到原文B，生成同样的摘要M即可。</p>
+<p>设MD5的哈希函数是H(x)，那么：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">H(A)= M</div><div class="line">H(B)=M</div></pre></td></tr></table></figure></p>
+<p>任意B即为破解结果。</p>
+<p><strong>MD5碰撞的方法有很多，主要包括暴力枚举法、字典法、彩虹表法等等。</strong></p>
+<p>暴力枚举就是枚举出所有原文并计算哈希值，对比与给定的信息摘要是否一致。时间复杂度太高。</p>
+<p>字典法就是存储尽可能多的原文和对应的哈希值，这样可以快速找到碰撞结果，但是需要巨大的空间存储。</p>
+<h3 id="彩虹表"><a href="#彩虹表" class="headerlink" title="彩虹表"></a>彩虹表</h3><p>两个基本函数：</p>
+<ul>
+<li>H(X)：生成信息摘要的哈希函数，比如MD5</li>
+<li>R(X)：从信息摘要转换成另一个字符串的衰减函数(Reduce)。其中R(X)的定义域是H(X)的值域，R(X)的值域是H(X)的定义域。注意R(X)并非H(X)的反函数。</li>
+</ul>
+<p>通过交替运算H和R若干次，可以形成一个原文和哈希值的链条。假设原文为<code>aaaaaa</code>，哈希值长度32bit，那么哈希链表如下：</p>
+<p><img src="/2017/10/17/md5/h&amp;r.png" alt="h &amp; r"></p>
+<p>假设H(X)和R(X)的交替重复K次，链条长度为2K+1，我们只需把链表的首部和尾部存入哈希表中。</p>
+<p>演示一次破解过程：</p>
+<blockquote>
+<p>给定信息摘要：<code>920ECF10</code>，进行R(X)运算得到<code>kiebgt</code>，查询哈希表可以找到末端<code>kiebgt</code>对应的首端是<code>aaaaaa</code>，因此摘要<code>920ECF10</code>的原文“极有可能”在<code>aaaaaa</code>到<code>kiebgt</code>的这个链条当中。</p>
+</blockquote>
+<p>接下来从<code>aaaaaa</code>开始，重新交替运算R(X)与H(X)，看一看摘要值920ECF10是否是其中一次H(X)的结果。从链条看来，答案是肯定的，因此<code>920ECF10</code>的原文就是<code>920ECF10</code>的前置节点<code>sgfnyd</code>。</p>
+<p>需要补充的是，如果给定的摘要值经过一次R(X)运算，结果在哈希表中找不到，可以继续交替H(X) R(X)直到第K次为止。如果重复了K次之后，仍然没有再末节点中找到对应的值，则可以断定所需明文不在集合中。再计算无意义。</p>
+<p>哈希链表代表了一组映射关系，其中每组包含K对映射，但只需要存储链条首位两个字符串。假设K=10，那么存储空间只有上述字典的十分之一，代价则是破解一个摘要的运算次数提高了十倍。</p>
+<p>但是哈希链条存在一个致命的缺陷：R(X)函数的可靠性，虽然尽量吧R(X)设计成结果均匀分布的函数，但是再完美的函数也难免有碰撞的情况，比如如下情况：</p>
+<blockquote>
+<p>给定信息摘要：<code>FB107E70</code>，经过多次R(X)，H(X)运算，得到结果<code>kiebgt</code>，通过哈希表查找末端<code>kiebgt</code>，可以找出首端<code>aaaaaa</code>。</p>
+</blockquote>
+<p>但是，<code>FB107E70</code>并不在<code>aaaaaa</code>到<code>kiebgt</code>的哈希链条当中，这就是R(X)的碰撞造成的。</p>
+<p>这个问题看似没什么影响，既然找不到就重新生成一组首尾映射即可。但是想象一下，当K值较大的时候，哈希链很长，一旦两条不同的哈希链在某个节点出现碰撞，后面所有的明文和哈希值全都变成了一毛一样的值。</p>
+<p>这样造成的后果就是冗余存储。原本两条哈希链可以存储2K个映射，由于重复，真正存储的映射数量不足2K。</p>
+<p>由此彩虹表诞生，彩虹表对哈希链进行了改进，把原先R(X)函数改进成了R1(X)到R(X)一共k个衰减函数。这样一来虽然也可能发生碰撞，但是碰撞只会发生在同一级运算，如R1和R1碰撞，R3和R3碰撞，大大减小了存储重复的几率。</p>
+<p><img src="/2017/10/17/md5/rainbow.png" alt="rainbow"></p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a href="https://en.wikipedia.org/wiki/MD5" target="_blank" rel="external">MD5 Wiki</a></p>
+<p><a href="https://mp.weixin.qq.com/s/k-ToL356asWtS_PN30Z17w" target="_blank" rel="external">MD5算法——梦见微信公众号</a></p>
+<p><a href="http://blog.sina.com.cn/s/blog_6fe0eb1901014cpl.html" target="_blank" rel="external">MD5算法步骤详解</a></p>
+<p><a href="https://www.zhihu.com/question/38369521" target="_blank" rel="external">如何给自己各种帐号编一个安全又不会忘记的密码？</a></p>
+<p><a href="https://www.zhihu.com/question/19790488" target="_blank" rel="external">彩虹表</a></p>
+<p><a href="http://blog.csdn.net/github_35681219/article/details/52743048" target="_blank" rel="external">计算机的大小端规则</a></p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>Title:</span><a href="/2017/10/17/md5/">MD5</a></p>
+        <p><span>Author:</span><a href="/" title="Back to Homepage">Adong Kong</a></p>
+        <p><span>Created:</span>2017-10-17, 22:45:46</p>
+        <p><span>Updated:</span>2019-03-10, 13:18:33</p>
+        <p>
+            <span>Full URL:</span><a class="post-url" href="/2017/10/17/md5/" title="MD5">http://kad0108.github.io/2017/10/17/md5/</a>
+            <span class="copy-path" data-clipboard-text="From http://kad0108.github.io/2017/10/17/md5/　　By Adong Kong" title="Copy Article&#39;s Link &amp; Author"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>License:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"CC BY-NC-SA 4.0"</a> Keep Link &amp; Author if Distribute.
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2017/10/30/sparse-representation/">
+                    Face Recognition via Sparse Representation
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2017/08/29/server-sent/">
+                    服务器推送信息
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">Contents</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#MD5算法原理："><span class="toc-number">1.</span> <span class="toc-text">MD5算法原理：</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#处理原文"><span class="toc-number">1.1.</span> <span class="toc-text">处理原文</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#设置初始值"><span class="toc-number">1.2.</span> <span class="toc-text">设置初始值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#循环加工"><span class="toc-number">1.3.</span> <span class="toc-text">循环加工</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#拼接结果"><span class="toc-number">1.4.</span> <span class="toc-text">拼接结果</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JS实现MD5算法"><span class="toc-number">2.</span> <span class="toc-text">JS实现MD5算法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MD5应用"><span class="toc-number">3.</span> <span class="toc-text">MD5应用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#一致性验证"><span class="toc-number">3.1.</span> <span class="toc-text">一致性验证</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数字证书"><span class="toc-number">3.2.</span> <span class="toc-text">数字证书</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安全访问认证"><span class="toc-number">3.3.</span> <span class="toc-text">安全访问认证</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MD5破解"><span class="toc-number">4.</span> <span class="toc-text">MD5破解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#彩虹表"><span class="toc-number">4.1.</span> <span class="toc-text">彩虹表</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-number">5.</span> <span class="toc-text">Reference</span></a></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="Hide"  title="Show or Hide Table of Contents">
+
+    <script>
+        yiliaConfig.toc = ["Hide", "Show", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"MD5　| Adong Kong's Blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+<!--
+
+    
+
+-->
+
+
+  <section id="comments">
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="post-md5" data-title="MD5" data-url="http://kad0108.github.io/2017/10/17/md5/"></div>
+    <!-- 多说评论框 end -->
+    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:'kad0108'};
+      (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] 
+         || document.getElementsByTagName('body')[0]).appendChild(ds);
+      })();
+      </script>
+    <!-- 多说公共JS代码 end -->
+  </section>
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2017/10/30/sparse-representation/" title="Pre: Face Recognition via Sparse Representation">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="Mini Archives"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2017/08/29/server-sent/" title="Next: 服务器推送信息">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/08/27/spider/">Spider & Anti-Spider</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/04/base64/">Base64</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/03/sapiens/">Sapiens —— A Brief History of Humankind</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/22/git/">Git</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/04/2017-summary/">2017 Summary</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/26/reduction/">Nonlinear Dimensionality Reduction —— LE & LLE</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/30/sparse-representation/">Face Recognition via Sparse Representation</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/17/md5/">MD5</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/29/server-sent/">服务器推送信息</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/28/custom-event/">JS自定义事件</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/10/you-dont-know-js-II/">You Don't Know JavaScript II —— This & Object & Prototypes</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/09/you-dont-know-js-I/">You Don't Know JavaScript I —— Scope & Closures</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/23/virtual-dom/">Virtual DOM</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/17/regexp/">RegExp</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/24/layout/">CSS布局</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/11/ajax/">Ajax和跨域总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/09/url/">输入URL到页面加载完成这个过程中都发生了什么</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/08/optimize/">前端性能优化</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/03/datatype/">关于JS中变量类型的一些知识总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/02/bfc/">BFC</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/24/scope/">Scope and Thread</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/21/cookie/">Cookie</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/20/prototype/">JS Prototype</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/15/websocket/">WebSocket</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/08/http/">HTTP协议</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/05/jsprotocol/">JS伪协议</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/28/hidedom/">隐藏页面元素的几种方法</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/26/build/">完善博客功能</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/25/float/">CSS布局模型之浮动模型</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/25/hello-world/">Hello World</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2016-2019 Adong Kong
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="A fast, simple &amp; powerful blog framework">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="Another simple and elegant theme for Hexo  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="Site Visitors"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="Page Hits"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+    <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script src="//cdn.bootcss.com/mathjax/2.6.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="Back to Top"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="Comments"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="Go to Bottom"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>

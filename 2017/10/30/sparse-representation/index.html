@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html >
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="Adong Kong" />
+
+
+
+<meta name="description" content="写在前面研二下做的文本分析不做了，转战机器学习人脸识别（老板要求发高质量高水平的文章），没接触过这个领域，不知道自己可以做到什么程度，这次有靠谱学长指导总是很欣慰的（比起之前小老师出去创业只能自己瞎鼓捣好太多了）。
+Day 2017/10/18： 学长推荐入门阅读 Robust Face Recognition via Sparse Representation
+说实话自己英文阅读水平很一般，而且">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Face Recognition via Sparse Representation">
+<meta property="og:url" content="http://kad0108.github.io/2017/10/30/sparse-representation/index.html">
+<meta property="og:site_name" content="Adong Kong's Blog">
+<meta property="og:description" content="写在前面研二下做的文本分析不做了，转战机器学习人脸识别（老板要求发高质量高水平的文章），没接触过这个领域，不知道自己可以做到什么程度，这次有靠谱学长指导总是很欣慰的（比起之前小老师出去创业只能自己瞎鼓捣好太多了）。
+Day 2017/10/18： 学长推荐入门阅读 Robust Face Recognition via Sparse Representation
+说实话自己英文阅读水平很一般，而且">
+<meta property="og:image" content="http://kad0108.github.io/2017/10/30/sparse-representation/norm.png">
+<meta property="og:image" content="http://kad0108.github.io/2017/10/30/sparse-representation/sparse-solution.png">
+<meta property="og:updated_time" content="2019-03-10T05:18:33.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Face Recognition via Sparse Representation">
+<meta name="twitter:description" content="写在前面研二下做的文本分析不做了，转战机器学习人脸识别（老板要求发高质量高水平的文章），没接触过这个领域，不知道自己可以做到什么程度，这次有靠谱学长指导总是很欣慰的（比起之前小老师出去创业只能自己瞎鼓捣好太多了）。
+Day 2017/10/18： 学长推荐入门阅读 Robust Face Recognition via Sparse Representation
+说实话自己英文阅读水平很一般，而且">
+<meta name="twitter:image" content="http://kad0108.github.io/2017/10/30/sparse-representation/norm.png">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="Adong Kong&#39;s Blog" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.ico">
+
+
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>Face Recognition via Sparse Representation | Adong Kong&#39;s Blog</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: false,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: true
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?1dbd558cf5d5b4dfae10344f2a043bbd";
+            var s = document.getElementsByTagName("script")[0]; 
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?1dbd558cf5d5b4dfae10344f2a043bbd";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="https://github.com/kad0108/"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://camo.githubusercontent.com/121cd7cbdc3e4855075ea8b558508b91ac463ac2/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f677265656e5f3030373230302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_left_green_007200.png"></a>
+        <a href="/" class="profilepic">
+            <img src="/img/avatar.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">Adong Kong</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">Do what you love and love what you do.</p>
+        
+
+        
+            <form id="search-form">
+            <input type="text" id="local-search-input" name="q" placeholder="search..." class="search form-control" autocomplete="off" autocorrect="off" searchonload="false" />
+            <i class="fa fa-times" onclick="resetSearch()"></i>
+            </form>
+            <div id="local-search-result"></div>
+            <p class='no-result'>No results found <i class='fa fa-spinner fa-pulse'></i></p>
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>Menu</li>
+                        <li>Tags</li>
+                        
+                        <li>Friends</li>
+                        
+                        
+                        <li>About Me</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="mailto:kad0108@foxmail.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" href="https://github.com/kad0108" title="GitHub"></a>
+                            
+                                <a class="fa RSS" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Float/">Float</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/">HTTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP缓存/">HTTP缓存</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Html5/">Html5</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NodeJS/">NodeJS</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://pages.github.com/">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://moxfive.xyz/">MOxFIVE</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">专注于前端</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">Adong Kong</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">Adong Kong</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">Do what you love and love what you do.</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="mailto:kad0108@foxmail.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="https://github.com/kad0108" title="GitHub"></a>
+                            
+                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="Tags" friends="Friends" about="About Me"/>
+</nav>
+      <div class="body-wrap"><article id="post-sparse-representation" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/10/30/sparse-representation/" class="article-date">
+      <time datetime="2017-10-30T14:03:18.000Z" itemprop="datePublished">2017-10-30</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Face Recognition via Sparse Representation
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a>
+    </div>
+
+
+        
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h2 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h2><p>研二下做的文本分析不做了，转战机器学习人脸识别（老板要求发高质量高水平的文章），没接触过这个领域，不知道自己可以做到什么程度，这次有靠谱学长指导总是很欣慰的（比起之前小老师出去创业只能自己瞎鼓捣好太多了）。</p>
+<p><strong><code>Day 2017/10/18：</code></strong> 学长推荐入门阅读 <a href="http://ieeexplore.ieee.org/abstract/document/4483511/" target="_blank" rel="external">Robust Face Recognition via Sparse Representation</a></p>
+<p>说实话自己英文阅读水平很一般，而且线性代数学的那些知识基本都还给老师了，这篇论文看的着实心累。再加上自己很反感写论文，看的进度很慢，基本看几个词就走神的那种。在此特别特别特别感谢<a href="https://github.com/liuguochao" target="_blank" rel="external">@超哥</a>的耐心讲解。</p>
+<a id="more"></a>
+<p>学长说不用非得看明白推导，但是需要了解算法的过程。而且看论文要养成习惯，把比较好的英文词语、短语、比较学术的词都整理记录下来方便以后用，这个很重要。</p>
+<h2 id="预备知识"><a href="#预备知识" class="headerlink" title="预备知识"></a>预备知识</h2><p>我们想要描述向量 $\vec x = (x_1, x_2)$ 的长度，那么用什么来度量？</p>
+<p>$$<br>模 \Leftrightarrow 范数 \Leftrightarrow 长度<br>$$</p>
+<ol>
+<li><p><strong>$\ell^2$ 范数</strong>就是我们通常意义上的模，即欧氏距离：$||\vec x||_2 = \sqrt{\sum_{i=1}^Nx_i^2} = x_1^2 + x_2^2$ 。二维空间 $\ell^2$ 范数对应的曲线是圆，在三维空间 $\ell^2$ 范数就是球体。</p>
+</li>
+<li><p><strong>$\ell^1$ 范数</strong>即：$||\vec x||_1 = \sum_{i=1}^N|x_i|$ 即向量元素绝对值之和。</p>
+</li>
+<li><p><strong>$\ell^0$ 范数</strong>指 $\vec x$ 中非0元素的个数。</p>
+</li>
+</ol>
+<p>范数对应的曲线如图:</p>
+<p><img src="/2017/10/30/sparse-representation/norm.png" alt="norm"></p>
+<h2 id="论文思想"><a href="#论文思想" class="headerlink" title="论文思想"></a>论文思想</h2><p>给定 $k$ 类样本集，每一类是同一个人的多张图片，将每张图片（是一个像素为 $w \times h$ 的矩阵）按照列堆砌表示成 $m$ 维向量形式 $\vec v \in R^m (m=wh)$，那么给定的 $n_i$ 个第 $i$ 类的训练样本可以表示为矩阵 $ A_i = [\vec v_{i,1}, \vec v_{i,2}, \dots, \vec v_{i,n_i}] \in R^{m \times n_i} $ 。<br>整个训练集可以表示为：</p>
+<p>$$<br>A = [A_1, A_2, \dots, A_k] = [\vec v_{1,1}, \vec v_{1,2}, \dots, \vec v_{k,n_k}]. \tag{1}<br>$$</p>
+<p>给定测试样本图像 $\vec y \in R^m$，假设是属于第 $i$ 类的，那么可以根据第 $i$ 类样本线性表示如下：</p>
+<p>$$<br>\vec y = \alpha_{i,1} \vec v_{i,1} + \alpha_{i,2} \vec v_{i,2} + \cdots + \alpha_{i,n_i} \vec v_{i,n_i}, \tag{2}<br>$$</p>
+<p>$$<br>\vec y = ( \vec v_{i,1}, \vec v_{i,2}, \cdots, \vec v_{i,n_i}) (\alpha_{i,1}, \alpha_{i,2}, \cdots, \alpha_{i,n_i})^T \tag{3}<br>$$</p>
+<p>那么 $\vec y$ 的线性表示可以写为：</p>
+<p>$$<br>\vec y = A\vec x_0 \in R^m. \tag{4}<br>$$</p>
+<p>其中 $\vec x_0 = [0, \cdots, 0, \alpha_{i,1}, \alpha_{i,2}, 0, \cdots, 0]^T \in R^n$。</p>
+<p>我们希望能够求解线性方程组 $\vec y = A \vec x$，其中未知数有n个，方程个数有m个。对于 $m &lt; n$ 的情况，方程组是超定的$overdetermied$，存在这样的 $\vec x_0$ 是唯一解。对于人脸识别，给定的样本集很大，所以是 $m &lt; n$ 的情况，这时方程组是欠定的$underdetermined$，解不唯一。一般解决这种问题是通过添加约束，取 $\ell^2$ 范数最小值：</p>
+<p>$$<br>\begin{equation}<br>\begin{split}<br>\ell^2 &amp;\quad\quad \hat{\vec x^  2} = arg min ||\vec x||_2 \newline<br>\ s.t. &amp;\quad\quad  A\vec x = \vec y<br>\end{split}<br>\end{equation} \tag {5}<br>$$</p>
+<p>$\ell^2$ 求解得到的 $\hat{\vec x_2}$ 是密集解，即有大量非0值。我们希望得到的解是稀疏的，也就是与第 $i$ 类有关的系数都为非0，无关系数都为0。最优的方式是求解 $\ell^0$ 范数，然而这个求解问题是NP-Hard：</p>
+<p>$$<br>\begin{equation}<br>\begin{split}<br>\ell^0 &amp;\quad \hat{\vec x^ 0} = arg min ||\vec x||_0 \newline<br>s.t. &amp;\quad  A\vec x = \vec y<br>\end{split}<br>\end{equation} \tag {6}<br>$$</p>
+<p>$\ell^0$ 范数很难优化求解， $\ell^1$ 范数是  $\ell^0$ 范数的最优凸近似，而且更容易优化求解，所以该篇文章通过求解 $\ell^1$最小值问题来做稀疏表示。</p>
+<p>$$<br>\begin{equation}<br>\begin{split}<br>\ell^1 &amp;\quad \hat{\vec x^ 1} = arg min ||\vec x||_1 \newline<br>s.t. &amp;\quad  A\vec x = \vec y<br>\end{split}<br>\end{equation} \tag {7}<br>$$</p>
+<h3 id="几何解释"><a href="#几何解释" class="headerlink" title="几何解释"></a>几何解释</h3><p>为什么 $\ell^1$ 范数比 $\ell^2$ 范数更容易得到稀疏解？</p>
+<p><img src="/2017/10/30/sparse-representation/sparse-solution.png" alt="sparse solution"></p>
+<p>如图 $\ell^2$ 范数曲线在 $scale$ 过程中总会 $touch$ 到直线，得到的相切的点更大概率不在坐标轴上，也就是不稀疏。而 $\ell^1$ 范数曲线与直线相切的点更容易落在坐标轴上，这样的解是稀疏解，那么得到稠密解只有两种情况就是直线的斜率为 $1$ 和 $-1$ 的是时候，所以 $\ell^1$ 求得稀疏解的概率更大。</p>
+<p>线性变换包括平移、旋转和缩放。$\vec y = A \vec x$ 求解方程中矩阵A作用域向量 $\vec x$ 相当于对向量进行线性变换，也就是将 $n$ 维的 $\vec x$ 映射到了 $m$ 维空间中。</p>
+<p>定义单位 $\ell^1-ball \quad P_1$，在进行线性映射后 $\vec y = A \vec x$ 的求解问题落在了多面体 $P = A(P_1)$上。</p>
+<h3 id="噪音处理"><a href="#噪音处理" class="headerlink" title="噪音处理"></a>噪音处理</h3><p>$\vec y = A \vec x_0$ 是最精确理想的情况，实际上一定会存在噪音 $\vec y = A \vec x_0 + \vec z$，假设我们允许的误差范围是 $||\vec z||_2 &lt; \varepsilon$ ，那么求解问题变为：</p>
+<p>$$<br>\begin{equation}<br>\begin{split}<br>\ell_s^1 &amp;\quad \hat{\vec x^ 1} = arg min ||\vec x||_1 \newline<br>s.t. &amp;\quad  ||A \vec x - \vec y||_2 \le \varepsilon<br>\end{split}<br>\end{equation} \tag {8}<br>$$</p>
+<h3 id="Algorithm-1"><a href="#Algorithm-1" class="headerlink" title="Algorithm 1"></a>Algorithm 1</h3><ol>
+<li><p>输入 $k$ 类训练样本 $A = [A_1, A_2, \dots, A_k] \in R^{m \times n}$，一个测试样本 $\vec y \in R^m$.</p>
+</li>
+<li><p>将A进行归一化。$\frac{\vec x}{||\vec x||_1} \to ||\frac{\vec x}{||\vec x||_1}||_1 = ||\frac{\vec x}{|x_1| + |x_2|}|| = \frac{||x_1|| + ||x_2||}{||x_1|| + ||x_2||} = 1$</p>
+</li>
+<li><p>求解 $\ell^1$最小化问题：<br>$$<br>\begin{equation}<br>\begin{split}<br>\ell^1 &amp;\quad \hat{\vec x^ 1} = arg min ||\vec x||_1 \newline<br>s.t. &amp;\quad  A\vec x = \vec y<br>\end{split}<br>\end{equation} \tag{7}<br>$$</p>
+</li>
+<li><p>计算残差：<br>$$<br>\begin{equation}<br>\begin{split}<br>\hat{\vec y} &amp; = A {\hat{\vec x^ 1}} \newline<br>r_i(\vec y) &amp; = ||\vec y - A \hat{\vec y}||_2<br>\end{split}<br>\end{equation} \tag{9}<br>$$<br>​</p>
+</li>
+<li>残差取最小得到 $\vec y$ 属于哪一类，$identity(\vec y)  = arg min_i r_i(\vec y) $.</li>
+</ol>
+<h3 id="论文还讨论了两个问题"><a href="#论文还讨论了两个问题" class="headerlink" title="论文还讨论了两个问题"></a>论文还讨论了两个问题</h3><h4 id="Feature-Extraction"><a href="#Feature-Extraction" class="headerlink" title="Feature Extraction"></a>Feature Extraction</h4><p>特征提取对于人脸识别的稀疏表示可以起到降低数据维度、减少计算开销的作用。比如图像分辨率为 $640 \times 480$ ，维数m在 $10^5$ 量级，这样采用上述 $Algorithm 1$ 过程计算会很慢很慢。所以将图像空间映射到特征空间 $R \in R^{d \times m}$ 其中 $d \ll m$ ：</p>
+<p>$$<br>\tilde{y} \doteq R \vec y = RA \vec x_0 \in R^d \tag{10}<br>$$</p>
+<p>求解问题变为：</p>
+<p>$$<br>\begin{equation}<br>\begin{split}<br>\ell_r^1 &amp;\quad \hat{\vec x^ 1} = arg min ||\vec x||_1 \newline<br>s.t. &amp;\quad  ||RA\vec x - \vec y||_2 \leq \varepsilon<br>\end{split}<br>\end{equation} \tag {11}<br>$$</p>
+<p>当特征维数 $d$ 满足 $d \geq 2tlog(n/d)$ 时，$Algorithm 1$ 能够快速迭代收敛，特征的选取不再是决定性的，即使是随机的映射或者降采样也可以表现的很好。</p>
+<h4 id="Robustness-to-Occlusion-or-Corruption"><a href="#Robustness-to-Occlusion-or-Corruption" class="headerlink" title="Robustness to Occlusion or Corruption"></a>Robustness to Occlusion or Corruption</h4><p>实际情形中会有被遮挡或者质量不好的测试样本 $\vec y$ ，需要将线性模型改写为：</p>
+<p>$$<br>\vec y = \vec y_0 + \vec e_0 = A \vec x_0 + \vec e_0 = [A, I][\vec x_0, \vec e_0]^T = B \vec w_0 \tag{12}<br>$$</p>
+<p>其中 $\vec e_0 \in R^m$ 是非零错误向量，求解问题变为：</p>
+<p>$$<br>\begin{equation}<br>\begin{split}<br>\ell_e^1 &amp;\quad \hat{\vec w^ 1} = arg min ||\vec w||_1 \newline<br>s.t. &amp;\quad  B \vec w = \vec y<br>\end{split}<br>\end{equation} \tag {13}<br>$$</p>
+<p>算法过程和 $Algorithm 1$ 一致。</p>
+<h2 id="写在后面"><a href="#写在后面" class="headerlink" title="写在后面"></a>写在后面</h2><p>为了能在hexo里正确显示latex语法，试了各种markdown renderer for hexo，总是个别语法有问题，鼓捣了老半天。。。必须贴一下<a href="http://blog.csdn.net/emptyset110/article/details/50123231" target="_blank" rel="external">这篇博文</a>，至少是好使了，我勒个去。。。</p>
+<p>其实看的稀里糊涂，真的是只知道了大概的算法过程，不过也算是有点收获。接下来开始学习线性降维PCA，加油啦~(≧▽≦)/~</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a href="http://asciimath.org/" target="_blank" rel="external">MathJax</a></p>
+<p><a href="http://www.mohu.org/info/symbols/symbols.htm" target="_blank" rel="external">LaTeX数学符号表示</a></p>
+<p><a href="http://blog.csdn.net/zouxy09/article/details/24971995" target="_blank" rel="external">机器学习中的范数规则化之（一）L0、L1与L2范数</a></p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>Title:</span><a href="/2017/10/30/sparse-representation/">Face Recognition via Sparse Representation</a></p>
+        <p><span>Author:</span><a href="/" title="Back to Homepage">Adong Kong</a></p>
+        <p><span>Created:</span>2017-10-30, 22:03:18</p>
+        <p><span>Updated:</span>2019-03-10, 13:18:33</p>
+        <p>
+            <span>Full URL:</span><a class="post-url" href="/2017/10/30/sparse-representation/" title="Face Recognition via Sparse Representation">http://kad0108.github.io/2017/10/30/sparse-representation/</a>
+            <span class="copy-path" data-clipboard-text="From http://kad0108.github.io/2017/10/30/sparse-representation/　　By Adong Kong" title="Copy Article&#39;s Link &amp; Author"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>License:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"CC BY-NC-SA 4.0"</a> Keep Link &amp; Author if Distribute.
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2017/11/26/reduction/">
+                    Nonlinear Dimensionality Reduction —— LE &amp; LLE
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2017/10/17/md5/">
+                    MD5
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">Contents</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#写在前面"><span class="toc-number">1.</span> <span class="toc-text">写在前面</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#预备知识"><span class="toc-number">2.</span> <span class="toc-text">预备知识</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#论文思想"><span class="toc-number">3.</span> <span class="toc-text">论文思想</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#几何解释"><span class="toc-number">3.1.</span> <span class="toc-text">几何解释</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#噪音处理"><span class="toc-number">3.2.</span> <span class="toc-text">噪音处理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Algorithm-1"><span class="toc-number">3.3.</span> <span class="toc-text">Algorithm 1</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#论文还讨论了两个问题"><span class="toc-number">3.4.</span> <span class="toc-text">论文还讨论了两个问题</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Feature-Extraction"><span class="toc-number">3.4.1.</span> <span class="toc-text">Feature Extraction</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Robustness-to-Occlusion-or-Corruption"><span class="toc-number">3.4.2.</span> <span class="toc-text">Robustness to Occlusion or Corruption</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#写在后面"><span class="toc-number">4.</span> <span class="toc-text">写在后面</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-number">5.</span> <span class="toc-text">Reference</span></a></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="Hide"  title="Show or Hide Table of Contents">
+
+    <script>
+        yiliaConfig.toc = ["Hide", "Show", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"Face Recognition via Sparse Representation　| Adong Kong's Blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+<!--
+
+    
+
+-->
+
+
+  <section id="comments">
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="post-sparse-representation" data-title="Face Recognition via Sparse Representation" data-url="http://kad0108.github.io/2017/10/30/sparse-representation/"></div>
+    <!-- 多说评论框 end -->
+    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:'kad0108'};
+      (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] 
+         || document.getElementsByTagName('body')[0]).appendChild(ds);
+      })();
+      </script>
+    <!-- 多说公共JS代码 end -->
+  </section>
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2017/11/26/reduction/" title="Pre: Nonlinear Dimensionality Reduction —— LE &amp; LLE">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="Mini Archives"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2017/10/17/md5/" title="Next: MD5">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/08/27/spider/">Spider & Anti-Spider</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/04/base64/">Base64</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/03/sapiens/">Sapiens —— A Brief History of Humankind</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/22/git/">Git</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/04/2017-summary/">2017 Summary</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/26/reduction/">Nonlinear Dimensionality Reduction —— LE & LLE</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/30/sparse-representation/">Face Recognition via Sparse Representation</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/17/md5/">MD5</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/29/server-sent/">服务器推送信息</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/28/custom-event/">JS自定义事件</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/10/you-dont-know-js-II/">You Don't Know JavaScript II —— This & Object & Prototypes</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/09/you-dont-know-js-I/">You Don't Know JavaScript I —— Scope & Closures</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/23/virtual-dom/">Virtual DOM</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/17/regexp/">RegExp</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/24/layout/">CSS布局</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/11/ajax/">Ajax和跨域总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/09/url/">输入URL到页面加载完成这个过程中都发生了什么</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/08/optimize/">前端性能优化</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/03/datatype/">关于JS中变量类型的一些知识总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/02/bfc/">BFC</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/24/scope/">Scope and Thread</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/21/cookie/">Cookie</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/20/prototype/">JS Prototype</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/15/websocket/">WebSocket</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/08/http/">HTTP协议</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/05/jsprotocol/">JS伪协议</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/28/hidedom/">隐藏页面元素的几种方法</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/26/build/">完善博客功能</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/25/float/">CSS布局模型之浮动模型</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/25/hello-world/">Hello World</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2016-2019 Adong Kong
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="A fast, simple &amp; powerful blog framework">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="Another simple and elegant theme for Hexo  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="Site Visitors"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="Page Hits"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+    <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script src="//cdn.bootcss.com/mathjax/2.6.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="Back to Top"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="Comments"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="Go to Bottom"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>
