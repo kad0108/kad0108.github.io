@@ -206,7 +206,7 @@ var _hmt = _hmt || [];
                 
                 <section class="switch-part switch-part2">
                     <div class="widget tagcloud" id="js-tagcloud">
-                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Float/">Float</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/">HTTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP缓存/">HTTP缓存</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Html5/">Html5</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NodeJS/">NodeJS</a></li></ul>
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Float/">Float</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/">HTTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP缓存/">HTTP缓存</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Html5/">Html5</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a></li></ul>
                     </div>
                 </section>
                 
@@ -283,11 +283,11 @@ var _hmt = _hmt || [];
 </nav>
       <div class="body-wrap">
   
-    <article id="post-spider" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-ajax" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2018/08/27/spider/" class="article-date">
-      <time datetime="2018-08-27T14:54:29.000Z" itemprop="datePublished">2018-08-27</time>
+      <a href="/2017/03/11/ajax/" class="article-date">
+      <time datetime="2017-03-11T13:41:17.000Z" itemprop="datePublished">2017-03-11</time>
 </a>
 
 
@@ -302,7 +302,7 @@ var _hmt = _hmt || [];
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/08/27/spider/">Spider &amp; Anti-Spider</a>
+      <a class="article-title" href="/2017/03/11/ajax/">Ajax和跨域总结</a>
     </h1>
   
 
@@ -312,89 +312,17 @@ var _hmt = _hmt || [];
     <div class="article-entry" itemprop="articleBody">
       
           
-              <blockquote>
-<p>最近沉迷爬虫无法自拔。。。做到现在也算是有点收获，总结一下。</p>
-</blockquote>
-<p>最开始想要爬阿里系的一个APP，用Charles抓包发现，抓到携带数据的包都是zip，批量解压后分析发现并没有有效的数据。所以结论是，数据传输不是HTTP协议，抓不到包，只能通过<a href="https://mp.weixin.qq.com/s/vaqFkjj5Mg_f3JkZXhzLYQ">群控</a>来做。</p>
-<p>然后想分析一些其它同类的APP，鉴于之前分析移动端APP可能抓不到包的情况，转而去看有没有对应的微信小程序。微信小程序的请求是一定能抓到包的，因为，微信小程序的项目在编译时是将wxml、wxss编译成js来压缩打包为wxapkg文件，微信小程序在微信中的运行其实就是在微信内嵌浏览器（渲染引擎：安卓端X5内核，IOS端Webkit内核）的JSCore（JS引擎）中解压执行JS代码。而浏览器中的请求一定是遵循http协议的（HTTP协议是Web浏览器和服务器之间通信一定遵循的规则）。所以比移动端APP抓到包的概率大很多。</p>
+              <h2 id="Ajax-异步JS-XML"><a href="#Ajax-异步JS-XML" class="headerlink" title="Ajax = 异步JS + XML"></a>Ajax = 异步JS + XML</h2><p>通过在后台与服务器进行少量数据交换，AJAX 可以使网页实现异步更新(不阻塞)。这意味着可以在不重新加载整个网页的情况下，对网页的某部分进行更新。</p>
+<h3 id="创建XMLHttpRequest对象，用于和服务器交换数据"><a href="#创建XMLHttpRequest对象，用于和服务器交换数据" class="headerlink" title="创建XMLHttpRequest对象，用于和服务器交换数据"></a>创建XMLHttpRequest对象，用于和服务器交换数据</h3><p>浏览器兼容写法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">var xhr;</div><div class="line">if(window.XMLHttpRequest)&#123;</div><div class="line">	xhr = new XMLHttpRequest();</div><div class="line">&#125;eles if(window.ActiveXObject)&#123;</div><div class="line">	// code for IE5,IE6</div><div class="line">	xhr = new ActiveXObject(Microsoft.XMLHTTP);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
           
       
     </div>
     
     <div class="article-info article-info-index">
       
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/Front-End/">Front-End</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NodeJS/">NodeJS</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2018/08/27/spider/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-<!--
-
--->
-
-
-
-
-
-
-  
-    <article id="post-base64" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2018/08/04/base64/" class="article-date">
-      <time datetime="2018-08-04T06:58:00.000Z" itemprop="datePublished">2018-08-04</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/08/04/base64/">Base64</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <h2 id="Base64"><a href="#Base64" class="headerlink" title="Base64"></a>Base64</h2><p>Base64是一种基于64个可打印（可见）字符来表示二进制数据的表示方式。</p>
-<p>用记事本去打开<code>exe</code>、<code>jpg</code>等文件时，会看到一大堆乱码，这是因为二进制文件中包含很多无法显示和打印的字符（计算机中任何数据都是按ascii码存储的，而ascii码的128个字符中有32个是不可见字符）。世界上存在着多种编码方式，同一个二进制数字可以被解释成不同的符号。因此，要想打开一个文本文件，就必须知道它的编码方式，否则用错误的编码方式解读，就会出现乱码。Base64是一种任意二进制到文本字符串的编码方法，常用于在URL、Cookie、网页中传输少量二进制数据。</p>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
+        <div class="article-pop-out tagcloud">
+          <a class="">置顶</a>
+        </div>
       
       
     <div class="article-category tagcloud">
@@ -409,7 +337,7 @@ var _hmt = _hmt || [];
 
       
         <p class="article-more-link">
-          <a href="/2018/08/04/base64/#more">more >></a>
+          <a href="/2017/03/11/ajax/#more">more >></a>
         </p>
       
       <div class="clearfix"></div>
@@ -432,11 +360,11 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="post-sapiens" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-datatype" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2018/05/03/sapiens/" class="article-date">
-      <time datetime="2018-05-03T08:58:24.000Z" itemprop="datePublished">2018-05-03</time>
+      <a href="/2017/03/03/datatype/" class="article-date">
+      <time datetime="2017-03-03T06:48:32.000Z" itemprop="datePublished">2017-03-03</time>
 </a>
 
 
@@ -451,7 +379,7 @@ var _hmt = _hmt || [];
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/05/03/sapiens/">Sapiens —— A Brief History of Humankind</a>
+      <a class="article-title" href="/2017/03/03/datatype/">关于JS中变量类型的一些知识总结</a>
     </h1>
   
 
@@ -461,530 +389,15 @@ var _hmt = _hmt || [];
     <div class="article-entry" itemprop="articleBody">
       
           
-              <h2 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h2><p>这学期无脑的写论文和改论文学习生活实在是百无聊赖，尽管同时也在学习英语看英语原著，但总是感觉有些乏味没能满足我的精神需求。虽然被困在学校困在实验室里，但我的思想不能被束缚。之前听过《人类简史》的大名，偶然在知乎上刷推荐书单看到，就决定读了。从小看的最多都是教科书课外辅导书作文书，可能是因为反感死记硬背，一直不喜欢文科类的科目，只喜欢理科思维性的科目，所以课外阅读很少，也直接导致了我看问题肤浅不够深入。不想说这本书论点论据的正确性，因为我还不够格来评价，只是在看的过程中发现书中很多观点和诠释问题的角度是对我固有思维的冲击，第一次在看书的过程中思维有了饥渴的感觉。看前半部分内容的过程中都在惊叹作者奇特的角度和观点，看到后面慢慢地自己能通过作者独特的视角去思考看待一些问题了。这本《人类简史》应该算是我的思维启蒙书了～～</p>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/Reading-Notes/">Reading Notes</a>
-    </div>
-
-
-      
-      
-        <p class="article-more-link">
-          <a href="/2018/05/03/sapiens/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-<!--
-
--->
-
-
-
-
-
-
-  
-    <article id="post-git" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2018/04/22/git/" class="article-date">
-      <time datetime="2018-04-22T08:58:01.000Z" itemprop="datePublished">2018-04-22</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/04/22/git/">Git</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <h2 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h2><p>毕业🎓前的日子真是度日如年，厌倦反感学校的一切，只能看书学英语参加各种英语角活动看视频，而且除了跑实验写的那点已经很久很久没有敲代码了。。。稍微学点东西安慰自己。。。之前只是知道Git这些命令怎么用，没有更详细地了解过。看廖老师的博文学习再学一遍Git加深印象。</p>
-<h2 id="Git：分布式版本控制系统"><a href="#Git：分布式版本控制系统" class="headerlink" title="Git：分布式版本控制系统"></a>Git：分布式版本控制系统</h2><p>Git自动记录每次文件改动，还可以多人协作编辑，即版本控制，Github则是为开源项目免费提供Git存储。</p>
-<p>Git是Linus为了方便管理Linux内核开发而开发的一个源码版本控制软件。</p>
-<p>分布式版本控制系统没有中央服务器，比集中式版本控制系统 （例如：SVN）安全性高很多。Git不仅仅是不需要联网这么简单，还有极其强大的分支管理。</p>
-<p>安装成功后Git需要自报家门，<code>--global</code>参数，用了这个参数，表示你这台机器上所有的Git仓库都会使用这个配置，当然也可以对某个仓库指定不同的用户名和Email地址。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ git config --global user.name &quot;Your Name&quot;</div><div class="line">$ git config --global user.email &quot;email@example.com&quot;</div></pre></td></tr></table></figure>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/Geek/">Geek</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Git/">Git</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2018/04/22/git/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-<!--
-
--->
-
-
-
-
-
-
-  
-    <article id="post-2017-summary" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2018/01/04/2017-summary/" class="article-date">
-      <time datetime="2018-01-04T03:58:44.000Z" itemprop="datePublished">2018-01-04</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/01/04/2017-summary/">2017 Summary</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <p>以前都没有总结过去一年的习惯，2017年感觉是我成长到现在最充实最有成就感的一年，想记录下来，当未来某天回首这一年能够为自己这一年的奋斗付出成长而热泪盈眶。</p>
-<blockquote>
-<p>2017年，我24周岁，研三，在大连上学已经是第七年。</p>
-</blockquote>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/Life/">Life</a>
-    </div>
-
-
-      
-      
-        <p class="article-more-link">
-          <a href="/2018/01/04/2017-summary/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-<!--
-
--->
-
-
-
-
-
-
-  
-    <article id="post-reduction" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2017/11/26/reduction/" class="article-date">
-      <time datetime="2017-11-26T12:21:32.000Z" itemprop="datePublished">2017-11-26</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/11/26/reduction/">Nonlinear Dimensionality Reduction —— LE &amp; LLE</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <h2 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h2><p>最近恶补了线性代数的知识，大一时《线性代数》的课本居然一直留着，惊讶到我了，因为本科毕业时把所有课本都卖了，不知怎么想的唯独没卖《线性代数》这本书，当时居然知道三年后自己会用到，感觉好神奇😄。特别推荐一下<a href="https://mp.weixin.qq.com/mp/profile_ext?action=home&amp;__biz=MzIyMTU0NDMyNA==&amp;scene=124&amp;#wechat_redirect">马同学高等数学</a>公众号以及感谢<a href="https://github.com/dovebaby">@大壮学长</a>的讲解。</p>
-<h2 id="降维"><a href="#降维" class="headerlink" title="降维"></a>降维</h2><p>高维数据意味着需要超过两个或三个维度来表示数据，在高维情形下出现的数据样本稀疏、距离计算困难等问题，是所有机器学习方法共同面对的严重障碍，称为“维数灾难”。</p>
-<p>缓解维数灾难的重要途径是降维，即通过某种数学变换将原始高维属性空间转为一个低维子空间，在这个子空间中样本密度大幅提高，距离计算也变得更为容易。为什么能降维呢？因为很多时候，观测或收集到数据样本虽然是高维的，但与学习任务相关的也许仅是某个低维分布，即高维空间中的一个低维嵌入（embedding）。</p>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a>
-    </div>
-
-
-      
-      
-        <p class="article-more-link">
-          <a href="/2017/11/26/reduction/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-<!--
-
--->
-
-
-
-
-
-
-  
-    <article id="post-sparse-representation" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2017/10/30/sparse-representation/" class="article-date">
-      <time datetime="2017-10-30T14:03:18.000Z" itemprop="datePublished">2017-10-30</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/10/30/sparse-representation/">Face Recognition via Sparse Representation</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <h2 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h2><p>研二下做的文本分析不做了，转战机器学习人脸识别（老板要求发高质量高水平的文章），没接触过这个领域，不知道自己可以做到什么程度，这次有靠谱学长指导总是很欣慰的（比起之前小老师出去创业只能自己瞎鼓捣好太多了）。</p>
-<p><strong><code>Day 2017/10/18：</code></strong> 学长推荐入门阅读 <a href="http://ieeexplore.ieee.org/abstract/document/4483511/">Robust Face Recognition via Sparse Representation</a></p>
-<p>说实话自己英文阅读水平很一般，而且线性代数学的那些知识基本都还给老师了，这篇论文看的着实心累。再加上自己很反感写论文，看的进度很慢，基本看几个词就走神的那种。在此特别特别特别感谢<a href="https://github.com/liuguochao">@超哥</a>的耐心讲解。</p>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a>
-    </div>
-
-
-      
-      
-        <p class="article-more-link">
-          <a href="/2017/10/30/sparse-representation/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-<!--
-
--->
-
-
-
-
-
-
-  
-    <article id="post-md5" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2017/10/17/md5/" class="article-date">
-      <time datetime="2017-10-17T14:45:46.000Z" itemprop="datePublished">2017-10-17</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/10/17/md5/">MD5</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <p><strong>MD5(Message Digest Algorithm 5)</strong>是一种信息摘要算法，它可以从任意长度的明文字符串生成128位的哈希值，是不可逆的。</p>
-<h2 id="MD5算法原理："><a href="#MD5算法原理：" class="headerlink" title="MD5算法原理："></a>MD5算法原理：</h2><h3 id="处理原文"><a href="#处理原文" class="headerlink" title="处理原文"></a>处理原文</h3><p>计算原文长度(bit)对512取余的结果，如果不等于448，就需要填充原文使得原文对512求余的结果等于448。填充的方法是第一位填1，其余位填0。填充后，信息长度为512*N+448(N为每512位为一组的组数)。用剩余位置(512-448=64位)记录原文的真正长度，将长度的二进制值补在最后。信息长度变为512(N+1)。</p>
-<h3 id="设置初始值"><a href="#设置初始值" class="headerlink" title="设置初始值"></a>设置初始值</h3><p>MD5的哈希结果长度为128位，按每32位一组分成4组，这4组结果是由4个初始值A、B、C、D经过不断演变得到。MD5的官方实现中这4个32位的整数参数称为链接变量，设置如下：</p>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/Front-End/">Front-End</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/">JavaScript</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2017/10/17/md5/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-<!--
-
--->
-
-
-
-
-
-
-  
-    <article id="post-server-sent" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2017/08/29/server-sent/" class="article-date">
-      <time datetime="2017-08-29T05:23:53.000Z" itemprop="datePublished">2017-08-29</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/08/29/server-sent/">服务器推送信息</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <p>本文总结了服务器将信息主动推送到客户端的几种实现方式：</p>
-<ol>
-<li>Ajax polling</li>
-<li>Long polling</li>
-<li>HTTP Stream</li>
-<li>WebSockets</li>
-<li>Server-Sent Events</li>
-</ol>
-<p>Ajax是一种从页面向服务器请求数据的技术，Comet是一种服务器向页面推送数据的技术。</p>
-<p>有两种方式实现Comet：长轮询和流。</p>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/Front-End/">Front-End</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/">JavaScript</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2017/08/29/server-sent/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-<!--
-
--->
-
-
-
-
-
-
-  
-    <article id="post-custom-event" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2017/08/28/custom-event/" class="article-date">
-      <time datetime="2017-08-28T12:08:00.000Z" itemprop="datePublished">2017-08-28</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/08/28/custom-event/">JS自定义事件</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <h3 id="绑定事件几种方式："><a href="#绑定事件几种方式：" class="headerlink" title="绑定事件几种方式："></a>绑定事件几种方式：</h3><ol>
-<li><p>HTML事件处理程序<code>&lt;input type=&quot;button&quot; value=&quot;click me&quot; onclick=&quot;alert(&#39;clicked&#39;)&quot;/&gt;</code></p>
+              <h2 id="变量类型"><a href="#变量类型" class="headerlink" title="变量类型"></a>变量类型</h2><p>基本类型：Number、String、Boolean、Null、Undefined</p>
+<p>引用类型：Array、Object</p>
+<p>ES6新数据类型：Symbol</p>
+<h3 id="声明变量"><a href="#声明变量" class="headerlink" title="声明变量"></a>声明变量</h3><ol>
+<li><p>var、let、const、function</p>
 </li>
-<li><p>DOM0级事件处理程序<code>$btn.onclick = function(){}</code></p>
+<li><p>不使用关键字，全局变量</p>
 </li>
-<li><p>DOM2级事件处理程序<code>$btn.addEventListener(&#39;click&#39;, function(){}, false)</code></p>
-</li>
-</ol>
-<h3 id="解除绑定："><a href="#解除绑定：" class="headerlink" title="解除绑定："></a>解除绑定：</h3><ol>
-<li><p><code>$btn.onclick = null;</code></p>
-</li>
-<li><p><code>$btn.removeEventListener()</code>传入参数和addEventListener参数相同，也就是通过addEventListener添加的匿名函数无法移除。 </p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">function handler()&#123;&#125;</div><div class="line">$btn.addEventListener(&apos;click&apos;, handler, false);</div><div class="line">$btn.removeEventListener(&apos;click&apos;, handler, false);</div></pre></td></tr></table></figure>
+<li><p>window.a = 1，全局变量</p>
 </li>
 </ol>
           
@@ -993,226 +406,9 @@ var _hmt = _hmt || [];
     
     <div class="article-info article-info-index">
       
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/Front-End/">Front-End</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/">JavaScript</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2017/08/28/custom-event/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-<!--
-
--->
-
-
-
-
-
-
-  
-    <article id="post-you-dont-know-js-II" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2017/08/10/you-dont-know-js-II/" class="article-date">
-      <time datetime="2017-08-10T15:02:04.000Z" itemprop="datePublished">2017-08-10</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/08/10/you-dont-know-js-II/">You Don&#39;t Know JavaScript II —— This &amp; Object &amp; Prototypes</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <h2 id="题记"><a href="#题记" class="headerlink" title="题记"></a>题记</h2><p>其实很多时候看书都有点心浮气躁，总是看一会儿就被别的事情打断了，最近很难静下心有一个完整的时间段来不思考任何烦心事好好地看书。</p>
-<h1 id="第二部分-this和对象原型"><a href="#第二部分-this和对象原型" class="headerlink" title="第二部分 this和对象原型"></a>第二部分 this和对象原型</h1><h2 id="第一章-关于this"><a href="#第一章-关于this" class="headerlink" title="第一章 关于this"></a>第一章 关于this</h2><h3 id="1-1-为什么要用this"><a href="#1-1-为什么要用this" class="headerlink" title="1.1 为什么要用this"></a>1.1 为什么要用this</h3><p>如果不使用this就需要给函数体显式地传入一个上下文对象，this提供了一种更优雅的方式来隐式传递一个对象的引用，让api设计更简洁而且易于复用。</p>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/Reading-Notes/">Reading Notes</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/">JavaScript</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2017/08/10/you-dont-know-js-II/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-<!--
-
--->
-
-
-
-
-
-
-  
-    <article id="post-you-dont-know-js-I" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2017/08/09/you-dont-know-js-I/" class="article-date">
-      <time datetime="2017-08-09T15:29:29.000Z" itemprop="datePublished">2017-08-09</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/08/09/you-dont-know-js-I/">You Don&#39;t Know JavaScript I —— Scope &amp; Closures</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <h2 id="题记"><a href="#题记" class="headerlink" title="题记"></a>题记</h2><p>这本书前后通读了两遍，是我看过的所有前端书籍📚中（虽然没全读完过几本，基本都是翻几页感觉内容没吸引到我就撇一边了。。。），内容质量最赞，最值得反复阅读体会的一本书，而且每次重读，会因为时间阅历不同都会有不同的体会和领悟，强烈推荐！！！</p>
-<p>之后一定会不止两遍的重复阅读，而且还要读英文原著，先立Flag。</p>
-<p>为什么会读了两遍？读第一次，哇，这内容讲的好深入，发现自己之前对JS的理解和应用都是浮于表面。后来因为找实习写论文一些事情，没有全看完。等到我再拾起来看之前看过的内容时，发现自己对看过的内容根本没吸收多少，所以就又重读了一遍。而且读第二遍的时候做了读书笔记，因为是图书馆借的书，没敢在书上乱画，所以写了markdown记录自己读时觉得值得重复研读的知识点。</p>
-<h1 id="第一部分-作用域和闭包"><a href="#第一部分-作用域和闭包" class="headerlink" title="第一部分 作用域和闭包"></a>第一部分 作用域和闭包</h1><h2 id="第1章-作用域是什么"><a href="#第1章-作用域是什么" class="headerlink" title="第1章 作用域是什么"></a>第1章 作用域是什么</h2><h3 id="1-1-编译原理"><a href="#1-1-编译原理" class="headerlink" title="1.1 编译原理"></a>1.1 编译原理</h3><p>JS是一门编译语言，JS引擎进行编译过程。</p>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/Reading-Notes/">Reading Notes</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/">JavaScript</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2017/08/09/you-dont-know-js-I/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-<!--
-
--->
-
-
-
-
-
-
-  
-    <article id="post-virtual-dom" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2017/07/23/virtual-dom/" class="article-date">
-      <time datetime="2017-07-23T13:42:13.000Z" itemprop="datePublished">2017-07-23</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/07/23/virtual-dom/">Virtual DOM</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <p>DOM操作是JS最基础的部分，前段时间重构的一个项目中使用JQuery来操作大量的DOM节点，就算是操作相同的节点也直接使用<code>$</code>去直接获取元素，JQuery是可以很方便的操作DOM，但是其底层封装的实现也依然是原生JS中提供的获取元素的API。现在项目里用到的knockoutJS，算是MVVM的鼻祖，虽说实现了数据绑定渲染，但其底层没有用到虚拟DOM，也就还是应该用了原生JS获取DOM元素的API。</p>
-<h2 id="前端应用状态管理"><a href="#前端应用状态管理" class="headerlink" title="前端应用状态管理"></a>前端应用状态管理</h2><p>记得最开始做IFE的任务中有个题目是让实现一个排序表格，附上当时写的<a href="https://github.com/BaiduGo3/task03/blob/gh-pages/task03_038/kad/kad.js">代码</a>，每次点击排序按钮，都要重新渲染整个table中的元素。DOM操作有多耗性能？看下图：</p>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
+        <div class="article-pop-out tagcloud">
+          <a class="">置顶</a>
+        </div>
       
       
     <div class="article-category tagcloud">
@@ -1227,7 +423,7 @@ var _hmt = _hmt || [];
 
       
         <p class="article-more-link">
-          <a href="/2017/07/23/virtual-dom/#more">more >></a>
+          <a href="/2017/03/03/datatype/#more">more >></a>
         </p>
       
       <div class="clearfix"></div>
@@ -1250,11 +446,11 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="post-regexp" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-prototype" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2017/07/17/regexp/" class="article-date">
-      <time datetime="2017-07-17T13:58:41.000Z" itemprop="datePublished">2017-07-17</time>
+      <a href="/2017/02/20/prototype/" class="article-date">
+      <time datetime="2017-02-20T12:56:26.000Z" itemprop="datePublished">2017-02-20</time>
 </a>
 
 
@@ -1269,7 +465,7 @@ var _hmt = _hmt || [];
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/07/17/regexp/">RegExp</a>
+      <a class="article-title" href="/2017/02/20/prototype/">JS Prototype</a>
     </h1>
   
 
@@ -1279,22 +475,18 @@ var _hmt = _hmt || [];
     <div class="article-entry" itemprop="articleBody">
       
           
-              <p>最近遇到几个很类似的题目，都用到正则做字符串操作，就想总结一下。</p>
-<h2 id="知识点"><a href="#知识点" class="headerlink" title="知识点"></a>知识点</h2><h3 id="正则创建方式"><a href="#正则创建方式" class="headerlink" title="正则创建方式"></a>正则创建方式</h3><ol>
-<li><p><code>var reg = new RegExp(/are/, &#39;g&#39;);</code></p>
-</li>
-<li><p><code>var reg = /are/i;</code></p>
-</li>
-</ol>
-<p>注意使用构造函数时字符的转义规则。</p>
-<h3 id="正则模式匹配符"><a href="#正则模式匹配符" class="headerlink" title="正则模式匹配符"></a>正则模式匹配符</h3><p><code>\g</code>：在字符串中查找所有可能的匹配，返回结果是多个</p>
-<p><code>\i</code>：匹配时不区分大小写</p>
-<p><code>\m</code>：多行匹配</p>
+              <p>JS原型是前端面试时总会问到的知识点，这里具体总结一下。</p>
+<p>缘于问题：<strong>对JS原型有什么了解，用原型创建对象和普通new一个对象的区别</strong>，下面具体说明创建对象的几种方法。</p>
+<h2 id="创建对象"><a href="#创建对象" class="headerlink" title="创建对象"></a>创建对象</h2><h3 id="工厂模式"><a href="#工厂模式" class="headerlink" title="工厂模式"></a>工厂模式</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">function person(name)&#123;</div><div class="line">	var o = new Object();</div><div class="line">	o.name = name;</div><div class="line">	return o;</div><div class="line">&#125;</div><div class="line"></div><div class="line">var p = person(&quot;kad&quot;);</div></pre></td></tr></table></figure>
           
       
     </div>
     
     <div class="article-info article-info-index">
+      
+        <div class="article-pop-out tagcloud">
+          <a class="">置顶</a>
+        </div>
       
       
     <div class="article-category tagcloud">
@@ -1309,7 +501,7 @@ var _hmt = _hmt || [];
 
       
         <p class="article-more-link">
-          <a href="/2017/07/17/regexp/#more">more >></a>
+          <a href="/2017/02/20/prototype/#more">more >></a>
         </p>
       
       <div class="clearfix"></div>
@@ -1390,79 +582,6 @@ var _hmt = _hmt || [];
       
         <p class="article-more-link">
           <a href="/2017/03/24/layout/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-<!--
-
--->
-
-
-
-
-
-
-  
-    <article id="post-ajax" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2017/03/11/ajax/" class="article-date">
-      <time datetime="2017-03-11T13:41:17.000Z" itemprop="datePublished">2017-03-11</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/03/11/ajax/">Ajax和跨域总结</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <h2 id="Ajax-异步JS-XML"><a href="#Ajax-异步JS-XML" class="headerlink" title="Ajax = 异步JS + XML"></a>Ajax = 异步JS + XML</h2><p>通过在后台与服务器进行少量数据交换，AJAX 可以使网页实现异步更新(不阻塞)。这意味着可以在不重新加载整个网页的情况下，对网页的某部分进行更新。</p>
-<h3 id="创建XMLHttpRequest对象，用于和服务器交换数据"><a href="#创建XMLHttpRequest对象，用于和服务器交换数据" class="headerlink" title="创建XMLHttpRequest对象，用于和服务器交换数据"></a>创建XMLHttpRequest对象，用于和服务器交换数据</h3><p>浏览器兼容写法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">var xhr;</div><div class="line">if(window.XMLHttpRequest)&#123;</div><div class="line">	xhr = new XMLHttpRequest();</div><div class="line">&#125;eles if(window.ActiveXObject)&#123;</div><div class="line">	// code for IE5,IE6</div><div class="line">	xhr = new ActiveXObject(Microsoft.XMLHTTP);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/Front-End/">Front-End</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/">JavaScript</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2017/03/11/ajax/#more">more >></a>
         </p>
       
       <div class="clearfix"></div>
@@ -1676,88 +795,6 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="post-datatype" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2017/03/03/datatype/" class="article-date">
-      <time datetime="2017-03-03T06:48:32.000Z" itemprop="datePublished">2017-03-03</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/03/03/datatype/">关于JS中变量类型的一些知识总结</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <h2 id="变量类型"><a href="#变量类型" class="headerlink" title="变量类型"></a>变量类型</h2><p>基本类型：Number、String、Boolean、Null、Undefined</p>
-<p>引用类型：Array、Object</p>
-<p>ES6新数据类型：Symbol</p>
-<h3 id="声明变量"><a href="#声明变量" class="headerlink" title="声明变量"></a>声明变量</h3><ol>
-<li><p>var、let、const、function</p>
-</li>
-<li><p>不使用关键字，全局变量</p>
-</li>
-<li><p>window.a = 1，全局变量</p>
-</li>
-</ol>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/Front-End/">Front-End</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/">JavaScript</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2017/03/03/datatype/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-<!--
-
--->
-
-
-
-
-
-
-  
     <article id="post-bfc" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -1818,6 +855,227 @@ var _hmt = _hmt || [];
       
         <p class="article-more-link">
           <a href="/2017/03/02/bfc/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+<!--
+
+-->
+
+
+
+
+
+
+  
+    <article id="post-scope" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/02/24/scope/" class="article-date">
+      <time datetime="2017-02-24T10:37:15.000Z" itemprop="datePublished">2017-02-24</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/02/24/scope/">Scope and Thread</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <p>有关作用域和执行栈的几道题目，直接来看例子：</p>
+<h3 id="例子一："><a href="#例子一：" class="headerlink" title="例子一："></a>例子一：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">for(var i = 0; i &lt; 10; i++)&#123;&#125;</div><div class="line">console.log(i);</div></pre></td></tr></table></figure>
+<p>输出10，var声明的变量i在全局范围内都有效。</p>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/Front-End/">Front-End</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/">JavaScript</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2017/02/24/scope/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+<!--
+
+-->
+
+
+
+
+
+
+  
+    <article id="post-cookie" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/02/21/cookie/" class="article-date">
+      <time datetime="2017-02-21T11:52:19.000Z" itemprop="datePublished">2017-02-21</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/02/21/cookie/">Cookie</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <h3 id="cookie的产生与使用"><a href="#cookie的产生与使用" class="headerlink" title="cookie的产生与使用"></a>cookie的产生与使用</h3><p>browser第一次请求server，server提供web页面，还附带一些键值对，也就是cookie。browser在本地存储cookie，之后每次请求和响应中都会来回发送cookie，仅限4k数据。</p>
+<p>cookie与一个域相关联，而且只能发送给这个域。</p>
+<p>cookie一般存储的是用户的登陆信息包括用户名、认证信息、登陆时间等，以便于下次免登陆，但一般不会将密码放在cookie中。</p>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/Front-End/">Front-End</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HTTP/">HTTP</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2017/02/21/cookie/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+<!--
+
+-->
+
+
+
+
+
+
+  
+    <article id="post-websocket" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/02/15/websocket/" class="article-date">
+      <time datetime="2017-02-15T11:23:41.000Z" itemprop="datePublished">2017-02-15</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/02/15/websocket/">WebSocket</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <p><strong>WebSocket是Html5新增的协议，目的就是为了在浏览器和服务器之间建立不受限的双向通信通道，使得服务器能够主动向客户端发送数据。</strong></p>
+<h2 id="传统的HTTP协议不能实现WebSocket的功能吗？"><a href="#传统的HTTP协议不能实现WebSocket的功能吗？" class="headerlink" title="传统的HTTP协议不能实现WebSocket的功能吗？"></a>传统的HTTP协议不能实现WebSocket的功能吗？</h2><p>HTTP是一个请求－响应协议，必须是浏览器向服务器发起请求，服务器才能响应这个请求，再把数据发送给客户端。也就是说浏览器不主动请求，服务器是没法主动发数据给浏览器的。</p>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/Front-End/">Front-End</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Html5/">Html5</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2017/02/15/websocket/#more">more >></a>
         </p>
       
       <div class="clearfix"></div>
