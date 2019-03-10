@@ -15,12 +15,40 @@
 
 
 
+<meta name="description" content="Summer Camp Interview一面
+单链表快排，尾指针不逆向移动怎么实现？
+给一个数组每个值表示股票价钱，要求买入卖出一次使得收益最大，必须先买入后卖出。
+链表两两翻转，比如1-&amp;gt;2-&amp;gt;3-&amp;gt;4 =&amp;gt; 3-&amp;gt;4-&amp;gt;1-&amp;gt;2
+
+二面聊项目，聊论文
+Positive Interview一面
+马踏棋盘
+给n个瓶子、n个瓶塞，其中是n个配套的瓶子和瓶塞">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Adong Kong's Blog">
-<meta property="og:url" content="http://kad0108.github.io/tags/NodeJS/index.html">
+<meta property="og:url" content="http://kad0108.github.io/myself/MSRA.html">
 <meta property="og:site_name" content="Adong Kong's Blog">
+<meta property="og:description" content="Summer Camp Interview一面
+单链表快排，尾指针不逆向移动怎么实现？
+给一个数组每个值表示股票价钱，要求买入卖出一次使得收益最大，必须先买入后卖出。
+链表两两翻转，比如1-&amp;gt;2-&amp;gt;3-&amp;gt;4 =&amp;gt; 3-&amp;gt;4-&amp;gt;1-&amp;gt;2
+
+二面聊项目，聊论文
+Positive Interview一面
+马踏棋盘
+给n个瓶子、n个瓶塞，其中是n个配套的瓶子和瓶塞">
+<meta property="og:updated_time" content="2019-01-31T14:32:08.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Adong Kong's Blog">
+<meta name="twitter:description" content="Summer Camp Interview一面
+单链表快排，尾指针不逆向移动怎么实现？
+给一个数组每个值表示股票价钱，要求买入卖出一次使得收益最大，必须先买入后卖出。
+链表两两翻转，比如1-&amp;gt;2-&amp;gt;3-&amp;gt;4 =&amp;gt; 3-&amp;gt;4-&amp;gt;1-&amp;gt;2
+
+二面聊项目，聊论文
+Positive Interview一面
+马踏棋盘
+给n个瓶子、n个瓶塞，其中是n个配套的瓶子和瓶塞">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -50,7 +78,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>Tag: NodeJS | Adong Kong&#39;s Blog</title>
+<title>Adong Kong&#39;s Blog</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -61,7 +89,7 @@
         isHome: false,
         isPost: false,
         isArchive: false,
-        isTag: true,
+        isTag: false,
         isCategory: false,
         fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
         scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
@@ -278,60 +306,130 @@ var _hmt = _hmt || [];
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap">
+      <div class="body-wrap"><article id="page-undefined" class="article article-type-page" itemscope itemprop="blogPost">
   
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-          <div class="article-meta">
-              <a href="/2018/08/27/spider/" class="archive-article-date">
-      <time datetime="2018-08-27T14:54:29.000Z" itemprop="datePublished">08-27</time>
+    <div class="article-meta">
+      <a href="/myself/MSRA.html" class="article-date">
+      <time datetime="2019-01-31T14:32:08.000Z" itemprop="datePublished">2019-01-31</time>
 </a>
 
 
-        </div>
-         
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/08/27/spider/">Spider &amp; Anti-Spider</a>
-    </h1>
-  
-
-        <div class="article-info info-on-archive">
-          
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/Front-End/">Front-End</a>
     </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <style>
+    .article-meta { display: none; }
+    #container .article .article-title { padding-right: 0; }
+    .article-header {
+        padding: 0;
+        padding-top: 26px;
+        border-left: none;
+        text-align: center;
+    }
+    .article-header:hover { border-left: none; }
+    .article-title { font-size: 1.6em }
+    .article-entry hr { margin: 0;}
+    .article-meta,
+    #container .article-info-post.article-info { display: none;}
+    #container .article .article-title { padding: 0; }
+</style>
 
 
           
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NodeJS/">NodeJS</a></li></ul>
-    </div>
+        <h2 id="Summer-Camp-Interview"><a href="#Summer-Camp-Interview" class="headerlink" title="Summer Camp Interview"></a>Summer Camp Interview</h2><h3 id="一面"><a href="#一面" class="headerlink" title="一面"></a>一面</h3><ol>
+<li>单链表快排，尾指针不逆向移动怎么实现？</li>
+<li>给一个数组每个值表示股票价钱，要求买入卖出一次使得收益最大，必须先买入后卖出。</li>
+<li>链表两两翻转，比如1-&gt;2-&gt;3-&gt;4 =&gt; 3-&gt;4-&gt;1-&gt;2</li>
+</ol>
+<h3 id="二面"><a href="#二面" class="headerlink" title="二面"></a>二面</h3><p>聊项目，聊论文</p>
+<h2 id="Positive-Interview"><a href="#Positive-Interview" class="headerlink" title="Positive Interview"></a>Positive Interview</h2><h3 id="一面-1"><a href="#一面-1" class="headerlink" title="一面"></a>一面</h3><ol>
+<li>马踏棋盘</li>
+<li>给n个瓶子、n个瓶塞，其中是n个配套的瓶子和瓶塞，但是互不相同，要求配对。分治</li>
+</ol>
+<h3 id="二面-1"><a href="#二面-1" class="headerlink" title="二面"></a>二面</h3><ol>
+<li>leetcode twosum</li>
+<li>写测试样例、测试代码</li>
+</ol>
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
+      
+    </div>
+    
   </div>
+  
+    
+
+
+  
 </article>
-  
-  
-    </div></section>
-  
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"　| Adong Kong's Blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+<!--
 
     
 
+-->
+
+
+  <section id="comments">
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="page-undefined" data-title="" data-url="http://kad0108.github.io/myself/MSRA.html"></div>
+    <!-- 多说评论框 end -->
+    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:'kad0108'};
+      (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] 
+         || document.getElementsByTagName('body')[0]).appendChild(ds);
+      })();
+      </script>
+    <!-- 多说公共JS代码 end -->
+  </section>
+
+
+
+
+
+    <script>
+        
+    </script>
 </div>
       <footer id="footer">
     <div class="outer">
