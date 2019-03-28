@@ -15,46 +15,21 @@
 
 
 
-<meta name="description" content="本文总结了服务器将信息主动推送到客户端的几种实现方式：
-
-Ajax polling
-Long polling
-HTTP Stream
-WebSockets
-Server-Sent Events
-
-Ajax是一种从页面向服务器请求数据的技术，Comet是一种服务器向页面推送数据的技术。
-有两种方式实现Comet：长轮询和流。">
+<meta name="description" content="写在前面工作后很久没有更新博文了，工作的热情也渐渐地被磨平了，一些事看不惯，一些事改变不了，从开始积极地想要做些什么，到现在佛系的工作，让自己不得不好好想想了。回过头来看自己工作这半年多，能说道说道的也只有混淆了(ps.接触了混淆，真心觉得混淆这门艺术高大上)，还不能在这里分享，就只能在这里巩固拓展学习了～
+Koakoa由express的原班人马打造，和express相比，koa是一个轻量级的no">
 <meta property="og:type" content="article">
-<meta property="og:title" content="服务器推送信息">
-<meta property="og:url" content="http://kad0108.github.io/2017/08/29/server-sent/index.html">
+<meta property="og:title" content="Koa">
+<meta property="og:url" content="http://kad0108.github.io/2019/03/28/koa/index.html">
 <meta property="og:site_name" content="Adong Kong's Blog">
-<meta property="og:description" content="本文总结了服务器将信息主动推送到客户端的几种实现方式：
-
-Ajax polling
-Long polling
-HTTP Stream
-WebSockets
-Server-Sent Events
-
-Ajax是一种从页面向服务器请求数据的技术，Comet是一种服务器向页面推送数据的技术。
-有两种方式实现Comet：长轮询和流。">
-<meta property="og:image" content="http://kad0108.github.io/2017/08/29/server-sent/ajax polling.png">
-<meta property="og:image" content="http://kad0108.github.io/2017/08/29/server-sent/long polling.png">
-<meta property="og:updated_time" content="2019-03-10T05:18:33.000Z">
+<meta property="og:description" content="写在前面工作后很久没有更新博文了，工作的热情也渐渐地被磨平了，一些事看不惯，一些事改变不了，从开始积极地想要做些什么，到现在佛系的工作，让自己不得不好好想想了。回过头来看自己工作这半年多，能说道说道的也只有混淆了(ps.接触了混淆，真心觉得混淆这门艺术高大上)，还不能在这里分享，就只能在这里巩固拓展学习了～
+Koakoa由express的原班人马打造，和express相比，koa是一个轻量级的no">
+<meta property="og:image" content="https://camo.githubusercontent.com/d80cf3b511ef4898bcde9a464de491fa15a50d06/68747470733a2f2f7261772e6769746875622e636f6d2f66656e676d6b322f6b6f612d67756964652f6d61737465722f6f6e696f6e2e706e67">
+<meta property="og:updated_time" content="2019-03-28T14:26:43.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="服务器推送信息">
-<meta name="twitter:description" content="本文总结了服务器将信息主动推送到客户端的几种实现方式：
-
-Ajax polling
-Long polling
-HTTP Stream
-WebSockets
-Server-Sent Events
-
-Ajax是一种从页面向服务器请求数据的技术，Comet是一种服务器向页面推送数据的技术。
-有两种方式实现Comet：长轮询和流。">
-<meta name="twitter:image" content="http://kad0108.github.io/2017/08/29/server-sent/ajax polling.png">
+<meta name="twitter:title" content="Koa">
+<meta name="twitter:description" content="写在前面工作后很久没有更新博文了，工作的热情也渐渐地被磨平了，一些事看不惯，一些事改变不了，从开始积极地想要做些什么，到现在佛系的工作，让自己不得不好好想想了。回过头来看自己工作这半年多，能说道说道的也只有混淆了(ps.接触了混淆，真心觉得混淆这门艺术高大上)，还不能在这里分享，就只能在这里巩固拓展学习了～
+Koakoa由express的原班人马打造，和express相比，koa是一个轻量级的no">
+<meta name="twitter:image" content="https://camo.githubusercontent.com/d80cf3b511ef4898bcde9a464de491fa15a50d06/68747470733a2f2f7261772e6769746875622e636f6d2f66656e676d6b322f6b6f612d67756964652f6d61737465722f6f6e696f6e2e706e67">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -84,7 +59,7 @@ Ajax是一种从页面向服务器请求数据的技术，Comet是一种服务�
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>服务器推送信息 | Adong Kong&#39;s Blog</title>
+<title>Koa | Adong Kong&#39;s Blog</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -312,11 +287,11 @@ var _hmt = _hmt || [];
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-server-sent" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-koa" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2017/08/29/server-sent/" class="article-date">
-      <time datetime="2017-08-29T05:23:53.000Z" itemprop="datePublished">2017-08-29</time>
+      <a href="/2019/03/28/koa/" class="article-date">
+      <time datetime="2019-03-28T13:59:07.000Z" itemprop="datePublished">2019-03-28</time>
 </a>
 
 
@@ -331,7 +306,7 @@ var _hmt = _hmt || [];
         
   
     <h1 class="article-title" itemprop="name">
-      服务器推送信息
+      Koa
     </h1>
   
 
@@ -346,7 +321,7 @@ var _hmt = _hmt || [];
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/">JavaScript</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NodeJS/">NodeJS</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -356,56 +331,43 @@ var _hmt = _hmt || [];
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>本文总结了服务器将信息主动推送到客户端的几种实现方式：</p>
-<ol>
-<li>Ajax polling</li>
-<li>Long polling</li>
-<li>HTTP Stream</li>
-<li>WebSockets</li>
-<li>Server-Sent Events</li>
-</ol>
-<p>Ajax是一种从页面向服务器请求数据的技术，Comet是一种服务器向页面推送数据的技术。</p>
-<p>有两种方式实现Comet：长轮询和流。</p>
-<a id="more"></a>
-<h2 id="Polling"><a href="#Polling" class="headerlink" title="Polling"></a>Polling</h2><p><strong>短轮询</strong>是浏览器定时向服务器发送请求，看有没有更新的数据。下图是短轮询的时间线。</p>
-<p>⚠️注意：短轮询并不是一直发送请求，而是应该在服务器响应后再发送请求，只不过服务器响应返回的不一定是更新的数据。</p>
-<p><img src="/2017/08/29/server-sent/ajax polling.png" alt="ajax polling"></p>
-<p><strong>长轮询</strong>是页面发起一个到服务器的请求，然后服务器一致保持连接打开，直到有数据可发送。发送完数据之后，浏览器关闭连接，随即又发起一个到服务器的新请求。这个过程在页面打开期间一直持续不断。下图是长轮询的时间线。</p>
-<p><img src="/2017/08/29/server-sent/long polling.png" alt="long polling"></p>
-<p>无论是短轮询还是长轮询，浏览器都要在接收数据之前，先发起对服务器的连接，两者最大的区别在于服务器如何发送数据。短轮询是服务器立即发送响应，无论数据是否有效，而长轮询是等待发送响应。轮询的优势是所有浏览器都支持，因为使用XHR对象和setTimeout就能实现的。</p>
-<h2 id="HTTP-Stream"><a href="#HTTP-Stream" class="headerlink" title="HTTP Stream"></a>HTTP Stream</h2><p>第二种Comet实现是<strong>HTTP流</strong>。流不同于上述两种轮询，因为它在页面的整个生命周期内只使用一个HTTP连接。浏览器向服务器发送一个请求，服务器保持连接打开，然后周期性地向浏览器发送数据。</p>
-<p>所有服务器端语言支持打印到输出缓存然后刷新（将输出缓存中的内容一次性全部发送到客户端）的功能。而这正是实现HTTP流的关键所在。</p>
-<p>通过侦听readystatechange事件及检测readyState的值是否为3，就可以利用XHR对象实现HTTP流。在上述这些浏览器中，随着不断从服务器接收数据，readyState的值会周期性变为3，此时responseText属性中酒会保存接收到的所有数据。就需要比较此前接收到的数据，决定从什么位置开始取得最新的数据。使用XHR对象实现HTTP流的典型代码如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">function createStreamingClient(url, progress, finished)&#123;</div><div class="line">	var xhr = new XMLHttpRequest(),</div><div class="line">		received = 0;</div><div class="line">	xhr.open(&quot;get&quot;, url, true);</div><div class="line">	xhr.onreadystatechange = function()&#123;</div><div class="line">		var result;</div><div class="line">		if(xhr.readyState == 3)&#123;</div><div class="line">			// 只取得最新数据并调整计数器</div><div class="line">			result = xhr.responseText.substring(received);</div><div class="line">			reveiced += result.length;</div><div class="line">			// 调用progress回调函数</div><div class="line">			progress(result);</div><div class="line">		&#125;else if(xhr.readyState == 4)&#123;</div><div class="line">			finished(xhr.responseText);</div><div class="line">		&#125;</div><div class="line">	&#125;;</div><div class="line">	xhr.send(null);</div><div class="line">	return xhr;</div><div class="line">&#125;</div><div class="line">var client = createStreamingClient(&quot;streaming.php&quot;, function(data)&#123;</div><div class="line">	alert(&quot;Recevied: &quot; + data);</div><div class="line">&#125;, function(data)&#123;</div><div class="line">	alert(&quot;Done!&quot;);</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
-<p>这个createStreamingClient函数接收三个参数：要连接的url，在连接到数据时调用的函数以及关闭连接时调用的函数。有时候，当连接关闭时，很可能还需要重新建立，所以关注连接什么时候关闭还是有必要的。</p>
-<p>只要readystatechange事件发生，而且readyState值为3，就对responseText进行分割以取得最新数据。这里的received变量用于记录已经处理了多少个字符，每次readyState值为3时都递增。然后通过progress回调函数来处理传入的新数据。当readyState值为4时，则执行finished回调函数，传入响应返回的全部内容。</p>
-<p>这个例子比较简单，在大多数浏览器中正常运行（IE除外），但管理Comet的连接是很容易出错的，需要时间不断改进才能达到完美。</p>
-<h2 id="Server-Sent-Events"><a href="#Server-Sent-Events" class="headerlink" title="Server-Sent Events"></a>Server-Sent Events</h2><p><strong>服务器发送事件SSE</strong>是围绕只读Comet交互推出的API或者模式。SSE API用于创建到服务器的单向连接，服务器通过这个连接可以发送任意数量的数据。服务器响应的MIME类型必须是<code>text/event-stream</code>，而且是浏览器中的JavaScript API能解析格式输出。SSE支持短轮询、长轮询和HTTP流，而且能在断开连接时自动确定何时重新连接。</p>
-<h3 id="SSE-API"><a href="#SSE-API" class="headerlink" title="SSE API"></a>SSE API</h3><p>要预定新的事件流，首先要创建一个新的EventSource对象，并传入一个入口点：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">var source = new EventSource(&quot;myevents.php&quot;);</div></pre></td></tr></table></figure>
-<p>注意，传入的URL必须与创建对象的页面同源（相同的URL模式，域及端口）。EventSource的实例有一个readyState的属性，值为0表示正连接到服务器，值为1表示打开了连接，值为2表示关闭了连接。</p>
-<p>另外还有三个事件：</p>
-<ol>
-<li>open：在建立连接时触发。</li>
-<li>message：在从服务器接收到新事件时触发。</li>
-<li>error：在无法建立连接时触发。</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">source.onmessage = function(event)&#123;</div><div class="line">	var data = event.data;</div><div class="line">	// 处理数据</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>服务器发回的数据以字符串形式保存在<code>event.data</code>中。</p>
-<p>默认情况下，EventSource对象会保持与服务器的活动连接。如果连接断开，还会重新连接，这就意味着SSE适合长轮询和HTTP流。如果想强制立即断开连接并且不再重新连接，可以调用close方法。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">source.close();</div></pre></td></tr></table></figure>
-<h3 id="事件流"><a href="#事件流" class="headerlink" title="事件流"></a>事件流</h3><p>所谓的服务器事件会通过一个持久的HTTP响应发送，这个响应的MIME类型为<code>text/event-stream</code>。响应的格式是纯文本，最简单的情况是每个数据项都带有前缀<code>data:</code>，例如：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">data: foo</div><div class="line">// blank line</div><div class="line">data: bar</div><div class="line">// blank line</div><div class="line">data: foo</div><div class="line">data: bar</div></pre></td></tr></table></figure>
-<p>对以上响应，事件流中的第一个message事件返回的<code>event.data</code>值为foo，第二个message事件返回的是bar，第三个message事件返回的<code>event.data</code>是<code>foo\nbar</code>（注意中间的换行符）。对于多个连续的以<code>data:</code>开头的数据行，将作为多段数据解析，每个值之间以一个换行符分隔。只有在包含<code>data:</code>的数据行后面有空行时，才会触发message事件，因此在服务器上生成事件流时不能忘了多添加这一行。</p>
-<p>通过<code>id:</code>前缀可以给特定的事件指定一个关联的ID，这个ID行位于<code>data:</code>行前面或后面。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">data: foo</div><div class="line">id: 1</div></pre></td></tr></table></figure>
-<p>设置了ID后，EventSource对象会跟踪上一次触发的事件，如果连接断开，会向服务器发送一个包含名为<code>Last-Event-ID</code>的特殊HTTP头部的请求，以便服务器知道下一次该触发哪个事件。在多次连接的事件流中，这种机制可以确保浏览器以正确的顺序收到连接的数据段。</p>
-<h2 id="WebSockets"><a href="#WebSockets" class="headerlink" title="WebSockets"></a>WebSockets</h2><p><a href="http://kadong.space/2017/02/15/websocket/" target="_blank" rel="external">WebSockets总结详见这篇博文</a></p>
-<h3 id="SSE与WebSockets"><a href="#SSE与WebSockets" class="headerlink" title="SSE与WebSockets"></a>SSE与WebSockets</h3><p>面对某个具体的用例，在考虑是使用SSE还是使用WebSocket时，可以考虑如下几个因素。首先，你是否有自由度建立和维护WebSockets服务器？因为Web Socket协议不同于HTTP，所以现有服务器不能用于Web Socket通信。SSE通过常规HTTP通信，因此现有服务器可以满足需求。</p>
-<p>第二个要考虑的问题是到底需不需要双向通信。如果用例只需读取服务器数据（比如比赛成绩），那么SSE比较容易实现，如果用例必须双向通信（如聊天室），那么Web Sockets显然更好。别忘了，在不能选择Web Sockets的情况下，组合XHR和SSE也是能实现双向通信的。</p>
+        <h2 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h2><p>工作后很久没有更新博文了，工作的热情也渐渐地被磨平了，一些事看不惯，一些事改变不了，从开始积极地想要做些什么，到现在佛系的工作，让自己不得不好好想想了。回过头来看自己工作这半年多，能说道说道的也只有混淆了(ps.接触了混淆，真心觉得混淆这门艺术高大上)，还不能在这里分享，就只能在这里巩固拓展学习了～</p>
+<h2 id="Koa"><a href="#Koa" class="headerlink" title="Koa"></a>Koa</h2><p><code>koa</code>由<code>express</code>的原班人马打造，和<code>express</code>相比，<code>koa</code>是一个轻量级的node框架，它的所有功能都能通过中间件实现，这种插拔式的架构设计模式，很符合<code>unix</code>哲学。</p>
 <blockquote>
-<p>以上内容基本都摘自《JS高级程序设计》一书。</p>
+<p>有关unix哲学，核心是简单原则，可以看<a href="http://www.ruanyifeng.com/blog/2009/06/unix_philosophy.html" target="_blank" rel="external">这篇</a>以及文末的评论。</p>
+<p>想到最近实现的一个混淆策略，已经在实现第二版，但代码还是越写越绕，mentor在发现我第二版的混淆策略仍然有处理不了的样例时说让我改的下一版更优雅些、代码易懂一点。代码越写越绕的原因应该是写的过程中发现需要兼容到某几种特殊样例的情况，每次为了兼容这种情况都会在原有基础上改，改到后面看见那一坨坨的代码就晕。。。感觉还是自己思考时站的高度不够。</p>
 </blockquote>
+<a id="more"></a>
+<p>目前所用的框架是<code>koa2</code>，与<code>koa1</code>不同，<code>koa1</code>使用的是<code>generator+co</code>的执行方式，而<code>koa2</code>使用的是<code>async/await</code>，所以需要<code>node v7.6.0</code>更高版本对<code>async</code>的支持。</p>
+<h3 id="async-await"><a href="#async-await" class="headerlink" title="async/await"></a>async/await</h3><p><code>async</code>函数允许你把异步的代码（当然这个异步方法支持<code>promise</code>时）当成同步的去对待，可读性高一些。在<code>async function</code>内部使用<code>await</code>来暂停<code>async function</code>的执行，等待一个<code>promise</code>对象处理完成。<code>await</code>返回需要是<code>Promise</code>对象。</p>
+<p>先来一个最简单的koa样例：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> Koa = <span class="built_in">require</span>(<span class="string">'koa'</span>);</div><div class="line"><span class="keyword">const</span> app = <span class="keyword">new</span> Koa();</div><div class="line"></div><div class="line">app.use(<span class="keyword">async</span> (ctx, next) =&gt; &#123;</div><div class="line">  ctx.body = <span class="string">'Hello World'</span>;</div><div class="line">  <span class="keyword">await</span> next();</div><div class="line">&#125;);</div><div class="line"></div><div class="line">app.listen(<span class="number">3000</span>);</div></pre></td></tr></table></figure>
+<p>启了一个<code>node http server</code>，监听端口<code>3000</code>，<code>app.use</code>中维护了一个中间件队列，代码中的这个中间件的功能是对请求<code>curl http://localhost:3000</code>响应内容<code>hello world</code>。</p>
+<p><code>next()</code>不是必须的，用来在当前中间件中想要downstream到下一个中间件时调用。</p>
+<h3 id="Middleware-onion-diagram"><a href="#Middleware-onion-diagram" class="headerlink" title="Middleware onion diagram"></a>Middleware onion diagram</h3><p>下面图中很清晰的表明了一个请求是如何经过中间件最后生成响应的：</p>
+<p><img src="https://camo.githubusercontent.com/d80cf3b511ef4898bcde9a464de491fa15a50d06/68747470733a2f2f7261772e6769746875622e636f6d2f66656e676d6b322f6b6f612d67756964652f6d61737465722f6f6e696f6e2e706e67" alt="onion"></p>
+<p>理解洋葱模型怎么运作，来看下面的样例：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> Koa = <span class="built_in">require</span>(<span class="string">'koa'</span>);</div><div class="line"><span class="keyword">const</span> app = <span class="keyword">new</span> Koa();</div><div class="line"><span class="comment">// middleware0</span></div><div class="line">app.use(<span class="keyword">async</span> (ctx, next) =&gt; &#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="number">0</span>);</div><div class="line">    <span class="keyword">const</span> a = <span class="keyword">await</span> next(); <span class="comment">// 这里是执行了middleware1之后return的结果</span></div><div class="line">    <span class="built_in">console</span>.log(a);</div><div class="line">    <span class="keyword">return</span> <span class="string">'middleware0'</span>;</div><div class="line">&#125;)</div><div class="line"><span class="comment">// middleware1</span></div><div class="line">app.use(<span class="keyword">async</span> (ctx, next) =&gt; &#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="number">1</span>);</div><div class="line">    <span class="keyword">const</span> b = <span class="keyword">await</span> next(); <span class="comment">// 这里是执行了middleware2之后return的结果</span></div><div class="line">    <span class="built_in">console</span>.log(b);</div><div class="line">    <span class="keyword">return</span> <span class="string">'middleware1'</span>;</div><div class="line">&#125;)</div><div class="line"><span class="comment">// middleware2</span></div><div class="line">app.use(<span class="keyword">async</span> (ctx, next) =&gt; &#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="number">2</span>);</div><div class="line">    <span class="keyword">const</span> c = <span class="keyword">await</span> next(); <span class="comment">// 这里因为没有下一个中间件的返回所以为undefined</span></div><div class="line">    <span class="built_in">console</span>.log(c);</div><div class="line">    <span class="keyword">return</span> <span class="string">'middleware2'</span>;</div><div class="line">&#125;)</div><div class="line">app.listen(<span class="number">3000</span>);</div></pre></td></tr></table></figure>
+<p>输出结果为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">0</div><div class="line">1</div><div class="line">2</div><div class="line">undefined</div><div class="line">middleware2</div><div class="line">middleware1</div></pre></td></tr></table></figure>
+<p>每个中间件都接受一个<code>koa context object</code>和一个<code>next function</code>作为参数，调用<code>next</code>函数会执行到下一个中间件中（如果在<code>middleware1</code>中注释掉<code>next</code>调用，就会发现并不会执行到<code>middleware2</code>中）。</p>
+<p>其中<code>await next()</code>的作用是当程序运行到它时会暂停当前中间件的执行，进入下一个中间件，等后面的中间件都处理完之后再回过头来处理。也就是说，当一个请求发来时，<code>middleware0</code>是第一个进入最后一个离开。</p>
+<p>特殊地，<code>koa</code>实现了对<code>context</code>的保存和传递（将<code>context</code>一路传下去给中间件），每个中间件的<code>next</code>返回值是下一个中间件的返回值。</p>
+<p><code>koa</code>这种洋葱结构，可以很方便的进行错误处理。</p>
+<blockquote>
+<p>这里提一下，在回调函数中抛出错误，如果没有任何错误捕获处理，node进程会崩溃。同时对回调函数<code>try/catch</code>也是没有用的，是捕获不到的，解决方法一个是监听<code>error</code>事件，在koa中的解决方法就是在外层中间件对错误进行捕获。可以看<a href="https://github.com/ruanyf/koa-demos#demo16-error-handling" target="_blank" rel="external">koa demo #Demo16: error handling &amp; #Demo17: error listener</a>。</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> Koa = <span class="built_in">require</span>(<span class="string">'koa'</span>);</div><div class="line"><span class="keyword">const</span> app = <span class="keyword">new</span> Koa();</div><div class="line"><span class="comment">// middleware error catch</span></div><div class="line">app.use(<span class="keyword">async</span> (ctx, next) =&gt; &#123;</div><div class="line">    <span class="keyword">try</span>&#123;</div><div class="line">        <span class="keyword">await</span> next();</div><div class="line">    &#125;<span class="keyword">catch</span>(e)&#123;</div><div class="line">        <span class="built_in">console</span>.log(e);</div><div class="line">    &#125;</div><div class="line">&#125;)</div><div class="line"><span class="comment">// middleware error test1</span></div><div class="line">app.use(<span class="keyword">async</span> (ctx, next) =&gt; &#123;</div><div class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'error test1'</span>);</div><div class="line">&#125;);</div><div class="line"><span class="comment">// middleware error test2</span></div><div class="line">app.use(<span class="keyword">async</span> (ctx, next) =&gt; &#123;</div><div class="line">    <span class="keyword">await</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</div><div class="line">        reject(<span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'error test2'</span>));</div><div class="line">    &#125;)</div><div class="line">&#125;)</div><div class="line">app.listen(<span class="number">3000</span>);</div><div class="line"><span class="built_in">console</span>.log(<span class="string">'server listening...'</span>);</div></pre></td></tr></table></figure>
+<p>在所有中间件中抛出的错误都可以在第一个中间件中捕获到，这样就可以包装一个统一的错误处理中间件。</p>
+<h3 id="Tips"><a href="#Tips" class="headerlink" title="Tips"></a>Tips</h3><ul>
+<li><a href="https://github.com/ruanyf/koa-demos" target="_blank" rel="external">koa的一些demo</a></li>
+<li><a href="https://github.com/koajs/koa/blob/master/docs/api/context.md" target="_blank" rel="external">koa context api</a></li>
+<li><code>koa-bodyparser</code>：解析post请求的body数据</li>
+<li><code>koa-static</code>：把静态文件serve出去。针对<a href="https://github.com/ruanyf/koa-demos#demo12-static-assets" target="_blank" rel="external">koa demo #Demo12: static assets</a>的样例，访问<code>http://localhost:3000/12.js</code>页面上显示文件内容，而正常未使用<code>koa-static</code>的访问时会显示<code>Not Found</code>。</li>
+<li><code>koa-router</code>：路由，样例：</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// router.js</span></div><div class="line"><span class="keyword">const</span> Router = <span class="built_in">require</span>(<span class="string">'koa-router'</span>);</div><div class="line"><span class="keyword">const</span> router = <span class="keyword">new</span> Router();</div><div class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</div><div class="line">router.get(<span class="string">'/test'</span>, (ctx, next) =&gt; &#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">'received request....'</span>);</div><div class="line">    ctx.body = <span class="string">'test'</span>;</div><div class="line">&#125;)</div><div class="line"><span class="built_in">module</span>.exports = router;</div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// index.js</span></div><div class="line"><span class="keyword">const</span> Koa = <span class="built_in">require</span>(<span class="string">'koa'</span>);</div><div class="line"><span class="keyword">const</span> app = <span class="keyword">new</span> Koa();</div><div class="line"><span class="keyword">const</span> router = <span class="built_in">require</span>(<span class="string">'./router'</span>);</div><div class="line">app.use(router.routes()).use(router.allowedMethods());</div><div class="line">app.listen(<span class="number">3000</span>);</div><div class="line"><span class="built_in">console</span>.log(<span class="string">'server listen on port 3000'</span>);</div></pre></td></tr></table></figure>
 
       
     </div>
@@ -414,13 +376,13 @@ var _hmt = _hmt || [];
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2017/08/29/server-sent/">服务器推送信息</a></p>
+        <p><span>本文标题:</span><a href="/2019/03/28/koa/">Koa</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">Adong Kong</a></p>
-        <p><span>发布时间:</span>2017-08-29, 13:23:53</p>
-        <p><span>最后更新:</span>2019-03-10, 13:18:33</p>
+        <p><span>发布时间:</span>2019-03-28, 21:59:07</p>
+        <p><span>最后更新:</span>2019-03-28, 22:26:43</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2017/08/29/server-sent/" title="服务器推送信息">http://kad0108.github.io/2017/08/29/server-sent/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://kad0108.github.io/2017/08/29/server-sent/　　作者: Adong Kong" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2019/03/28/koa/" title="Koa">http://kad0108.github.io/2019/03/28/koa/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://kad0108.github.io/2019/03/28/koa/　　作者: Adong Kong" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -432,16 +394,10 @@ var _hmt = _hmt || [];
 
     <nav id="article-nav">
         
-            <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2017/10/17/md5/">
-                    MD5
-                </a>
-            </div>
-        
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2017/08/28/custom-event/">
-                    JS自定义事件
+                <a href="/2018/08/27/spider/">
+                    Spider &amp; Anti-Spider
                 </a>
             </div>
         
@@ -453,7 +409,7 @@ var _hmt = _hmt || [];
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Polling"><span class="toc-number">1.</span> <span class="toc-text">Polling</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTP-Stream"><span class="toc-number">2.</span> <span class="toc-text">HTTP Stream</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Server-Sent-Events"><span class="toc-number">3.</span> <span class="toc-text">Server-Sent Events</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#SSE-API"><span class="toc-number">3.1.</span> <span class="toc-text">SSE API</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#事件流"><span class="toc-number">3.2.</span> <span class="toc-text">事件流</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#WebSockets"><span class="toc-number">4.</span> <span class="toc-text">WebSockets</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#SSE与WebSockets"><span class="toc-number">4.1.</span> <span class="toc-text">SSE与WebSockets</span></a></li></ol></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#写在前面"><span class="toc-number">1.</span> <span class="toc-text">写在前面</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Koa"><span class="toc-number">2.</span> <span class="toc-text">Koa</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#async-await"><span class="toc-number">2.1.</span> <span class="toc-text">async/await</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Middleware-onion-diagram"><span class="toc-number">2.2.</span> <span class="toc-text">Middleware onion diagram</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Tips"><span class="toc-number">2.3.</span> <span class="toc-text">Tips</span></a></li></ol></li></ol>
         
     </div>
     <style>
@@ -489,7 +445,7 @@ var _hmt = _hmt || [];
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"服务器推送信息　| Adong Kong's Blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"Koa　| Adong Kong's Blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -510,7 +466,7 @@ var _hmt = _hmt || [];
 
   <section id="comments">
     <!-- 多说评论框 start -->
-    <div class="ds-thread" data-thread-key="post-server-sent" data-title="服务器推送信息" data-url="http://kad0108.github.io/2017/08/29/server-sent/"></div>
+    <div class="ds-thread" data-thread-key="post-koa" data-title="Koa" data-url="http://kad0108.github.io/2019/03/28/koa/"></div>
     <!-- 多说评论框 end -->
     <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
     <script type="text/javascript">
@@ -532,15 +488,13 @@ var _hmt = _hmt || [];
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2017/10/17/md5/" title="上一篇: MD5">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
 
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2017/08/28/custom-event/" title="下一篇: JS自定义事件">
+            <a href="/2018/08/27/spider/" title="下一篇: Spider &amp; Anti-Spider">
                 <i class="fa fa-angle-right"></i>
             </a>
         
