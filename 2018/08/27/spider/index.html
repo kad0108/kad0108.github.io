@@ -17,23 +17,23 @@
 
 <meta name="description" content="最近沉迷爬虫无法自拔。。。做到现在也算是有点收获，总结一下。
 
-最开始想要爬阿里系的一个APP，用Charles抓包发现，抓到携带数据的包都是zip，批量解压后分析发现并没有有效的数据。所以结论是，数据传输不是HTTP协议，抓不到包，只能通过群控来做。
-然后想分析一些其它同类的APP，鉴于之前分析移动端APP可能抓不到包的情况，转而去看有没有对应的微信小程序。微信小程序的请求是一定能抓到包的，因">
+最开始想要爬的APP，用Charles抓包发现，抓到携带数据的包都是zip，批量解压后分析发现并没有有效的数据。猜测数据传输不是HTTP协议，抓不到包，只能通过群控来做。
+然后想分析一些其它同类的APP，鉴于之前分析移动端APP可能抓不到包的情况，转而去看有没有对应的微信小程序。微信小程序的请求是一定能抓到包的，因为，微信小程序的项">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Spider & Anti-Spider">
 <meta property="og:url" content="http://kad0108.github.io/2018/08/27/spider/index.html">
 <meta property="og:site_name" content="Adong Kong's Blog">
 <meta property="og:description" content="最近沉迷爬虫无法自拔。。。做到现在也算是有点收获，总结一下。
 
-最开始想要爬阿里系的一个APP，用Charles抓包发现，抓到携带数据的包都是zip，批量解压后分析发现并没有有效的数据。所以结论是，数据传输不是HTTP协议，抓不到包，只能通过群控来做。
-然后想分析一些其它同类的APP，鉴于之前分析移动端APP可能抓不到包的情况，转而去看有没有对应的微信小程序。微信小程序的请求是一定能抓到包的，因">
-<meta property="og:updated_time" content="2019-03-10T05:18:33.000Z">
+最开始想要爬的APP，用Charles抓包发现，抓到携带数据的包都是zip，批量解压后分析发现并没有有效的数据。猜测数据传输不是HTTP协议，抓不到包，只能通过群控来做。
+然后想分析一些其它同类的APP，鉴于之前分析移动端APP可能抓不到包的情况，转而去看有没有对应的微信小程序。微信小程序的请求是一定能抓到包的，因为，微信小程序的项">
+<meta property="og:updated_time" content="2019-04-03T13:53:10.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Spider & Anti-Spider">
 <meta name="twitter:description" content="最近沉迷爬虫无法自拔。。。做到现在也算是有点收获，总结一下。
 
-最开始想要爬阿里系的一个APP，用Charles抓包发现，抓到携带数据的包都是zip，批量解压后分析发现并没有有效的数据。所以结论是，数据传输不是HTTP协议，抓不到包，只能通过群控来做。
-然后想分析一些其它同类的APP，鉴于之前分析移动端APP可能抓不到包的情况，转而去看有没有对应的微信小程序。微信小程序的请求是一定能抓到包的，因">
+最开始想要爬的APP，用Charles抓包发现，抓到携带数据的包都是zip，批量解压后分析发现并没有有效的数据。猜测数据传输不是HTTP协议，抓不到包，只能通过群控来做。
+然后想分析一些其它同类的APP，鉴于之前分析移动端APP可能抓不到包的情况，转而去看有没有对应的微信小程序。微信小程序的请求是一定能抓到包的，因为，微信小程序的项">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -338,7 +338,7 @@ var _hmt = _hmt || [];
         <blockquote>
 <p>最近沉迷爬虫无法自拔。。。做到现在也算是有点收获，总结一下。</p>
 </blockquote>
-<p>最开始想要爬阿里系的一个APP，用Charles抓包发现，抓到携带数据的包都是zip，批量解压后分析发现并没有有效的数据。所以结论是，数据传输不是HTTP协议，抓不到包，只能通过<a href="https://mp.weixin.qq.com/s/vaqFkjj5Mg_f3JkZXhzLYQ" target="_blank" rel="external">群控</a>来做。</p>
+<p>最开始想要爬的APP，用Charles抓包发现，抓到携带数据的包都是zip，批量解压后分析发现并没有有效的数据。猜测数据传输不是HTTP协议，抓不到包，只能通过<a href="https://mp.weixin.qq.com/s/vaqFkjj5Mg_f3JkZXhzLYQ" target="_blank" rel="external">群控</a>来做。</p>
 <p>然后想分析一些其它同类的APP，鉴于之前分析移动端APP可能抓不到包的情况，转而去看有没有对应的微信小程序。微信小程序的请求是一定能抓到包的，因为，微信小程序的项目在编译时是将wxml、wxss编译成js来压缩打包为wxapkg文件，微信小程序在微信中的运行其实就是在微信内嵌浏览器（渲染引擎：安卓端X5内核，IOS端Webkit内核）的JSCore（JS引擎）中解压执行JS代码。而浏览器中的请求一定是遵循http协议的（HTTP协议是Web浏览器和服务器之间通信一定遵循的规则）。所以比移动端APP抓到包的概率大很多。</p>
 <a id="more"></a>
 <!-- X5内核是渲染引擎，浏览器内核也称为渲染引擎 -->
@@ -427,7 +427,7 @@ var _hmt = _hmt || [];
         <p><span>本文标题:</span><a href="/2018/08/27/spider/">Spider &amp; Anti-Spider</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">Adong Kong</a></p>
         <p><span>发布时间:</span>2018-08-27, 22:54:29</p>
-        <p><span>最后更新:</span>2019-03-10, 13:18:33</p>
+        <p><span>最后更新:</span>2019-04-03, 21:53:10</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2018/08/27/spider/" title="Spider &amp; Anti-Spider">http://kad0108.github.io/2018/08/27/spider/</a>
             <span class="copy-path" data-clipboard-text="原文: http://kad0108.github.io/2018/08/27/spider/　　作者: Adong Kong" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
