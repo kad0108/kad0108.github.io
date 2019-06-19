@@ -4,7 +4,7 @@
   
     
     <entry>
-      <title><![CDATA[commonjs]]></title>
+      <title><![CDATA[CommonJS规范]]></title>
       <url>http://kad0108.github.io/2019/06/19/commonjs/</url>
       <content type="html"><![CDATA[<blockquote>
 <p>最近做了一点环境模拟的工作，还是有点意思的，无意中发现自己其实已经在实现CommonJS规范了，那就正好去学习一下。<br>本来想上来就总结一下commonJS规范的概念，然后放一段完美的原理实现代码，perfect！其实最早也是按照这个模式去写了（一如既往的知识点搬来主义，哈哈哈），但是想了想还是从自己如何一步步实现并理解模块定义加载的角度来写，感觉这样印象更深更有助于理解。</p>
